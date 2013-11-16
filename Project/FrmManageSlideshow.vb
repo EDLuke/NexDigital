@@ -9,11 +9,15 @@ Public Class FrmManageSlideshow
     Private AnimationList As ArrayList
 
     Private Sub FrmManageSlideshow_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        LoadCategory()
+        FillCategories()
+        UpdateTreeView()
+    End Sub
+
+    Public Sub LoadCategory()
         'TODO: This line of code loads data into the 'CategoriesDSfrmManageSlide.Category' table. You can move, or remove it, as needed.
         Me.CategoryTableAdapter.Connection.ConnectionString = DataLayer.conString
         Me.CategoryTableAdapter.Fill(Me.CategoriesDSfrmManageSlide.Category)
-        FillCategories()
-        UpdateTreeView()
     End Sub
 
     Public Sub UpdateTreeView()
@@ -265,7 +269,7 @@ Public Class FrmManageSlideshow
     End Function
 
     Private Sub btnUp_Click(sender As Object, e As EventArgs) Handles btnUp.Click
-        If lstSlideShowPics.SelectedNode Is Nothing Then
+        If lstSlideShowPics.SelectedNode Is Nothing Or isAnimation(lstSlideShowPics.SelectedNode.ToString) Then
             MessageBox.Show("Please Select an Item", "Error")
         Else
             If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
@@ -276,7 +280,7 @@ Public Class FrmManageSlideshow
     End Sub
 
     Private Sub btnDown_Click(sender As Object, e As EventArgs) Handles btnDown.Click
-        If lstSlideShowPics.SelectedNode Is Nothing Or lstSlideShowPics.SelectedNode.Parent IsNot Nothing Then
+        If lstSlideShowPics.SelectedNode Is Nothing Or isAnimation(lstSlideShowPics.SelectedNode.ToString) Then
             MessageBox.Show("Please Select an Item", "Error")
         Else
             If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
@@ -285,6 +289,15 @@ Public Class FrmManageSlideshow
             End If
         End If
     End Sub
+
+    Private Function isAnimation(ByVal node As String) As Boolean
+        For Each Str As String In [Enum].GetNames(GetType(AnimationTypes))
+            If node = Str Then
+                Return True
+            End If
+        Next
+        Return False
+    End Function
 
     Private Sub MoveUp()
         Dim item = lstSlideShowPics.SelectedNode.Text

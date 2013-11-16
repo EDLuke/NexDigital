@@ -28,9 +28,7 @@ Public Class frmSetupTwo
 
 
     Private Sub frmSetup_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        'TODO: This line of code loads data into the 'CategoriesFrmSetupDS.Category' table. You can move, or remove it, as needed.
-        Me.CategoryTableAdapter.Connection.ConnectionString = DataLayer.conString
-        Me.CategoryTableAdapter.Fill(Me.CategoriesFrmSetupDS.Category)
+        LoadCategory()
         loadToolTip()
         loadDefaults()
         FillCategories()
@@ -40,6 +38,12 @@ Public Class frmSetupTwo
         If lstMenuItems.Items.Count <> 0 Then
             lstMenuItems.SelectedIndex = 0
         End If
+    End Sub
+
+    Public Sub LoadCategory()
+        'TODO: This line of code loads data into the 'CategoriesFrmSetupDS.Category' table. You can move, or remove it, as needed.
+        Me.CategoryTableAdapter.Connection.ConnectionString = DataLayer.conString
+        Me.CategoryTableAdapter.Fill(Me.CategoriesFrmSetupDS.Category)
     End Sub
 
     Private Sub loadToolTip()
