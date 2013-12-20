@@ -34,7 +34,11 @@
     End Sub
 
     Public Sub loadItems()
-        'TODO: This line of code loads data into the 'ItemsDSfrmAllItems.Items' table. You can move, or remove it, as needed.
+        Me.Cursor = Cursors.WaitCursor
+        bgwLoad.RunWorkerAsync()
+    End Sub
+
+    Private Sub loadComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoad.RunWorkerCompleted
         Me.ItemsTableAdapter.Connection.ConnectionString = DataLayer.conString
         Me.ItemsTableAdapter.Fill(Me.ItemsDSfrmAllItems.Items)
 
@@ -47,6 +51,7 @@
         Catch ex As Exception
 
         End Try
+        Me.Cursor = Cursors.Arrow
     End Sub
 
     Public Sub selectUp()

@@ -32,6 +32,7 @@ Partial Class FrmViewSlideShow
         Me.PictureBox1 = New Project.AnimationControl()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.bgw = New System.ComponentModel.BackgroundWorker()
         CType(Me.trkOne, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -112,6 +113,9 @@ Partial Class FrmViewSlideShow
         Me.Label2.TabIndex = 31
         Me.Label2.Text = "Slow"
         '
+        'bgw
+        '
+        '
         'FrmViewSlideShow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -146,4 +150,5 @@ Partial Class FrmViewSlideShow
     Friend WithEvents trkOne As System.Windows.Forms.TrackBar
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents bgw As System.ComponentModel.BackgroundWorker
 End Class

@@ -119,7 +119,6 @@ Public Class MainMenu
         vwOne.loadTimerFreq()
     End Sub
 
-
     Private Sub loadComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoad.RunWorkerCompleted
         showMainForm()
         tabMain.SelectedIndex = 0

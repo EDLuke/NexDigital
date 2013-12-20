@@ -29,6 +29,7 @@ Partial Class frmAllItems
         Me.ItemsTableAdapter = New Project.ItemsDSfrmAllItemsTableAdapters.ItemsTableAdapter()
         Me.txtSearch = New System.Windows.Forms.TextBox()
         Me.bgwSearch = New System.ComponentModel.BackgroundWorker()
+        Me.bgwLoad = New System.ComponentModel.BackgroundWorker()
         CType(Me.ItemsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ItemsDSfrmAllItems, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -93,4 +94,5 @@ Partial Class frmAllItems
     Friend WithEvents ItemsTableAdapter As Project.ItemsDSfrmAllItemsTableAdapters.ItemsTableAdapter
     Friend WithEvents txtSearch As System.Windows.Forms.TextBox
     Friend WithEvents bgwSearch As System.ComponentModel.BackgroundWorker
+    Friend WithEvents bgwLoad As System.ComponentModel.BackgroundWorker
 End Class

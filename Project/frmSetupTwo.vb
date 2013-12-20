@@ -5,6 +5,8 @@ Public Class frmSetupTwo
 
     Dim itemsArrayList As ArrayList
 
+    Dim cmbCategorySelected As Integer
+
     Public selectedItemId As Integer
 
     Public btnArray(2) As Boolean
@@ -264,13 +266,32 @@ Public Class frmSetupTwo
     End Sub
 
     Public Sub FillCategories()
+        Me.Cursor = Cursors.WaitCursor
         If cmbCategories.SelectedValue <> Nothing Then
-            itemsArrayList = DataLayer.GetItemOfCategory(CInt(cmbCategories.SelectedValue.ToString()))
+            cmbCategorySelected = CInt(cmbCategories.SelectedValue.ToString())
+            bgwLoadOne.RunWorkerAsync()
         End If
     End Sub
 
     Public Sub FillMenuItems()
+        Me.Cursor = Cursors.WaitCursor
+        bgwLoadTwo.RunWorkerAsync()
+    End Sub
+
+    Private Sub bgwOne_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwLoadOne.DoWork
+        itemsArrayList = DataLayer.GetItemOfCategory(cmbCategorySelected)
+    End Sub
+
+    Private Sub loadCompleteOne(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoadOne.RunWorkerCompleted
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub bgwTwo_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwLoadOne.DoWork
         menuItemsArrayList = DataLayer.GetMenuItems(2)
+    End Sub
+
+    Private Sub loadCompleteTwo(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoadOne.RunWorkerCompleted
+        Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub clearUI()

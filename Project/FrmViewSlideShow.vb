@@ -40,6 +40,11 @@ Public Class FrmViewSlideShow
 
     Public Sub loadSlideShowPic()
         Timer1.Stop()
+        Me.Cursor = Cursors.WaitCursor
+        bgw.RunWorkerAsync()
+    End Sub
+
+    Private Sub bgw_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgw.DoWork
         imageNumber = 0
         SlideShowPicsList.Clear()
         SlideShowPics = DataLayer.GetSlideShowItems()
@@ -50,11 +55,14 @@ Public Class FrmViewSlideShow
         For i = 1 To SlideShowPics.Count Step 3
             Pic((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
         Next
+    End Sub
 
+    Private Sub bgw_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw.RunWorkerCompleted
         PictureBox1.AnimatedFadeImage = Pic(imageNumber)
         PictureBox1.BackgroundImage = Pic(imageNumber)
         PictureBox1.BackColor = Color.Transparent
 
+        Me.Cursor = Cursors.Arrow
         Timer1.Start()
     End Sub
 

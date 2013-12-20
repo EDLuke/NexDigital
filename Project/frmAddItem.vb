@@ -7,12 +7,17 @@ Public Class frmAddItem
 
     Private Sub frmAddNewItem_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         LoadItems()
-
     End Sub
 
     Public Sub LoadItems()
+        Me.Cursor = Cursors.WaitCursor
+        bgw.RunWorkerAsync()
+    End Sub
+
+    Private Sub loadComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw.RunWorkerCompleted
         Me.CategoryTableAdapter.Connection.ConnectionString = DataLayer.conString
         Me.CategoryTableAdapter.Fill(Me.DatabaseDataSet.Category)
+        Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub btnButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnButton.Click
@@ -24,12 +29,6 @@ Public Class frmAddItem
         If result = Windows.Forms.DialogResult.OK Then
             txtPicture.Text = OpenFileDialog1.FileName
         End If
-    End Sub
-
-    Public Sub OneTimeAdd()
-        For i As Integer = 0 To 1000
-            Dim result = DataLayer.InsertItem(CInt(cmbCategories.SelectedValue.ToString()), i.ToString(), i.ToString() + "lol", i, Directory.GetCurrentDirectory() & "\images\Salad Bar.png")
-        Next
     End Sub
 
     Private Sub btnAddItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddItem.Click
@@ -66,7 +65,9 @@ Public Class frmAddItem
 
         Dim strPrice = price.ToString("C")
         ' Insert into database
+
         DataLayer.InsertItem(categoryId, item, desc, price, picture)
+
 
         MessageBox.Show("Item has been added", "Success")
         MainMenu.tabOne.loadItems()

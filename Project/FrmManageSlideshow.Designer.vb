@@ -24,6 +24,8 @@ Partial Class FrmManageSlideshow
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.btnDown = New System.Windows.Forms.Button()
+        Me.btnUp = New System.Windows.Forms.Button()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -37,8 +39,9 @@ Partial Class FrmManageSlideshow
         Me.CategoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.CategoriesDSfrmManageSlide = New Project.categoriesDSfrmManageSlide()
         Me.CategoryTableAdapter = New Project.categoriesDSfrmManageSlideTableAdapters.CategoryTableAdapter()
-        Me.btnUp = New System.Windows.Forms.Button()
-        Me.btnDown = New System.Windows.Forms.Button()
+        Me.bgwOne = New System.ComponentModel.BackgroundWorker()
+        Me.bgwTwo = New System.ComponentModel.BackgroundWorker()
+        Me.bgwThree = New System.ComponentModel.BackgroundWorker()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CategoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -65,6 +68,24 @@ Partial Class FrmManageSlideshow
         Me.GroupBox1.TabIndex = 3
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Select Pictures"
+        '
+        'btnDown
+        '
+        Me.btnDown.Location = New System.Drawing.Point(358, 179)
+        Me.btnDown.Name = "btnDown"
+        Me.btnDown.Size = New System.Drawing.Size(32, 23)
+        Me.btnDown.TabIndex = 10
+        Me.btnDown.Text = "ᐯ"
+        Me.btnDown.UseVisualStyleBackColor = True
+        '
+        'btnUp
+        '
+        Me.btnUp.Location = New System.Drawing.Point(358, 135)
+        Me.btnUp.Name = "btnUp"
+        Me.btnUp.Size = New System.Drawing.Size(32, 23)
+        Me.btnUp.TabIndex = 9
+        Me.btnUp.Text = "ᐱ"
+        Me.btnUp.UseVisualStyleBackColor = True
         '
         'Label4
         '
@@ -170,24 +191,6 @@ Partial Class FrmManageSlideshow
         '
         Me.CategoryTableAdapter.ClearBeforeFill = True
         '
-        'btnUp
-        '
-        Me.btnUp.Location = New System.Drawing.Point(358, 135)
-        Me.btnUp.Name = "btnUp"
-        Me.btnUp.Size = New System.Drawing.Size(32, 23)
-        Me.btnUp.TabIndex = 9
-        Me.btnUp.Text = "ᐱ"
-        Me.btnUp.UseVisualStyleBackColor = True
-        '
-        'btnDown
-        '
-        Me.btnDown.Location = New System.Drawing.Point(358, 179)
-        Me.btnDown.Name = "btnDown"
-        Me.btnDown.Size = New System.Drawing.Size(32, 23)
-        Me.btnDown.TabIndex = 10
-        Me.btnDown.Text = "ᐯ"
-        Me.btnDown.UseVisualStyleBackColor = True
-        '
         'FrmManageSlideshow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -221,4 +224,7 @@ Partial Class FrmManageSlideshow
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents btnDown As System.Windows.Forms.Button
     Friend WithEvents btnUp As System.Windows.Forms.Button
+    Friend WithEvents bgwOne As System.ComponentModel.BackgroundWorker
+    Friend WithEvents bgwTwo As System.ComponentModel.BackgroundWorker
+    Friend WithEvents bgwThree As System.ComponentModel.BackgroundWorker
 End Class

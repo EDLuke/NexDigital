@@ -41,6 +41,7 @@ Partial Class frmAddItem
         Me.btnAddItem = New System.Windows.Forms.Button()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
+        Me.bgw = New System.ComponentModel.BackgroundWorker()
         CType(Me.CategoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DatabaseDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -236,4 +237,5 @@ Partial Class frmAddItem
     Friend WithEvents btnAddItem As System.Windows.Forms.Button
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents bgw As System.ComponentModel.BackgroundWorker
 End Class

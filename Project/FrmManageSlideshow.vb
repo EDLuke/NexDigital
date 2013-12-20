@@ -7,6 +7,7 @@ Public Class FrmManageSlideshow
     Private SlideShowPicsArrayList As ArrayList
     Private AnimationOneList As New ArrayList
     Private AnimationList As ArrayList
+    Private cmbCategorySelected As Integer
 
     Private Sub FrmManageSlideshow_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         LoadCategory()
@@ -29,8 +30,15 @@ Public Class FrmManageSlideshow
     End Sub
 
     Private Sub LoadAnimationList()
-        AnimationList = BinaryDeserialize()
+        Me.Cursor = Cursors.WaitCursor
+        bgwThree.RunWorkerAsync()
+    End Sub
 
+    Private Sub bgwThree_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwThree.DoWork
+        AnimationList = BinaryDeserialize()
+    End Sub
+
+    Private Sub loadCompleteThree(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwThree.RunWorkerCompleted
         lstSlideShowPics.BeginUpdate()
         For Each item As TreeNode In lstSlideShowPics.Nodes
             If item.Parent Is Nothing Then
@@ -46,6 +54,7 @@ Public Class FrmManageSlideshow
             End If
         Next
         lstSlideShowPics.EndUpdate()
+        Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub cmbCategories_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCategories.SelectedIndexChanged
@@ -54,12 +63,22 @@ Public Class FrmManageSlideshow
 
     Public Sub FillCategories()
         If cmbCategories.SelectedValue <> Nothing Then
-            picsArrayList = DataLayer.GetPicsOfCategoryItems(CInt(cmbCategories.SelectedValue.ToString()))
-            lstPics.Items.Clear()
-            For i = 2 To picsArrayList.Count Step 3
-                lstPics.Items.Add(picsArrayList(i))
-            Next
+            cmbCategorySelected = CInt(cmbCategories.SelectedValue.ToString())
+            Me.Cursor = Cursors.WaitCursor
+            bgwOne.RunWorkerAsync()          
         End If
+    End Sub
+
+    Private Sub bgwOne_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwOne.DoWork
+        picsArrayList = DataLayer.GetPicsOfCategoryItems(cmbCategorySelected)
+    End Sub
+
+    Private Sub loadCompleteOne(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwOne.RunWorkerCompleted
+        lstPics.Items.Clear()
+        For i = 2 To picsArrayList.Count Step 3
+            lstPics.Items.Add(picsArrayList(i))
+        Next
+        Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub lstItems_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles lstPics.DoubleClick
@@ -167,12 +186,20 @@ Public Class FrmManageSlideshow
     End Sub
 
     Private Sub FillSlideShowPics()
-        SlideShowPicsArrayList = DataLayer.GetSlideShowItems()
+        Me.Cursor = Cursors.WaitCursor
+        bgwTwo.RunWorkerAsync()
+    End Sub
 
+    Private Sub bgwTwo_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwTwo.DoWork
+        SlideShowPicsArrayList = DataLayer.GetSlideShowItems()
+    End Sub
+
+    Private Sub loadCompleteTwo(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwTwo.RunWorkerCompleted
         For i = 2 To SlideShowPicsArrayList.Count Step 3
             lstSlideShowPics.Nodes.Add(SlideShowPicsArrayList(i))
             AnimationOneList.Add(SlideShowPicsArrayList(i))
         Next
+        Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub lstPics_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstPics.SelectedIndexChanged

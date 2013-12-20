@@ -43,6 +43,8 @@ Partial Class frmSetupTwo
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.ToolTip2 = New System.Windows.Forms.ToolTip(Me.components)
         Me.ToolTip3 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.bgwLoadOne = New System.ComponentModel.BackgroundWorker()
+        Me.bgwLoadTwo = New System.ComponentModel.BackgroundWorker()
         CType(Me.CategoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CategoriesFrmSetupDS, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -208,7 +210,7 @@ Partial Class frmSetupTwo
         Me.btnDesp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.btnDesp.UseVisualStyleBackColor = True
         '
-        'frmSetup
+        'frmSetupTwo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -218,7 +220,7 @@ Partial Class frmSetupTwo
         Me.Controls.Add(Me.btnName)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Name = "frmSetup"
+        Me.Name = "frmSetupTwo"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "s"
         CType(Me.CategoryBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -248,4 +250,6 @@ Partial Class frmSetupTwo
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
     Friend WithEvents ToolTip2 As System.Windows.Forms.ToolTip
     Friend WithEvents ToolTip3 As System.Windows.Forms.ToolTip
+    Friend WithEvents bgwLoadOne As System.ComponentModel.BackgroundWorker
+    Friend WithEvents bgwLoadTwo As System.ComponentModel.BackgroundWorker
 End Class
