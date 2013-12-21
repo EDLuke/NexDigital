@@ -41,7 +41,9 @@ Public Class FrmViewSlideShow
     Public Sub loadSlideShowPic()
         Timer1.Stop()
         Me.Cursor = Cursors.WaitCursor
-        bgw.RunWorkerAsync()
+        If (Not bgw.IsBusy) Then
+            bgw.RunWorkerAsync()
+        End If
     End Sub
 
     Private Sub bgw_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgw.DoWork

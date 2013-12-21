@@ -46,6 +46,10 @@ Public Class frmSetupTwo
         'TODO: This line of code loads data into the 'CategoriesFrmSetupDS.Category' table. You can move, or remove it, as needed.
         Me.CategoryTableAdapter.Connection.ConnectionString = DataLayer.conString
         Me.CategoryTableAdapter.Fill(Me.CategoriesFrmSetupDS.Category)
+        If (cmbCategories.SelectedValue IsNot Nothing) Then
+            cmbCategories.SelectedIndex = -1
+        End If
+        clearUI()
     End Sub
 
     Private Sub loadToolTip()
@@ -65,7 +69,7 @@ Public Class frmSetupTwo
 
     Private Sub cmbCategories_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCategories.SelectedIndexChanged
         FillCategories()
-        updateUI()
+
     End Sub
 
     Private Sub btnAdd_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAdd.Click
@@ -269,13 +273,17 @@ Public Class frmSetupTwo
         Me.Cursor = Cursors.WaitCursor
         If cmbCategories.SelectedValue <> Nothing Then
             cmbCategorySelected = CInt(cmbCategories.SelectedValue.ToString())
-            bgwLoadOne.RunWorkerAsync()
+            If (Not bgwLoadOne.IsBusy) Then
+                bgwLoadOne.RunWorkerAsync()
+            End If
         End If
     End Sub
 
     Public Sub FillMenuItems()
         Me.Cursor = Cursors.WaitCursor
-        bgwLoadTwo.RunWorkerAsync()
+        If (Not bgwLoadTwo.IsBusy) Then
+            bgwLoadTwo.RunWorkerAsync()
+        End If
     End Sub
 
     Private Sub bgwOne_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwLoadOne.DoWork
@@ -283,21 +291,22 @@ Public Class frmSetupTwo
     End Sub
 
     Private Sub loadCompleteOne(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoadOne.RunWorkerCompleted
+        updateUI()
         Me.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub bgwTwo_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwLoadOne.DoWork
+    Private Sub bgwTwo_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwLoadTwo.DoWork
         menuItemsArrayList = DataLayer.GetMenuItems(2)
     End Sub
 
-    Private Sub loadCompleteTwo(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoadOne.RunWorkerCompleted
+    Private Sub loadCompleteTwo(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoadTwo.RunWorkerCompleted
+        updateUI()
         Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub clearUI()
         lstMenuItems.Items.Clear()
         lstItems.Items.Clear()
-
     End Sub
 
     Private Function checkRep(input As String) As Boolean
@@ -317,7 +326,8 @@ Public Class frmSetupTwo
             For i = 1 To itemsArrayList.Count Step 4
                 lstItems.Items.Add(itemsArrayList(i))
             Next
-
+        End If
+        If Not menuItemsArrayList Is Nothing Then
             'Fill MenuBox
             For i = 1 To menuItemsArrayList.Count Step 4
                 lstMenuItems.Items.Add(menuItemsArrayList(i))

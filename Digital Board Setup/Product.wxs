@@ -14,19 +14,28 @@
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
+        
 				<Directory Id="INSTALLFOLDER" Name="Digital Board Setup" />
       </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop"/>
 		</Directory>
 	</Fragment>
 
 	<Fragment>
+    <Icon Id="Digital_Board.ico" SourceFile="C:\Users\Luke\Desktop\NexDigital\Project 1.71\WorkingProject\Project\Project\favicon.ico" />
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
 			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<Component Id="MainExecutable" Guid ="*">
-				<File Source ="C:\Users\Luke\Desktop\NexDigital\Project 1.71\WorkingProject\Project\Project\bin\Debug\Digital Board.exe"/>
+			<Component Id="MainExecutable" Guid ="d7eccbb9-0a22-422d-8a2e-7fa18155cfd4">
+				<File Source ="C:\Users\Luke\Desktop\NexDigital\Project 1.71\WorkingProject\Project\Project\bin\Debug\Digital Board.exe">
+         <Shortcut Id="Digital_Board_Icon" Directory="DesktopFolder" Name="Digital Board"
+                  WorkingDirectory='INSTALLDIR' Icon="Digital_Board.ico" IconIndex="0" Advertise="yes"/>
+        </File>
 			</Component>
-      <Component Id="Database" Guid ="*">
-        <File Source ="C:\Users\Luke\Desktop\NexDigital\Project 1.71\WorkingProject\Project\Project\bin\Debug\Database.sdf"/>
+      <Component Id="Database" Guid ="0cd02031-db1c-4b73-b200-fcaeb24b6cda" KeyPath="yes">
+        <File Source ="C:\Users\Luke\Desktop\NexDigital\Project 1.71\WorkingProject\Project\Project\bin\Debug\Database.sdf">
+          <Permission User="Everyone" GenericAll="yes"  Write ="yes"/>
+        </File>
+      
       </Component>
 		</ComponentGroup>
 	</Fragment>

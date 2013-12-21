@@ -35,7 +35,10 @@
 
     Public Sub loadItems()
         Me.Cursor = Cursors.WaitCursor
-        bgwLoad.RunWorkerAsync()
+        If (Not bgwLoad.IsBusy) Then
+            bgwLoad.RunWorkerAsync()
+        End If
+
     End Sub
 
     Private Sub loadComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoad.RunWorkerCompleted
@@ -71,13 +74,19 @@
     End Sub
 
     Private Sub bgwSearch_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwSearch.DoWork
+
+    End Sub
+
+    Private Sub bgwSearch_RunWorkComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwSearch.RunWorkerCompleted
         Try
             For Each item In lstAllItems.Items
                 If searchText.Length <= item.Row.ItemArray(1).Length Then
                     If String.Equals(searchText, item.Row.ItemArray(1).subString(0, txtSearch.Text.Length), StringComparison.InvariantCultureIgnoreCase) Then
                         searchItem = item
-                        bgwSearch.ReportProgress(0)
-                        bgwSearch.CancelAsync()
+                        searched = True
+                        lstAllItems.SelectedItem = searchItem
+                        txtSearch.Select(txtSearch.Text.Length, 0)
+                        Exit For
                     End If
                 End If
 
@@ -85,12 +94,10 @@
         Catch ex As Exception
 
         End Try
-        
     End Sub
 
     Private Sub bgwSearch_ReportProgress(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles bgwSearch.ProgressChanged
-        searched = True
-        lstAllItems.SelectedItem = searchItem
+        
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged

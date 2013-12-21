@@ -213,7 +213,11 @@ Public Class MainMenu
                 _tabTwo = addItem
             Case "Update Item"
                 _tabTwo = updateItem
-                updateItem.setFormData(_tabOne.selectedItemId)
+                Try
+                    updateItem.setFormData(_tabOne.selectedItemId)
+                Catch ex As Exception
+
+                End Try
             Case "Delete Item"
                 checkDelete()
                 Return

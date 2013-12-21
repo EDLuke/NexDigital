@@ -11,7 +11,10 @@ Public Class frmAddItem
 
     Public Sub LoadItems()
         Me.Cursor = Cursors.WaitCursor
-        bgw.RunWorkerAsync()
+        If (Not bgw.IsBusy) Then
+            bgw.RunWorkerAsync()
+        End If
+
     End Sub
 
     Private Sub loadComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw.RunWorkerCompleted

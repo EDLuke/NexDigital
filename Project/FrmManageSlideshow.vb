@@ -31,7 +31,11 @@ Public Class FrmManageSlideshow
 
     Private Sub LoadAnimationList()
         Me.Cursor = Cursors.WaitCursor
-        bgwThree.RunWorkerAsync()
+        If (Not bgwThree.IsBusy) Then
+            bgwThree.RunWorkerAsync()
+        End If
+
+
     End Sub
 
     Private Sub bgwThree_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwThree.DoWork
@@ -65,7 +69,9 @@ Public Class FrmManageSlideshow
         If cmbCategories.SelectedValue <> Nothing Then
             cmbCategorySelected = CInt(cmbCategories.SelectedValue.ToString())
             Me.Cursor = Cursors.WaitCursor
-            bgwOne.RunWorkerAsync()          
+            If (Not bgwOne.IsBusy) Then
+                bgwOne.RunWorkerAsync()
+            End If
         End If
     End Sub
 
@@ -187,7 +193,10 @@ Public Class FrmManageSlideshow
 
     Private Sub FillSlideShowPics()
         Me.Cursor = Cursors.WaitCursor
-        bgwTwo.RunWorkerAsync()
+        If (Not bgwTwo.IsBusy) Then
+            bgwTwo.RunWorkerAsync()
+        End If
+
     End Sub
 
     Private Sub bgwTwo_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwTwo.DoWork
