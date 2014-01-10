@@ -2,7 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Reflection
 
-Public Class FrmViewSlideShow
+Public Class FrmViewSlideShowTwo
 
     Private SlideShowPicsList As New ArrayList
     Private SlideShowPics As New ArrayList
@@ -49,7 +49,7 @@ Public Class FrmViewSlideShow
     Private Sub bgw_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgw.DoWork
         imageNumber = 0
         SlideShowPicsList.Clear()
-        SlideShowPics = DataLayer.GetSlideShowItems(1)
+        SlideShowPics = DataLayer.GetSlideShowItems(2)
         For i = 1 To SlideShowPics.Count Step 3
             SlideShowPicsList.Add(SlideShowPics(i))
         Next
@@ -69,7 +69,7 @@ Public Class FrmViewSlideShow
     End Sub
 
     Public Sub loadTimerFreq()
-        slideShowFreq = MainMenu.digital.frqOne / 1000 * 2
+        slideShowFreq = MainMenu.digital.frqTwo / 1000 * 2
     End Sub
 
     Private Function resizeImage(ByVal image As Image) As Image
@@ -105,7 +105,7 @@ Public Class FrmViewSlideShow
         slideShowFreq = trkOne.Value / 2 * 1000
         TimerDelay.Interval = slideShowFreq
         MainMenu.digital.frqOne = slideShowFreq
-        MainMenu.digital.setFrequency(1)
+        MainMenu.digital.setFrequency(2)
     End Sub
 
     Public Sub changeAnimaSelected(ByVal animaIn As String)

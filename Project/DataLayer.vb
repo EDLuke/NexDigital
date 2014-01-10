@@ -132,6 +132,7 @@ Public Class DataLayer
         Dim maxMenuOrder As Integer
         Dim maxMenuOrderTwo As Integer
         Dim maxSlideOrder As Integer
+        Dim maxSlideOrderTwo As Integer
         Dim recordSaved As Boolean
 
         ' Create a connection object and open the connection
@@ -148,7 +149,8 @@ Public Class DataLayer
         Try
             maxMenuOrder = FindMaxItemOrder(1)
             maxMenuOrderTwo = FindMaxItemOrder(2)
-            maxSlideOrder = FindMaxSlideShowOrder()
+            maxSlideOrder = FindMaxSlideShowOrder(1)
+            maxSlideOrderTwo = FindMaxSlideShowOrder(2)
 
             'Find the deleted Menu item order
             strSQL = "select menuItem from items WHERE itemID=" & itemid & ""
@@ -170,6 +172,13 @@ Public Class DataLayer
 
             ' Run the query
             Dim deletedSlideOrder = command.ExecuteScalar()
+
+            'Find the deleted Menu item order
+            strSQL = "select slideshow2 from items WHERE itemID=" & itemid & ""
+            command.CommandText = strSQL
+
+            ' Run the query
+            Dim deletedSlideOrderTwo = command.ExecuteScalar()
 
             'Now Delete the item
             strSQL = "Delete from Items WHERE itemID=" & itemid & ""
@@ -203,6 +212,15 @@ Public Class DataLayer
             If deletedSlideOrder <> maxSlideOrder Then
                 For i = deletedSlideOrder To maxSlideOrder - 1
                     strSQL = "Update Items SET slideshow =" & i & " WHERE slideshow=" & (i + 1) & ""
+                    command.CommandText = strSQL
+                    command.ExecuteNonQuery()
+                Next
+            End If
+
+            'Move all the item behind the delete item in front in slideshow2
+            If deletedSlideOrderTwo <> maxSlideOrderTwo Then
+                For i = deletedSlideOrderTwo To maxSlideOrderTwo - 1
+                    strSQL = "Update Items SET slideshow2 =" & i & " WHERE slideshow2 =" & (i + 1) & ""
                     command.CommandText = strSQL
                     command.ExecuteNonQuery()
                 Next
@@ -366,21 +384,29 @@ Public Class DataLayer
         result = arrayTemp.GetRange(0, maxMenuOrder * 4)
     End Sub
 
-    Public Shared Sub SortSlideShow(ByRef result As ArrayList)
+    Public Shared Sub SortSlideShow(ByRef result As ArrayList, ByVal slideShow As Integer)
+        Dim slideShowNum As String = ""
+        Select Case slideShow
+            Case 1
+                slideShowNum = ""
+            Case 2
+                slideShowNum = "2"
+        End Select
+
         Dim sqlConn As SqlCeConnection
         ' create connection using the Conection String
         sqlConn = New SqlCeConnection(conString)
         ' Query statement to get all the records from the tblPersonnel 
         ' Fill the dataset from the database table using the data adapter
 
-        Dim maxSlideShowOrder = FindMaxSlideShowOrder()
+        Dim maxSlideShowOrder = FindMaxSlideShowOrder(slideShow)
         Dim arrayTemp As New ArrayList
 
         For i = 1 To maxSlideShowOrder
             ' Create the dataset
             Dim datasetitems As New DataSet()
             Dim sqlDA As SqlCeDataAdapter
-            sqlDA = New SqlCeDataAdapter("select itemid, Picture, name from items WHERE slideShow = " & i, sqlConn)
+            sqlDA = New SqlCeDataAdapter("select itemid, Picture, name from items WHERE slideShow" & slideShowNum & " = " & i, sqlConn)
             sqlDA.Fill(datasetitems)
             For Each row As DataRow In datasetitems.Tables(0).Rows
                 Dim itemid As String = row("ItemId").ToString()
@@ -441,7 +467,15 @@ Public Class DataLayer
         sqlConn.Close()
     End Sub
 
-    Public Shared Sub SwitchSlideShowOrder(ByVal itemIdOne As Integer, ByVal itemIdTwo As Integer)
+    Public Shared Sub SwitchSlideShowOrder(ByVal itemIdOne As Integer, ByVal itemIdTwo As Integer, ByVal slideShow As Integer)
+        Dim slideShowNum As String = ""
+        Select Case slideShow
+            Case 1
+                slideShowNum = ""
+            Case 2
+                slideShowNum = "2"
+        End Select
+
         Dim sqlConn As New SqlCeConnection(conString)
         Dim command As SqlCeCommand = sqlConn.CreateCommand()
 
@@ -449,20 +483,20 @@ Public Class DataLayer
 
         sqlConn.Open()
 
-        strSQL = "select slideShow from items where itemid = " & itemIdOne
+        strSQL = "select slideShow" & slideShowNum & " from items where itemid = " & itemIdOne
         command.CommandText = strSQL
 
         ' Run the query
         Dim slideShowOrderOne = command.ExecuteScalar()
 
-        strSQL = "select slideShow from items where itemid = " & itemIdTwo
+        strSQL = "select slideShow" & slideShowNum & " from items where itemid = " & itemIdTwo
         command.CommandText = strSQL
 
         ' Run the query
         Dim slideShowOrderTwo = command.ExecuteScalar()
 
         ' SqlQuery for updating data into the table
-        strSQL = "Update Items SET slideShow=" & slideShowOrderTwo & " WHERE itemID=" & itemIdOne & ""
+        strSQL = "Update Items SET slideShow" & slideShowNum & "=" & slideShowOrderTwo & " WHERE itemID=" & itemIdOne & ""
 
         command.CommandType = CommandType.Text
         command.CommandText = strSQL
@@ -470,7 +504,7 @@ Public Class DataLayer
         command.ExecuteNonQuery()
 
         ' SqlQuery for updating data into the table
-        strSQL = "Update Items SET slideShow=" & slideShowOrderOne & " WHERE itemID=" & itemIdTwo & ""
+        strSQL = "Update Items SET slideShow" & slideShowNum & "=" & slideShowOrderOne & " WHERE itemID=" & itemIdTwo & ""
 
         command.CommandText = strSQL
         ' Run the query
@@ -510,7 +544,15 @@ Public Class DataLayer
         Return 0
     End Function
 
-    Public Shared Function FindMaxSlideShowOrder() As Integer
+    Public Shared Function FindMaxSlideShowOrder(ByVal slideShow As Integer) As Integer
+        Dim slideShowNum As String = ""
+        Select Case slideShow
+            Case 1
+                slideShowNum = ""
+            Case 2
+                slideShowNum = "2"
+        End Select
+
         Try
             ' Create a connection object and open the connection
             Dim sqlConn As New SqlCeConnection(conString)
@@ -521,7 +563,7 @@ Public Class DataLayer
 
             'Find the max SlideShow int
 
-            strSQL = "select max(slideShow) from items"
+            strSQL = "select max(slideShow" & slideShowNum & ") from items"
             command.CommandText = strSQL
 
             ' Run the query
@@ -771,9 +813,17 @@ Public Class DataLayer
     End Function
 
     ' Add item picture to slide show
-    Public Shared Function AddToSlideShow(ByVal itemid As Integer) As Boolean
+    Public Shared Function AddToSlideShow(ByVal itemid As Integer, ByVal slideShow As Integer) As Boolean
+        Dim slideShowNum As String = ""
+        Select Case slideShow
+            Case 1
+                slideShowNum = ""
+            Case 2
+                slideShowNum = "2"
+        End Select
+
         Dim recordSaved As Boolean
-        Dim maxSlideShowItem = FindMaxSlideShowOrder() + 1
+        Dim maxSlideShowItem = FindMaxSlideShowOrder(slideShow) + 1
 
         Try
             ' Create a connection object and open the connection
@@ -782,7 +832,7 @@ Public Class DataLayer
             Dim command As SqlCeCommand = sqlConn.CreateCommand()
             Dim strSQL As String
 
-            strSQL = "Update Items SET SlideShow=" & maxSlideShowItem & " WHERE itemID = " & itemid & ""
+            strSQL = "Update Items SET SlideShow" & slideShowNum & "=" & maxSlideShowItem & " WHERE itemID = " & itemid & ""
 
 
             ' Set command type to text and set the query to strSql
@@ -803,9 +853,17 @@ Public Class DataLayer
         Return recordSaved
     End Function
 
-    Public Shared Function RemoveFromSlideShow(ByVal itemid As Integer) As Boolean
+    Public Shared Function RemoveFromSlideShow(ByVal itemid As Integer, ByVal slideShow As Integer) As Boolean
+        Dim slideShowNum As String = ""
+        Select Case slideShow
+            Case 1
+                slideShowNum = ""
+            Case 2
+                slideShowNum = "2"
+        End Select
+
         Dim recordSaved As Boolean
-        Dim maxSlideShowItem = FindMaxSlideShowOrder()
+        Dim maxSlideShowItem = FindMaxSlideShowOrder(slideShow)
 
         Try
             ' Create a connection object and open the connection
@@ -820,14 +878,14 @@ Public Class DataLayer
             trans = sqlConn.BeginTransaction()
 
             'Find the Removed Menu item order
-            strSQL = "select slideShow from items WHERE itemID=" & itemid & ""
+            strSQL = "select slideShow" & slideShowNum & " from items WHERE itemID=" & itemid & ""
             command.CommandType = CommandType.Text
             command.CommandText = strSQL
 
             ' Run the query
             Dim deletedSlideShowOrder = command.ExecuteScalar()
 
-            strSQL = "Update Items SET SlideShow = " & 0 & " WHERE itemID = " & itemid & ""
+            strSQL = "Update Items SET SlideShow" & slideShowNum & " = " & 0 & " WHERE itemID = " & itemid & ""
 
             ' Set command type to text and set the query to strSql
             command.CommandType = CommandType.Text
@@ -840,7 +898,7 @@ Public Class DataLayer
             If maxSlideShowItem <> 1 Then
                 If deletedSlideShowOrder <> maxSlideShowItem Then
                     For i = deletedSlideShowOrder To maxSlideShowItem
-                        strSQL = "Update Items SET slideShow =" & i & " WHERE slideShow =" & (i + 1) & ""
+                        strSQL = "Update Items SET slideShow" & slideShowNum & " =" & i & " WHERE slideShow" & slideShowNum & " =" & (i + 1) & ""
                         command.CommandText = strSQL
                         command.ExecuteNonQuery()
                     Next
@@ -859,7 +917,15 @@ Public Class DataLayer
         Return recordSaved
     End Function
 
-    Public Shared Function GetSlideShowItems() As ArrayList
+    Public Shared Function GetSlideShowItems(ByVal slideShow As Integer) As ArrayList
+        Dim slideShowNum As String = ""
+        Select Case slideShow
+            Case 1
+                slideShowNum = ""
+            Case 2
+                slideShowNum = "2"
+        End Select
+
         Dim result As New ArrayList
 
         Dim sqlConn As SqlCeConnection
@@ -867,7 +933,7 @@ Public Class DataLayer
         ' create connection using the Conection String
         sqlConn = New SqlCeConnection(conString)
         ' Query statement to get all the records from the tblPersonnel 
-        sqlDA = New SqlCeDataAdapter("select itemid, Picture, Name from items WHERE SlideShow != 0", sqlConn)
+        sqlDA = New SqlCeDataAdapter("select itemid, Picture, Name from items WHERE SlideShow" & slideShowNum & " != 0", sqlConn)
 
         ' Create the dataset
         Dim datasetitems As New DataSet()
@@ -883,7 +949,7 @@ Public Class DataLayer
             result.Add(name)
         Next
 
-        SortSlideShow(result)
+        SortSlideShow(result, slideShow)
         Return result
 
     End Function

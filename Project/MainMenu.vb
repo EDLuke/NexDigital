@@ -5,6 +5,7 @@ Public Class MainMenu
 #Region "Field"
     Private _tabOne As New Object
     Private _tabTwo As New Object
+    Private digitalForm As Integer
 
     Public slideNum As String = ""
     Public digital As Object

@@ -164,6 +164,12 @@
     <Compile Include="DatabaseDataSet1.vb">
       <DependentUpon>DatabaseDataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="frmDigitalBBTwo.Designer.vb">
+      <DependentUpon>frmDigitalBBTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDigitalBBTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmDigitalBB.Designer.vb">
       <DependentUpon>frmDigitalBB.vb</DependentUpon>
     </Compile>
@@ -195,6 +201,12 @@
     <Compile Include="frmAddItem.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FrmManageSlideshowTwo.Designer.vb">
+      <DependentUpon>FrmManageSlideshowTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmManageSlideshowTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FrmManageSlideshow.Designer.vb">
       <DependentUpon>FrmManageSlideshow.vb</DependentUpon>
     </Compile>
@@ -217,6 +229,12 @@
       <DependentUpon>frmUpdateItems.vb</DependentUpon>
     </Compile>
     <Compile Include="frmUpdateItems.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmViewSlideShowTwo.Designer.vb">
+      <DependentUpon>FrmViewSlideShowTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmViewSlideShowTwo.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmViewSlideShow.Designer.vb">
@@ -286,6 +304,10 @@
     <EmbeddedResource Include="frmColorDialog.resx">
       <DependentUpon>frmColorDialog.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmDigitalBBTwo.resx">
+      <DependentUpon>frmDigitalBBTwo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDigitalBB.resx">
       <DependentUpon>frmDigitalBB.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -304,6 +326,10 @@
       <DependentUpon>frmAddItem.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmManageSlideshowTwo.resx">
+      <DependentUpon>FrmManageSlideshowTwo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmManageSlideshow.resx">
       <DependentUpon>FrmManageSlideshow.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -318,6 +344,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmUpdateItems.resx">
       <DependentUpon>frmUpdateItems.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmViewSlideShowTwo.resx">
+      <DependentUpon>FrmViewSlideShowTwo.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmViewSlideShow.resx">

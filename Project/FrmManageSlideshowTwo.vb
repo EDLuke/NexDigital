@@ -2,10 +2,10 @@
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Reflection
 
-Public Class FrmManageSlideshow
+Public Class FrmManageSlideshowTwo
     Private picsArrayList As ArrayList
     Private SlideShowPicsArrayList As ArrayList
-    Private AnimationOneList As New ArrayList
+    Private AnimationTwoList As New ArrayList
     Private AnimationList As ArrayList
     Private cmbCategorySelected As Integer
 
@@ -23,7 +23,7 @@ Public Class FrmManageSlideshow
 
     Public Sub UpdateTreeView()
         lstSlideShowPics.Nodes.Clear()
-        AnimationOneList.Clear()
+        AnimationTwoList.Clear()
 
         FillSlideShowPics()
         LoadAnimationList()
@@ -47,12 +47,12 @@ Public Class FrmManageSlideshow
         For Each item As TreeNode In lstSlideShowPics.Nodes
             If item.Parent Is Nothing Then
                 Dim animationSearch = AnimationList.IndexOf(item.Text)
-                Dim animationOneSearch = AnimationOneList.IndexOf(item.Text)
+                Dim animationOneSearch = AnimationTwoList.IndexOf(item.Text)
 
                 If animationSearch <> -1 Then
                     If (item.Nodes.Count = 0) Then
                         item.Nodes.Add(AnimationList(animationSearch + 1).ToString)
-                        AnimationOneList.Insert(animationOneSearch + 1, AnimationList(animationSearch + 1).ToString)
+                        AnimationTwoList.Insert(animationOneSearch + 1, AnimationList(animationSearch + 1).ToString)
                     End If
                 End If
             End If
@@ -127,7 +127,7 @@ Public Class FrmManageSlideshow
             Return
         Else
             ' Update in database
-            Dim response As Boolean = DataLayer.AddToSlideShow(CInt(itemId), 1)
+            Dim response As Boolean = DataLayer.AddToSlideShow(CInt(itemId), 2)
 
             ' Add to menuItems arraylist
             SlideShowPicsArrayList.Add(itemId)
@@ -182,7 +182,7 @@ Public Class FrmManageSlideshow
             End If
         Next
         ' Update in database
-        Dim response As Boolean = DataLayer.RemoveFromSlideShow(CInt(itemId), 1)
+        Dim response As Boolean = DataLayer.RemoveFromSlideShow(CInt(itemId), 2)
 
         'Update ui
         lstSlideShowPics.Nodes.Remove(lstSlideShowPics.SelectedNode)
@@ -200,13 +200,13 @@ Public Class FrmManageSlideshow
     End Sub
 
     Private Sub bgwTwo_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwTwo.DoWork
-        SlideShowPicsArrayList = DataLayer.GetSlideShowItems(1)
+        SlideShowPicsArrayList = DataLayer.GetSlideShowItems(2)
     End Sub
 
     Private Sub loadCompleteTwo(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwTwo.RunWorkerCompleted
         For i = 2 To SlideShowPicsArrayList.Count Step 3
             lstSlideShowPics.Nodes.Add(SlideShowPicsArrayList(i))
-            AnimationOneList.Add(SlideShowPicsArrayList(i))
+            AnimationTwoList.Add(SlideShowPicsArrayList(i))
         Next
         Me.Cursor = Cursors.Arrow
     End Sub
@@ -282,7 +282,7 @@ Public Class FrmManageSlideshow
     End Sub
 
     Private Shared Sub BinarySerialize(list As ArrayList)
-        Using str As FileStream = File.Create("AnimationListOne.bin")
+        Using str As FileStream = File.Create("AnimationListTwo.bin")
             Dim bf As New BinaryFormatter()
             bf.Serialize(str, list)
         End Using
@@ -293,7 +293,7 @@ Public Class FrmManageSlideshow
         Dim people As New ArrayList
 
         Try
-            Using str As FileStream = File.OpenRead("AnimationListOne.bin")
+            Using str As FileStream = File.OpenRead("AnimationListTwo.bin")
                 Dim bf As New BinaryFormatter()
                 people = DirectCast(bf.Deserialize(str), ArrayList)
             End Using
@@ -337,44 +337,44 @@ Public Class FrmManageSlideshow
 
     Private Sub MoveUp()
         Dim item = lstSlideShowPics.SelectedNode.Text
-        Dim itemIndex = AnimationOneList.IndexOf(item)
+        Dim itemIndex = AnimationTwoList.IndexOf(item)
         Dim animationTypes = [Enum].GetNames(GetType(AnimationTypes))
 
         If itemIndex <> 0 Then
 
             Dim isEnum As Boolean = False
             For Each Str As String In animationTypes
-                If AnimationOneList(itemIndex - 1) = Str Then
+                If AnimationTwoList(itemIndex - 1) = Str Then
                     isEnum = True
                 End If
             Next
 
             If isEnum Then
-                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationOneList(itemIndex - 2)) - 2), 1)
+                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationTwoList(itemIndex - 2)) - 2), 2)
             Else
-                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationOneList(itemIndex - 1)) - 2), 1)
+                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationTwoList(itemIndex - 1)) - 2), 2)
             End If
         End If
     End Sub
 
     Private Sub MoveDown()
         Dim item = lstSlideShowPics.SelectedNode.Text
-        Dim itemIndex = AnimationOneList.IndexOf(item)
+        Dim itemIndex = AnimationTwoList.IndexOf(item)
         Dim animationTypes = [Enum].GetNames(GetType(AnimationTypes))
 
-        If itemIndex <> AnimationOneList.Count - 1 Then
+        If itemIndex <> AnimationTwoList.Count - 1 Then
 
             Dim isEnum As Boolean = False
             For Each Str As String In animationTypes
-                If AnimationOneList(itemIndex + 1) = Str Then
+                If AnimationTwoList(itemIndex + 1) = Str Then
                     isEnum = True
                 End If
             Next
 
             If isEnum Then
-                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationOneList(itemIndex + 2)) - 2), 1)
+                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationTwoList(itemIndex + 2)) - 2), 2)
             Else
-                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationOneList(itemIndex + 1)) - 2), 1)
+                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationTwoList(itemIndex + 1)) - 2), 2)
             End If
         End If
     End Sub
