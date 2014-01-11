@@ -23,19 +23,20 @@ Partial Class FrmDigitalBBTwo
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmDigitalBBTwo))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmDigitalBB))
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.flowPanel = New System.Windows.Forms.FlowLayoutPanel()
-        Me.flowPanelTwo = New System.Windows.Forms.FlowLayoutPanel()
         Me.lblNow = New System.Windows.Forms.Label()
         Me.lblLogo = New System.Windows.Forms.PictureBox()
         Me.TimerDelay = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerSecondDelay = New System.Windows.Forms.Timer(Me.components)
         Me.bgwFull = New System.ComponentModel.BackgroundWorker()
         Me.bgwLoad = New System.ComponentModel.BackgroundWorker()
         Me.bgwW = New System.ComponentModel.BackgroundWorker()
         Me.bgwN = New System.ComponentModel.BackgroundWorker()
         Me.FullPictureBox = New Project.AnimationControl()
         Me.PictureBox1 = New Project.AnimationControl()
+        Me.PictureBox2 = New Project.AnimationControl()
         Me.lblNews = New Project.MarqueeLabel()
         CType(Me.lblLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -51,14 +52,6 @@ Partial Class FrmDigitalBBTwo
         Me.flowPanel.Name = "flowPanel"
         Me.flowPanel.Size = New System.Drawing.Size(160, 487)
         Me.flowPanel.TabIndex = 17
-        '
-        'flowPanelTwo
-        '
-        Me.flowPanelTwo.BackColor = System.Drawing.Color.Transparent
-        Me.flowPanelTwo.Location = New System.Drawing.Point(293, 0)
-        Me.flowPanelTwo.Name = "flowPanelTwo"
-        Me.flowPanelTwo.Size = New System.Drawing.Size(160, 487)
-        Me.flowPanelTwo.TabIndex = 17
         '
         'lblNow
         '
@@ -86,6 +79,10 @@ Partial Class FrmDigitalBBTwo
         'TimerDelay
         '
         Me.TimerDelay.Interval = 3000
+        '
+        'TimerSecondDelay
+        '
+        Me.TimerSecondDelay.Interval = 1000
         '
         'bgwLoad
         '
@@ -123,6 +120,17 @@ Partial Class FrmDigitalBBTwo
         Me.PictureBox1.TabIndex = 27
         Me.PictureBox1.Transparent = True
         '
+        'PictureBox2
+        '
+        Me.PictureBox2.AnimationType = Project.AnimationTypes.RighTotLeft
+        Me.PictureBox2.Location = New System.Drawing.Point(0, 180)
+        Me.PictureBox2.MinimumSize = New System.Drawing.Size(100, 100)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Opacity = 0.0R
+        Me.PictureBox2.Size = New System.Drawing.Size(287, 180)
+        Me.PictureBox2.TabIndex = 27
+        Me.PictureBox2.Transparent = True
+        '
         'lblNews
         '
         Me.lblNews.BackColor = System.Drawing.Color.Transparent
@@ -143,10 +151,10 @@ Partial Class FrmDigitalBBTwo
         Me.Controls.Add(Me.lblLogo)
         Me.Controls.Add(Me.FullPictureBox)
         Me.Controls.Add(Me.PictureBox1)
+        Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.lblNews)
         Me.Controls.Add(Me.lblNow)
         Me.Controls.Add(Me.flowPanel)
-        Me.Controls.Add(Me.flowPanelTwo)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmDigitalBB"
         Me.Text = "Digital Board"
@@ -157,12 +165,13 @@ Partial Class FrmDigitalBBTwo
     End Sub
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents flowPanel As System.Windows.Forms.FlowLayoutPanel
-    Friend WithEvents flowPanelTwo As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents lblNow As System.Windows.Forms.Label
     Friend WithEvents lblLogo As System.Windows.Forms.PictureBox
     Friend WithEvents lblNews As MarqueeLabel
     Friend WithEvents TimerDelay As System.Windows.Forms.Timer
+    Friend WithEvents TimerSecondDelay As System.Windows.Forms.Timer
     Friend WithEvents PictureBox1 As Project.AnimationControl
+    Friend WithEvents PictureBox2 As Project.AnimationControl
     Friend WithEvents FullPictureBox As Project.AnimationControl
     Friend WithEvents bgwFull As System.ComponentModel.BackgroundWorker
     Friend WithEvents bgwLoad As System.ComponentModel.BackgroundWorker

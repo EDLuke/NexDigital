@@ -11,13 +11,14 @@ Public Class FrmDigitalBBTwo
     Public weatherLocationCode As String = "2396503"
     Public internet As Boolean
     Public frqOne As Integer = 5000
+    Public frqTwo As Integer = 5000
 
-    Private imageNumber, imageCount, newsNumber, newsCount As Integer
-    Private Pics(100), weatherPic As Image
+    Private imageNumber, imageNumber2, imageCount, imageCount2, newsNumber, newsCount As Integer
+    Private Pics(200), Pics2(100), weatherPic As Image
     Private Full(100), slideFullSeparte, fullAnimate As Boolean
     Private despFontArray(2) As Font
     Private despBgColor, itemPanelColor, itemBorderColor, despColorArray(2) As Color
-    Private newsArrayList, animationOneList, animationTwoList, SlideShowPics As ArrayList
+    Private newsArrayList, animationOneList, animationTwoList, SlideShowPics, SlideShowPics2, SlideShowFull As ArrayList
     Private w_Thread As CallBackThread
     Private n_Thread As CallBackThread
     Private n As New clsNews
@@ -70,9 +71,11 @@ Public Class FrmDigitalBBTwo
         Try
             If slideFullSeparte Then
                 PictureBox1.Visible = False
+                PictureBox2.Visible = False
                 FullPictureBox.Visible = True
             Else
                 PictureBox1.Visible = True
+                PictureBox2.Visible = True
                 FullPictureBox.Visible = False
             End If
         Catch ex As InvalidOperationException
@@ -82,6 +85,7 @@ Public Class FrmDigitalBBTwo
 
     Private Sub loadFrq()
         frqOne = Timer1.Interval
+        frqTwo = TimerDelay.Interval
     End Sub
 
     Private Sub loadThread()
@@ -121,28 +125,29 @@ Public Class FrmDigitalBBTwo
         Me.WindowState = FormWindowState.Maximized
 
         'Scretch Everything
-        PictureBox1.Size = New Size(Me.Height * 0.475, Me.Height * 0.475)
+        PictureBox1.Size = New Size(Me.Width * 0.65, Me.Height * 0.48)
+        PictureBox2.Size = New Size(Me.Width * 0.65, Me.Height * 0.48)
+        FullPictureBox.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
 
-        flowPanel.Width = (Me.Width - Me.Height * 0.475) / 2
-        flowPanel.Height = Me.Height * 0.95
-
-        flowPanelTwo.Width = (Me.Width - Me.Height * 0.475) / 2
-        flowPanelTwo.Height = Me.Height * 0.95
+        flowPanel.Width = Me.Width * 0.35
+        flowPanel.Height = Me.Height * 0.7
 
         lblNews.Width = Me.Width
         lblNews.Height = Me.Height * 0.05
 
         lblLogo.AutoSize = False
-        lblLogo.Width = Me.Height * 0.475
-        lblLogo.Height = Me.Height * 0.475
+        lblLogo.Width = Me.Height * 0.3
+        lblLogo.Height = Me.Height * 0.3
+
 
         'Change Locations as well
-        PictureBox1.Location = New Point(Me.Width - Me.Height * 0.475, Me.Height * 0.475)
-        flowPanel.Location = New Point(0, 0)
-        flowPanelTwo.Location = New Point((Me.Width - Me.Height * 0.475) / 2, 0)
+        PictureBox1.Location = New Point(0, 0)
+        PictureBox2.Location = New Point(0, Me.Height * 0.48)
+        FullPictureBox.Location = New Point(0, 0)
+        flowPanel.Location = New Point(Me.Width * 0.65, Me.Height * 0.3)
         lblNews.Location = New Point(0, Me.Height * 0.95)
-        lblLogo.Location = New Point(Me.Width - Me.Height * 0.475, 0)
-        lblNow.Location = New Point(Me.Width - Me.Height * 0.485, 0)
+        lblLogo.Location = New Point(Me.Width * 0.67, 0)
+        lblNow.Location = New Point(Me.Width * 0.85, Me.Height * 0.2)
 
         Me.ResumeLayout()
         Me.Invalidate()
@@ -182,7 +187,9 @@ Public Class FrmDigitalBBTwo
 
     Private Sub updateWeather(ByVal status As String)
         If CBool(status) Then
-            lblNow.Text = w.now
+            If w.now() <> "" Then
+                lblNow.Text = w.now
+            End If
             weatherPic = w.image
             Me.Invalidate()
         Else
@@ -196,19 +203,39 @@ Public Class FrmDigitalBBTwo
         loadBinaryDeserialize()
 
         Array.Clear(Pics, 0, Pics.Length)
+        Array.Clear(Pics2, 0, Pics2.Length)
         Array.Clear(Full, 0, Full.Length)
 
-        SlideShowPics = DataLayer.GetSlideShowItems()
+        SlideShowPics = DataLayer.GetSlideShowItems(1)
+        SlideShowPics2 = DataLayer.GetSlideShowItems(2)
+        SlideShowFull = DataLayer.GetSlideShowFull()
         imageCount = SlideShowPics.Count / 3
+        imageCount2 = SlideShowPics2.Count / 3
 
         For i = 1 To SlideShowPics.Count Step 3
             Pics((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
+        Next
+
+        For i = 1 To SlideShowPics2.Count Step 3
+            Pics2((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics2(i).ToString()))
+            Full((i - 1) / 3) = CBool(SlideShowFull(i).ToString())
         Next
 
         Dim myImage As Image = Pics(0)
         PictureBox1.AnimatedFadeImage = myImage
         PictureBox1.BackgroundImage = myImage
         PictureBox1.BackColor = Color.Transparent
+        FullPictureBox.AnimatedFadeImage = myImage
+        FullPictureBox.BackgroundImage = myImage
+        FullPictureBox.BackColor = Color.Transparent
+
+        Dim myImage2 As Image = Pics2(0)
+        PictureBox2.AnimatedFadeImage = myImage2
+        PictureBox2.BackgroundImage = myImage2
+        PictureBox2.BackColor = Color.Transparent
+
+        imageNumber = 0
+        imageNumber2 = 0
 
         imageNumber = 0
 
@@ -232,11 +259,9 @@ Public Class FrmDigitalBBTwo
         Timer1.Stop()
 
         flowPanel.Controls.Clear()
-        flowPanelTwo.Controls.Clear()
         MainMenu.setup.loadDefaults()
 
         Dim despList = DataLayer.GetMenuItems(1)
-        Dim despListTwo = DataLayer.GetMenuItems(2)
 
         Array.Copy(MainMenu.setup.despColorArray, despColorArray, 3)
         Array.Copy(MainMenu.setup.despFontArray, despFontArray, 3)
@@ -274,51 +299,14 @@ Public Class FrmDigitalBBTwo
             flowPanel.Controls.Add(labelPanel)
         Next
 
-        For i = 1 To despListTwo.Count Step 4
-            Dim labelPanel As New Panel
-            labelPanel.BackColor = despBgColor
-            labelPanel.AutoSize = True
-
-            Dim labelName As New MenuItemLabel
-            labelName.TitleFont = despFontArray(0)
-            labelName.PriceFont = despFontArray(1)
-            labelName.DespFont = despFontArray(2)
-            labelName.TitleColor = despColorArray(0)
-            labelName.PriceColor = despColorArray(1)
-            labelName.DespColor = despColorArray(2)
-            MenuItemLabel.BorderColor = itemBorderColor
-            labelName.Width = (Me.Width - Me.Height * 0.485) / 2
-
-            labelName.ID = despListTwo(i - 1)
-            labelName.Title = despListTwo(i)
-            labelName.Money = despListTwo(i + 1)
-            labelName.Desp = despListTwo(i + 2)
-
-            labelPanel.Controls.Add(labelName)
-            flowPanelTwo.Controls.Add(labelPanel)
-        Next
-
         Timer1.Start()
     End Sub
 
     Private Sub updatePanel(ByVal goFull As Boolean)
         Try
-            Dim SlideShowPics As ArrayList = DataLayer.GetSlideShowItems()
+            Dim SlideShowPics As ArrayList = DataLayer.GetSlideShowItems(1)
 
             For Each pn As Panel In flowPanel.Controls
-                Dim tempLabelPanel As MenuItemLabel = pn.Controls(0)
-                If goFull Then
-                    If CInt(tempLabelPanel.ID) = SlideShowPics((imageNumber) * 3) Then
-                        turnOnBorder(pn)
-                    Else
-                        turnOffBorder(pn)
-                    End If
-                Else
-                    turnOffBorder(pn)
-                End If
-            Next
-
-            For Each pn As Panel In flowPanelTwo.Controls
                 Dim tempLabelPanel As MenuItemLabel = pn.Controls(0)
                 If goFull Then
                     If CInt(tempLabelPanel.ID) = SlideShowPics((imageNumber) * 3) Then
@@ -352,6 +340,8 @@ Public Class FrmDigitalBBTwo
         Select Case picbox
             Case 1
                 TimerDelay.Interval = frqOne
+            Case 2
+                TimerSecondDelay.Interval = frqTwo
         End Select
 
         updateSlideShow()
@@ -359,32 +349,37 @@ Public Class FrmDigitalBBTwo
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Try
-            'Change Background Image
-            PictureBox1.AnimatedFadeImage = Pics(imageNumber)
-            PictureBox1.BackgroundImage = Pics(imageNumber)
-            PictureBox1.BackColor = Color.Transparent
-
-            'Change image number
-            imageNumber += 1
-            If imageNumber >= imageCount Then
-                imageNumber = 0
-            End If
-
-            'Animate (Foreground) Image
-            PictureBox1.AnimatedImage = Pics(imageNumber)
-
-            'Highlight Menu Item
-            updatePanel(Not FullPictureBox.Visible)
-
-            If animationOneList IsNot Nothing Then
-                'Search for Unique AnimationType
-                Dim animationSearch = animationOneList.IndexOf(SlideShowPics(imageNumber * 3 + 2))
-                If animationSearch <> -1 Then
-                    PictureBox1.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationOneList(animationSearch + 1)), AnimationTypes)
+            If Not slideFullSeparte Then
+                If (Not Full(imageNumber2)) Then
+                    'Change Background Image
+                    PictureBox1.AnimatedFadeImage = Pics(imageNumber)
+                    PictureBox1.BackgroundImage = Pics(imageNumber)
+                    PictureBox1.BackColor = Color.Transparent
                 End If
-            End If
 
-            PictureBox1.Animate(frqOne / 100)
+                'Change image number
+                imageNumber += 1
+                If imageNumber >= imageCount Then
+                    imageNumber = 0
+                End If
+
+                'Animate (Foreground) Image
+                PictureBox1.AnimatedImage = Pics(imageNumber)
+
+                'Highlight Menu Item
+                updatePanel(Not FullPictureBox.Visible)
+
+                If animationOneList IsNot Nothing Then
+                    'Search for Unique AnimationType
+                    Dim animationSearch = animationOneList.IndexOf(SlideShowPics(imageNumber * 3 + 2))
+                    If animationSearch <> -1 Then
+                        PictureBox1.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationOneList(animationSearch + 1)), AnimationTypes)
+                    End If
+                End If
+
+                FullPictureBox.Visible = False
+                PictureBox1.Animate(frqOne / 100)
+            End If
 
             Timer1.Stop()
             TimerDelay.Start()
@@ -398,15 +393,150 @@ Public Class FrmDigitalBBTwo
     End Sub
 
     Private Sub TimerDelay_Tick(sender As Object, e As EventArgs) Handles TimerDelay.Tick
+        If Not slideFullSeparte Then
+            separateSlideShowAnimate()
+        Else
+            fullSlideShowAnimate()
+        End If
         TimerDelay.Stop()
-        Timer1.Start()
+        TimerSecondDelay.Start()
     End Sub
 
-    Private Sub loadBinaryDeserialize()
+    Private Sub fullSlideShowAnimate()
+        FullPictureBox.AnimatedFadeImage = Pics(imageNumber)
+        FullPictureBox.BackgroundImage = Pics(imageNumber)
+        FullPictureBox.BackColor = Color.Transparent
+
+        imageNumber += 1
+        If imageNumber >= imageCount Then
+            imageNumber = 0
+        End If
+
+        FullPictureBox.AnimatedImage = Pics(imageNumber)
+
+        'Un-highlight when Full Image is shown
+        updatePanel(FullPictureBox.Visible)
+
+        If animationOneList IsNot Nothing And SlideShowPics.Count <> 0 Then
+            'Search for Unique AnimationType
+            Dim animationSearch = animationOneList.IndexOf(SlideShowPics(imageNumber * 3 + 2))
+            If animationSearch <> -1 Then
+                FullPictureBox.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationOneList(animationSearch + 1)), AnimationTypes)
+            End If
+        End If
+
+        fullAnimate = True
+        FullPictureBox.Animate(frqOne / 100)
+    End Sub
+
+    Private Sub separateSlideShowAnimate()
+        If Not Full(imageNumber2) Then
+            PictureBox2.AnimatedFadeImage = Pics2(imageNumber2)
+            PictureBox2.BackgroundImage = Pics2(imageNumber2)
+            PictureBox2.BackColor = Color.Transparent
+        End If
+
+        imageNumber2 += 1
+        If imageNumber2 >= imageCount2 Then
+            imageNumber2 = 0
+        End If
+
+        If (Full(imageNumber2)) Then
+            FullPictureBox.AnimatedImage = Pics2(imageNumber2)
+        Else
+            PictureBox2.AnimatedImage = Pics2(imageNumber2)
+        End If
+
+        If (Full(imageNumber2)) Then
+            Dim bmp As New Bitmap(CInt(Me.Width * 0.65), CInt(Me.Height * 0.96))
+            Using g As Graphics = Graphics.FromImage(bmp)
+                g.DrawImage(PictureBox1.AnimatedImage, New Point(0, 0))
+                g.DrawImage(PictureBox2.BackgroundImage, New Point(0, Me.Height * 0.48))
+            End Using
+
+            FullPictureBox.AnimatedFadeImage = bmp
+            FullPictureBox.BackgroundImage = bmp
+            FullPictureBox.BackColor = Color.Transparent
+            FullPictureBox.AnimationType = AnimationTypes.LeftToRight
+
+            FullPictureBox.Visible = True
+
+            'Change background image
+            Dim bmpBottom As New Bitmap(CInt(Me.Width * 0.65), CInt(Me.Height * 0.48))
+            Using gBottom As Graphics = Graphics.FromImage(bmpBottom)
+                Dim fm_rect As New Rectangle(0, FullPictureBox.AnimatedImage.Height / 2, FullPictureBox.AnimatedImage.Width, FullPictureBox.AnimatedImage.Height / 2)
+                Dim to_rect As New Rectangle(0, 0, Me.Width * 0.65, Me.Height * 0.48)
+
+                gBottom.DrawImage(FullPictureBox.AnimatedImage, to_rect, fm_rect, GraphicsUnit.Pixel)
+            End Using
+            Dim bmpTop As New Bitmap(CInt(Me.Width * 0.65), CInt(Me.Height * 0.48))
+            Using gTop As Graphics = Graphics.FromImage(bmpTop)
+                Dim fm_rect As New Rectangle(0, 0, FullPictureBox.AnimatedImage.Width, FullPictureBox.AnimatedImage.Height / 2)
+                Dim to_rect As New Rectangle(0, 0, Me.Width * 0.65, Me.Height * 0.48)
+
+                gTop.DrawImage(FullPictureBox.AnimatedImage, to_rect, fm_rect, GraphicsUnit.Pixel)
+            End Using
+
+            PictureBox1.AnimatedImage = bmpTop
+            PictureBox1.AnimatedFadeImage = bmpTop
+            PictureBox1.BackgroundImage = bmpTop
+            PictureBox1.BackColor = Color.Transparent
+
+            PictureBox2.AnimatedImage = bmpBottom
+            PictureBox2.AnimatedFadeImage = bmpBottom
+            PictureBox2.BackgroundImage = bmpBottom
+            PictureBox2.BackColor = Color.Transparent
+
+            'highlight when Full Image is shown
+            updatePanel(FullPictureBox.Visible)
+
+            Try
+                If animationTwoList IsNot Nothing And SlideShowPics2.Count <> 0 Then
+                    'Search for Unique AnimationType
+                    Dim animationSearch = animationTwoList.IndexOf(SlideShowPics2(imageNumber2 * 3 + 2))
+                    If animationSearch <> -1 Then
+                        FullPictureBox.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationTwoList(animationSearch + 1)), AnimationTypes)
+                    End If
+                End If
+            Catch ex As Exception
+
+            End Try
+
+
+            FullPictureBox.Animate(frqOne / 100)
+        Else
+            FullPictureBox.Visible = False
+
+            Try
+                If animationTwoList IsNot Nothing And SlideShowPics2.Count <> 0 Then
+                    'Search for Unique AnimationType
+                    Dim animationSearch = animationTwoList.IndexOf(SlideShowPics2(imageNumber2 * 3 + 2))
+                    If animationSearch <> -1 Then
+                        PictureBox2.AnimationType = animationTwoList(animationSearch + 1)
+                    End If
+                End If
+            Catch ex As Exception
+
+            End Try
+
+            PictureBox2.Animate(frqTwo / 100)
+        End If
+    End Sub
+
+    Public Sub loadBinaryDeserialize()
         Try
             Using str As FileStream = File.OpenRead("AnimationListOne.bin")
                 Dim bf As New BinaryFormatter()
                 animationOneList = DirectCast(bf.Deserialize(str), ArrayList)
+            End Using
+        Catch ex As Exception
+
+        End Try
+
+        Try
+            Using str As FileStream = File.OpenRead("AnimationListTwo.bin")
+                Dim bf As New BinaryFormatter()
+                animationTwoList = DirectCast(bf.Deserialize(str), ArrayList)
             End Using
         Catch ex As Exception
 
@@ -432,8 +562,14 @@ Public Class FrmDigitalBBTwo
 
     Sub Form_Paint(s As Object, e As PaintEventArgs) Handles Me.Paint
         If weatherPic IsNot Nothing Then
-            Dim r As New Rectangle(Me.Width * 0.8, Me.Height * (-0.08), Me.Width * 0.2, Me.Width * 0.2)
+            Dim r As New Rectangle(Me.Width * 0.73, Me.Height * (-0.08), Me.Width * 0.2, Me.Width * 0.2)
             e.Graphics.DrawImage(weatherPic, r)
         End If
+    End Sub
+
+    Private Sub TimerSecondDelay_Tick(sender As Object, e As EventArgs) Handles TimerSecondDelay.Tick
+        fullAnimate = False
+        TimerSecondDelay.Stop()
+        Timer1.Start()
     End Sub
 End Class

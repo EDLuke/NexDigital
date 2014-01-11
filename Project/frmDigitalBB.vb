@@ -198,7 +198,7 @@ Public Class FrmDigitalBB
         Array.Clear(Pics, 0, Pics.Length)
         Array.Clear(Full, 0, Full.Length)
 
-        SlideShowPics = DataLayer.GetSlideShowItems()
+        SlideShowPics = DataLayer.GetSlideShowItems(1)
         imageCount = SlideShowPics.Count / 3
 
         For i = 1 To SlideShowPics.Count Step 3
@@ -303,7 +303,7 @@ Public Class FrmDigitalBB
 
     Private Sub updatePanel(ByVal goFull As Boolean)
         Try
-            Dim SlideShowPics As ArrayList = DataLayer.GetSlideShowItems()
+            Dim SlideShowPics As ArrayList = DataLayer.GetSlideShowItems(1)
 
             For Each pn As Panel In flowPanel.Controls
                 Dim tempLabelPanel As MenuItemLabel = pn.Controls(0)

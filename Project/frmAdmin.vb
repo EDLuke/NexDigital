@@ -3,9 +3,10 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
 Public Class frmAdmin
 
-    Private adminList(1) As String
+    Private adminList(2) As String
     '0 Logo Image
     '1 Weather Location
+    '2 Style (TS as Two SlideShow, TM as Two Menu)
 
     Private Sub showAdminControl()
         btnLogo.Visible = True
@@ -132,5 +133,21 @@ Public Class frmAdmin
             MainMenu.setup.BinarySerialize()
             MainMenu.digital.updateDespPanel()
         End If
+    End Sub
+
+    Private Sub cbxTM_CheckedChanged(sender As Object, e As EventArgs) Handles cbxTM.CheckedChanged
+        If cbxTM.Checked = True Then
+            cbxTS.Checked = False
+            adminList(2) = "TM"
+        End If
+        BinarySerialize()
+    End Sub
+
+    Private Sub cbxTS_CheckedChanged(sender As Object, e As EventArgs) Handles cbxTS.CheckedChanged
+        If cbxTS.Checked = True Then
+            cbxTM.Checked = False
+            adminList(2) = "TS"
+        End If
+        BinarySerialize()
     End Sub
 End Class

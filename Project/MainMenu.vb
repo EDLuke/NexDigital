@@ -1,11 +1,13 @@
 ﻿Imports System.Threading
+Imports System.IO
+Imports System.Runtime.Serialization.Formatters.Binary
 
 Public Class MainMenu
 
 #Region "Field"
     Private _tabOne As New Object
     Private _tabTwo As New Object
-    Private digitalForm As Integer
+    Private digitalForm As Integer = 0
 
     Public slideNum As String = ""
     Public digital As Object
@@ -21,7 +23,9 @@ Public Class MainMenu
     Public fontD2 As Object
     Public colorD2 As Object
     Public mgOne As Object
+    Public mgTwo As Object
     Public vwOne As Object
+    Public vwTwo As Object
 
     Property tabTwo() As Object
         Get
@@ -79,13 +83,40 @@ Public Class MainMenu
     End Sub
 
     Private Sub bgwLoad_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwLoad.DoWork
+        styleSetup()
         formSetup()
         mdiSetup()
         idleSetup()
     End Sub
 
+    Private Sub styleSetup()
+        Try
+            Dim styleString As String = "TS"
+            Using str As FileStream = File.OpenRead("Admin.bin")
+                Dim bf As New BinaryFormatter()
+                Dim adminList = DirectCast(bf.Deserialize(str), String())
+                styleString = adminList(2)
+            End Using
+            If styleString = "TS" Then
+                digitalForm = 2
+                
+            ElseIf styleString = "TM" Then
+                digitalForm = 1
+
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
     Private Sub formSetup()
-        digital = New FrmDigitalBB
+        Select Case digitalForm
+            Case 2
+                digital = New FrmDigitalBBTwo
+            Case Else
+                digital = New FrmDigitalBB
+        End Select
+
         all = New frmAllItems
         admin = New frmAdmin
         addItem = New frmAddItem
@@ -99,6 +130,8 @@ Public Class MainMenu
         colorD2 = New frmColorDialogTwo
         mgOne = New FrmManageSlideshow
         vwOne = New FrmViewSlideShow
+        mgTwo = New FrmManageSlideshowTwo
+        vwTwo = New FrmViewSlideShowTwo
     End Sub
 
     Public Sub reloadData()
@@ -118,9 +151,15 @@ Public Class MainMenu
         mgOne.UpdateTreeView()
         vwOne.loadSlideShowPic()
         vwOne.loadTimerFreq()
+        mgTwo.LoadCategory()
+        mgTwo.FillCategories()
+        mgTwo.UpdateTreeView()
+        vwTwo.loadSlideShowPic()
+        vwTwo.loadTimerFreq()
     End Sub
 
     Private Sub loadComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoad.RunWorkerCompleted
+        changeStyle()
         showMainForm()
         tabMain.SelectedIndex = 0
         showSecForm()
@@ -149,6 +188,8 @@ Public Class MainMenu
         formArray.Add(colorD2)
         formArray.Add(mgOne)
         formArray.Add(vwOne)
+        formArray.Add(mgTwo)
+        formArray.Add(vwTwo)
 
         For Each formTemp As Form In formArray
             formTemp.TopLevel = False
@@ -164,6 +205,17 @@ Public Class MainMenu
         showMainForm()
         showSecForm()
         updateSecForm()
+    End Sub
+
+    Private Sub changeStyle()
+        Select Case digitalForm
+            Case 2
+                tabMenuSetupTwo.Name = "tabMgSlideTwo"
+                tabMenuSetupTwo.Text = "Manage SlideShow Two"
+            Case Else
+                tabMenuSetupTwo.Name = "tabMenuSetup Two"
+                tabMenuSetupTwo.Name = "Menu Setup Two"
+        End Select
     End Sub
 
     Private Sub tabSec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tabSec.SelectedIndexChanged
@@ -182,6 +234,8 @@ Public Class MainMenu
                 _tabOne = setupTwo
             Case "tabMgSlideOne"
                 _tabOne = mgOne
+            Case "tabMgSlideTwo"
+                _tabOne = mgTwo
         End Select
 
         tabMain.SelectedTab.Controls.Add(_tabOne)
@@ -204,6 +258,8 @@ Public Class MainMenu
                 tabSec.Controls.Add(New TabPage("Color Two"))
             Case "tabMgSlideOne"
                 tabSec.Controls.Add(New TabPage("View SlideShow One"))
+            Case "tabMgSlideTwo"
+                tabSec.Controls.Add(New TabPage("View SlideShow Two"))
         End Select
     End Sub
 
@@ -236,6 +292,8 @@ Public Class MainMenu
                 _tabTwo = colorD2
             Case "View SlideShow One"
                 _tabTwo = vwOne
+            Case "View SlideShow Two"
+                _tabTwo = vwTwo
         End Select
 
         admin.hideAdminControl()
@@ -288,11 +346,16 @@ Public Class MainMenu
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
         setup.BinaryDeserialize()
 
-        If TypeOf digital Is FrmDigitalBB Then
+        If TypeOf digital Is FrmDigitalBB Or TypeOf digital Is FrmDigitalBBTwo Then
             digital.Dispose()
         End If
 
-        digital = New FrmDigitalBB
+        Select Case digitalForm
+            Case 2
+                digital = New FrmDigitalBBTwo
+            Case Else
+                digital = New FrmDigitalBB
+        End Select
         digital.loadform()
         Application.DoEvents()
 
@@ -336,6 +399,4 @@ Public Class MainMenu
         End If
 
     End Sub
-
-
 End Class

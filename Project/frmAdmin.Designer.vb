@@ -37,6 +37,8 @@ Partial Class frmAdmin
         Me.btnNewsColor = New System.Windows.Forms.Button()
         Me.ColorDialog4 = New System.Windows.Forms.ColorDialog()
         Me.ColorDialog5 = New System.Windows.Forms.ColorDialog()
+        Me.cbxTM = New System.Windows.Forms.CheckBox()
+        Me.cbxTS = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -133,11 +135,31 @@ Partial Class frmAdmin
         Me.btnNewsColor.UseVisualStyleBackColor = True
         Me.btnNewsColor.Visible = False
         '
+        'cbxTM
+        '
+        Me.cbxTM.Location = New System.Drawing.Point(153, 62)
+        Me.cbxTM.Name = "cbxTM"
+        Me.cbxTM.Size = New System.Drawing.Size(114, 23)
+        Me.cbxTM.TabIndex = 9
+        Me.cbxTM.Text = "Two Menus"
+        Me.cbxTM.UseVisualStyleBackColor = True
+        '
+        'cbxTS
+        '
+        Me.cbxTS.Location = New System.Drawing.Point(153, 91)
+        Me.cbxTS.Name = "cbxTS"
+        Me.cbxTS.Size = New System.Drawing.Size(114, 23)
+        Me.cbxTS.TabIndex = 9
+        Me.cbxTS.Text = "Two SlideShows"
+        Me.cbxTS.UseVisualStyleBackColor = True
+        '
         'frmAdmin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(421, 462)
+        Me.Controls.Add(Me.cbxTS)
+        Me.Controls.Add(Me.cbxTM)
         Me.Controls.Add(Me.btnNewsColor)
         Me.Controls.Add(Me.btnWeatherColor)
         Me.Controls.Add(Me.btnHLB)
@@ -168,4 +190,6 @@ Partial Class frmAdmin
     Friend WithEvents btnNewsColor As System.Windows.Forms.Button
     Friend WithEvents ColorDialog4 As System.Windows.Forms.ColorDialog
     Friend WithEvents ColorDialog5 As System.Windows.Forms.ColorDialog
+    Friend WithEvents cbxTM As System.Windows.Forms.CheckBox
+    Friend WithEvents cbxTS As System.Windows.Forms.CheckBox
 End Class

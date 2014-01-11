@@ -954,6 +954,33 @@ Public Class DataLayer
 
     End Function
 
+    Public Shared Function GetSlideShowFull() As ArrayList
+
+        Dim result As New ArrayList
+
+        Dim sqlConn As SqlCeConnection
+        Dim sqlDA As SqlCeDataAdapter
+        ' create connection using the Conection String
+        sqlConn = New SqlCeConnection(conString)
+        ' Query statement to get all the records from the tblPersonnel 
+        sqlDA = New SqlCeDataAdapter("select itemid, SlideFull from items WHERE SlideShow2 != 0", sqlConn)
+
+        ' Create the dataset
+        Dim datasetitems As New DataSet()
+        ' Fill the dataset from the database table using the data adapter
+        sqlDA.Fill(datasetitems)
+
+        For Each row As DataRow In datasetitems.Tables(0).Rows
+            Dim itemid As String = row("ItemId").ToString()
+            Dim full As [String] = row("SlideFull").ToString()
+            result.Add(itemid)
+            result.Add(full)
+            result.Add("")
+        Next
+        Return result
+
+    End Function
+
     Public Shared Function FixString(ByVal SourceString As String, ByVal StringToReplace As String, ByVal StringReplacement As String)
         SourceString = SourceString.Replace(StringToReplace, StringReplacement)
         Return SourceString
