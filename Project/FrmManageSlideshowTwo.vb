@@ -340,7 +340,7 @@ Public Class FrmManageSlideshowTwo
         Dim itemIndex = AnimationTwoList.IndexOf(item)
         Dim animationTypes = [Enum].GetNames(GetType(AnimationTypes))
 
-        If itemIndex <> 0 Then
+        If itemIndex > 0 Then
 
             Dim isEnum As Boolean = False
             For Each Str As String In animationTypes

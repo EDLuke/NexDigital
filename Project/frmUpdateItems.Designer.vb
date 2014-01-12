@@ -35,11 +35,20 @@ Partial Class frmUpdateItem
         Me.Label1 = New System.Windows.Forms.Label()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.chkFull = New System.Windows.Forms.CheckBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.cmbCategories = New System.Windows.Forms.ComboBox()
+        Me.DatabaseDataSet = New Project.DatabaseDataSet()
+        Me.CategoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.CategoryTableAdapter = New Project.DatabaseDataSetTableAdapters.CategoryTableAdapter()
+        CType(Me.DatabaseDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CategoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUpdateItem
         '
-        Me.btnUpdateItem.Location = New System.Drawing.Point(15, 220)
+        Me.btnUpdateItem.Location = New System.Drawing.Point(12, 254)
         Me.btnUpdateItem.Name = "btnUpdateItem"
         Me.btnUpdateItem.Size = New System.Drawing.Size(75, 23)
         Me.btnUpdateItem.TabIndex = 25
@@ -48,7 +57,7 @@ Partial Class frmUpdateItem
         '
         'btnButton
         '
-        Me.btnButton.Location = New System.Drawing.Point(306, 182)
+        Me.btnButton.Location = New System.Drawing.Point(306, 194)
         Me.btnButton.Name = "btnButton"
         Me.btnButton.Size = New System.Drawing.Size(75, 23)
         Me.btnButton.TabIndex = 24
@@ -57,7 +66,7 @@ Partial Class frmUpdateItem
         '
         'txtPicture
         '
-        Me.txtPicture.Location = New System.Drawing.Point(61, 184)
+        Me.txtPicture.Location = New System.Drawing.Point(61, 196)
         Me.txtPicture.Name = "txtPicture"
         Me.txtPicture.ReadOnly = True
         Me.txtPicture.Size = New System.Drawing.Size(239, 20)
@@ -66,7 +75,7 @@ Partial Class frmUpdateItem
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(12, 187)
+        Me.Label4.Location = New System.Drawing.Point(12, 199)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(43, 13)
         Me.Label4.TabIndex = 20
@@ -74,7 +83,7 @@ Partial Class frmUpdateItem
         '
         'txtPrice
         '
-        Me.txtPrice.Location = New System.Drawing.Point(104, 146)
+        Me.txtPrice.Location = New System.Drawing.Point(104, 158)
         Me.txtPrice.Name = "txtPrice"
         Me.txtPrice.Size = New System.Drawing.Size(142, 20)
         Me.txtPrice.TabIndex = 19
@@ -82,7 +91,7 @@ Partial Class frmUpdateItem
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(12, 149)
+        Me.Label3.Location = New System.Drawing.Point(12, 161)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(34, 13)
         Me.Label3.TabIndex = 18
@@ -90,7 +99,7 @@ Partial Class frmUpdateItem
         '
         'txtDescription
         '
-        Me.txtDescription.Location = New System.Drawing.Point(104, 47)
+        Me.txtDescription.Location = New System.Drawing.Point(104, 59)
         Me.txtDescription.Multiline = True
         Me.txtDescription.Name = "txtDescription"
         Me.txtDescription.Size = New System.Drawing.Size(263, 89)
@@ -99,7 +108,7 @@ Partial Class frmUpdateItem
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(12, 50)
+        Me.Label2.Location = New System.Drawing.Point(12, 62)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(86, 13)
         Me.Label2.TabIndex = 16
@@ -125,11 +134,66 @@ Partial Class frmUpdateItem
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
+        'chkFull
+        '
+        Me.chkFull.AutoSize = True
+        Me.chkFull.Location = New System.Drawing.Point(83, 232)
+        Me.chkFull.Name = "chkFull"
+        Me.chkFull.Size = New System.Drawing.Size(15, 14)
+        Me.chkFull.TabIndex = 31
+        Me.chkFull.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(12, 232)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(65, 13)
+        Me.Label5.TabIndex = 30
+        Me.Label5.Text = "Full Picture: "
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(12, 35)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(72, 13)
+        Me.Label6.TabIndex = 16
+        Me.Label6.Text = "ItemCategory:"
+        '
+        'cmbCategories
+        '
+        Me.cmbCategories.DataSource = Me.CategoryBindingSource
+        Me.cmbCategories.DisplayMember = "CategoryName"
+        Me.cmbCategories.FormattingEnabled = True
+        Me.cmbCategories.Location = New System.Drawing.Point(104, 32)
+        Me.cmbCategories.Name = "cmbCategories"
+        Me.cmbCategories.Size = New System.Drawing.Size(142, 21)
+        Me.cmbCategories.TabIndex = 32
+        Me.cmbCategories.ValueMember = "CategoryId"
+        '
+        'DatabaseDataSet
+        '
+        Me.DatabaseDataSet.DataSetName = "DatabaseDataSet"
+        Me.DatabaseDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'CategoryBindingSource
+        '
+        Me.CategoryBindingSource.DataMember = "Category"
+        Me.CategoryBindingSource.DataSource = Me.DatabaseDataSet
+        '
+        'CategoryTableAdapter
+        '
+        Me.CategoryTableAdapter.ClearBeforeFill = True
+        '
         'frmUpdateItem
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(436, 286)
+        Me.Controls.Add(Me.cmbCategories)
+        Me.Controls.Add(Me.chkFull)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.btnUpdateItem)
         Me.Controls.Add(Me.btnButton)
         Me.Controls.Add(Me.txtPicture)
@@ -137,12 +201,15 @@ Partial Class frmUpdateItem
         Me.Controls.Add(Me.txtPrice)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.txtDescription)
+        Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmUpdateItem"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Update Items"
+        CType(Me.DatabaseDataSet, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CategoryBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -159,4 +226,11 @@ Partial Class frmUpdateItem
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
+    Friend WithEvents chkFull As System.Windows.Forms.CheckBox
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents cmbCategories As System.Windows.Forms.ComboBox
+    Friend WithEvents CategoryBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents DatabaseDataSet As Project.DatabaseDataSet
+    Friend WithEvents CategoryTableAdapter As Project.DatabaseDataSetTableAdapters.CategoryTableAdapter
 End Class

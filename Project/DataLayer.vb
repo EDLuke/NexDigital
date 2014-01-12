@@ -70,7 +70,7 @@ Public Class DataLayer
         Return recordSaved
     End Function
 
-    Public Shared Function UpdateItem(ByVal itemid As Integer, ByVal item As String, ByVal desc As String, ByVal price As Double, ByVal pictureUrl As String) As Boolean
+    Public Shared Function UpdateItem(ByVal itemid As Integer, ByVal item As String, ByVal desc As String, ByVal price As Double, ByVal pictureUrl As String, ByVal slideFull As Boolean, ByVal categoryid As Integer) As Boolean
 
         Dim recordSaved As Boolean
         ' Create a connection object and open the connection
@@ -92,7 +92,7 @@ Public Class DataLayer
 
         Try
             ' SqlQuery for updating data into the table
-            strSQL = "Update Items SET Name= @item, Description = @desc , Price = @price , picture =  @pictureUrl  WHERE itemID= @itemid"
+            strSQL = "Update Items SET Name= @item, Description = @desc , Price = @price , picture =  @pictureUrl , slideFull = @slideFull, categoryId = @categoryId WHERE itemID= @itemid"
 
             ' Set command type to text and set the query to strSql
             command.CommandType = CommandType.Text
@@ -102,6 +102,8 @@ Public Class DataLayer
             command.Parameters.AddWithValue("@price", price)
             command.Parameters.AddWithValue("@pictureUrl", pictureUrl)
             command.Parameters.AddWithValue("@itemid", itemid)
+            command.Parameters.AddWithValue("@slideFull", slideFull)
+            command.Parameters.AddWithValue("@categoryId", categoryid)
 
             ' Run the query
             command.ExecuteNonQuery()
@@ -263,6 +265,8 @@ Public Class DataLayer
             Dim desc As [String] = row("Description").ToString()
             Dim price As [String] = row("Price").ToString()
             Dim image As [String] = row("Picture").ToString()
+            Dim full As [String] = row("SlideFull").ToString()
+            Dim categoryId As [String] = row("CategoryId").ToString()
             'Dim quantity As [String] = row("Product_Quantity").ToString()
             ' Add to result arraylist
             'result.Add(prodid)
@@ -271,6 +275,8 @@ Public Class DataLayer
             result.Add(price)
             'result.Add(quantity)
             result.Add(image)
+            result.Add(full)
+            result.Add(categoryId)
         Next
 
         Return result

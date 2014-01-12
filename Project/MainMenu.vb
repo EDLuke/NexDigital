@@ -213,8 +213,8 @@ Public Class MainMenu
                 tabMenuSetupTwo.Name = "tabMgSlideTwo"
                 tabMenuSetupTwo.Text = "Manage SlideShow Two"
             Case Else
-                tabMenuSetupTwo.Name = "tabMenuSetup Two"
-                tabMenuSetupTwo.Name = "Menu Setup Two"
+                tabMenuSetupTwo.Name = "tabMenuSetupTwo"
+                tabMenuSetupTwo.Text = "Menu Setup Two"
         End Select
     End Sub
 

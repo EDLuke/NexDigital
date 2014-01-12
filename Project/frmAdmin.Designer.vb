@@ -39,6 +39,7 @@ Partial Class frmAdmin
         Me.ColorDialog5 = New System.Windows.Forms.ColorDialog()
         Me.cbxTM = New System.Windows.Forms.CheckBox()
         Me.cbxTS = New System.Windows.Forms.CheckBox()
+        Me.lblNote = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -153,11 +154,20 @@ Partial Class frmAdmin
         Me.cbxTS.Text = "Two SlideShows"
         Me.cbxTS.UseVisualStyleBackColor = True
         '
+        'lblNote
+        '
+        Me.lblNote.Location = New System.Drawing.Point(150, 117)
+        Me.lblNote.Name = "lblNote"
+        Me.lblNote.Size = New System.Drawing.Size(153, 44)
+        Me.lblNote.TabIndex = 10
+        Me.lblNote.Text = "Note: exit and re-enter the program after changing the style"
+        '
         'frmAdmin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(421, 462)
+        Me.Controls.Add(Me.lblNote)
         Me.Controls.Add(Me.cbxTS)
         Me.Controls.Add(Me.cbxTM)
         Me.Controls.Add(Me.btnNewsColor)
@@ -192,4 +202,5 @@ Partial Class frmAdmin
     Friend WithEvents ColorDialog5 As System.Windows.Forms.ColorDialog
     Friend WithEvents cbxTM As System.Windows.Forms.CheckBox
     Friend WithEvents cbxTS As System.Windows.Forms.CheckBox
+    Friend WithEvents lblNote As System.Windows.Forms.Label
 End Class

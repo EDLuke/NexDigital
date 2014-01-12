@@ -6,7 +6,8 @@ Public Class frmUpdateItem
     Dim currentItemId As Integer
 
     Private Sub frmUpdateItem_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Me.CategoryTableAdapter.Connection.ConnectionString = DataLayer.conString
+        Me.CategoryTableAdapter.Fill(Me.DatabaseDataSet.Category)
     End Sub
 
     Public Sub setFormData(ByVal itemid As Integer)
@@ -19,7 +20,8 @@ Public Class frmUpdateItem
             txtDescription.Text = result.Item(1).ToString()
             txtPrice.Text = result.Item(2).ToString()
             txtPicture.Text = result.Item(3).ToString()
-
+            chkFull.Checked = CBool(result.Item(4).ToString())
+            cmbCategories.SelectedValue = CInt(result.Item(5).ToString())
         End If
     End Sub
 
@@ -49,6 +51,8 @@ Public Class frmUpdateItem
         Dim item As String = txtName.Text
         Dim desc As String = txtDescription.Text
         Dim price As Double = CDbl(txtPrice.Text)
+        Dim full As Boolean = chkFull.Checked
+        Dim categoryid As Integer = cmbCategories.SelectedValue
         Dim picture As String
         If OpenFileDialog1.FileName = "OpenFileDialog1" Then
             picture = txtPicture.Text
@@ -58,7 +62,7 @@ Public Class frmUpdateItem
             FileCopy(OpenFileDialog1.FileName, Directory.GetCurrentDirectory() & "\images\" & picture)
         End If
 
-        Dim result As Boolean = DataLayer.UpdateItem(currentItemId, item, desc, price, picture)
+        Dim result As Boolean = DataLayer.UpdateItem(currentItemId, item, desc, price, picture, full, categoryid)
         MessageBox.Show("Item has been updated!", "Success")
         MainMenu.tabOne.loadItems()
 

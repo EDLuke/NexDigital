@@ -191,6 +191,9 @@ Partial Class frmAddItem
         Me.Label8.TabIndex = 15
         Me.Label8.Text = "*"
         '
+        'bgw
+        '
+        '
         'frmAddItem
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)

@@ -16,6 +16,9 @@ Public Class frmAdmin
         btnHLB.Visible = True
         btnWeatherColor.Visible = True
         btnNewsColor.Visible = True
+        cbxTM.Visible = True
+        cbxTS.Visible = True
+        lblNote.Visible = True
     End Sub
 
     Public Sub hideAdminControl()
@@ -26,6 +29,9 @@ Public Class frmAdmin
         btnHLB.Visible = False
         btnWeatherColor.Visible = False
         btnNewsColor.Visible = False
+        cbxTM.Visible = False
+        cbxTS.Visible = False
+        lblNote.Visible = False
     End Sub
 
     Private Sub frmAdmin_KeyDown(sender As System.Object, e As KeyEventArgs) Handles txtPasswd.KeyDown
