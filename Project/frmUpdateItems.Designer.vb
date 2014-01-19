@@ -42,6 +42,7 @@ Partial Class frmUpdateItem
         Me.DatabaseDataSet = New Project.DatabaseDataSet()
         Me.CategoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.CategoryTableAdapter = New Project.DatabaseDataSetTableAdapters.CategoryTableAdapter()
+        Me.btnRemovePic = New System.Windows.Forms.Button()
         CType(Me.DatabaseDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CategoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -186,11 +187,21 @@ Partial Class frmUpdateItem
         '
         Me.CategoryTableAdapter.ClearBeforeFill = True
         '
+        'btnRemovePic
+        '
+        Me.btnRemovePic.Location = New System.Drawing.Point(277, 222)
+        Me.btnRemovePic.Name = "btnRemovePic"
+        Me.btnRemovePic.Size = New System.Drawing.Size(104, 23)
+        Me.btnRemovePic.TabIndex = 33
+        Me.btnRemovePic.Text = "Remove Picture"
+        Me.btnRemovePic.UseVisualStyleBackColor = True
+        '
         'frmUpdateItem
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(436, 286)
+        Me.Controls.Add(Me.btnRemovePic)
         Me.Controls.Add(Me.cmbCategories)
         Me.Controls.Add(Me.chkFull)
         Me.Controls.Add(Me.Label5)
@@ -233,4 +244,5 @@ Partial Class frmUpdateItem
     Friend WithEvents CategoryBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents DatabaseDataSet As Project.DatabaseDataSet
     Friend WithEvents CategoryTableAdapter As Project.DatabaseDataSetTableAdapters.CategoryTableAdapter
+    Friend WithEvents btnRemovePic As System.Windows.Forms.Button
 End Class

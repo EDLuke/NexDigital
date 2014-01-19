@@ -69,4 +69,14 @@ Public Class frmUpdateItem
         ' Update the digital board at run time
         MainMenu.reloadData()
     End Sub
+
+    Private Sub btnRemovePic_Click(sender As Object, e As EventArgs) Handles btnRemovePic.Click
+        If txtPicture.Text = "" Then
+            MessageBox.Show("No picture was assigned.", "Error")
+        Else
+            txtPicture.Text = ""
+            DataLayer.RemoveFromSlideShow(currentItemId, 1)
+            DataLayer.RemoveFromSlideShow(currentItemId, 2)
+        End If
+    End Sub
 End Class

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="Digital_Board_Setup" Language="1033" Version="1.0.0.0" Manufacturer="Luke" UpgradeCode="a5c07a2a-f627-4ff2-b831-d0dc326bda5b">
+	<Product Id="*" Name="Digital_Board_Setup" Language="1033" Version="1.0.0.1" Manufacturer="Luke" UpgradeCode="a5c07a2a-f627-4ff2-b831-d0dc326bda5b">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of Digital Board is already installed." />
@@ -22,17 +22,17 @@
 	</Fragment>
 
 	<Fragment>
-    <Icon Id="Digital_Board.ico" SourceFile="C:\Users\Luke\Desktop\NexDigital\Project 1.71\WorkingProject\Project\Project\favicon.ico" />
+    <Icon Id="Digital_Board.ico" SourceFile="C:\Users\Luke\Desktop\NexDigital\Project 1.75\WorkingProject\Project\Project\favicon.ico" />
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
 			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<Component Id="MainExecutable" Guid ="d7eccbb9-0a22-422d-8a2e-7fa18155cfd4">
-				<File Source ="C:\Users\Luke\Desktop\NexDigital\Project 1.71\WorkingProject\Project\Project\bin\Debug\Digital Board.exe">
+			<Component Id="MainExecutable" Guid ="d7eccbb9-0a22-422d-8a2e-7fa18155cfd5">
+				<File Source ="C:\Users\Luke\Desktop\NexDigital\Project 1.75\WorkingProject\Project\Project\bin\Debug\Digital Board.exe">
          <Shortcut Id="Digital_Board_Icon" Directory="DesktopFolder" Name="Digital Board"
                   WorkingDirectory='INSTALLDIR' Icon="Digital_Board.ico" IconIndex="0" Advertise="yes"/>
         </File>
 			</Component>
-      <Component Id="Database" Guid ="0cd02031-db1c-4b73-b200-fcaeb24b6cda" KeyPath="yes">
-        <File Source ="C:\Users\Luke\Desktop\NexDigital\Project 1.71\WorkingProject\Project\Project\bin\Debug\Database.sdf">
+      <Component Id="Database" Guid ="0cd02031-db1c-4b73-b200-fcaeb24b6cdb" KeyPath="yes">
+        <File Source ="C:\Users\Luke\Desktop\NexDigital\Project 1.75\WorkingProject\Project\Project\bin\Debug\Database.sdf">
           <Permission User="Everyone" GenericAll="yes"  Write ="yes"/>
         </File>
       
