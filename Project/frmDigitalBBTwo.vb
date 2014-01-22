@@ -14,7 +14,8 @@ Public Class FrmDigitalBBTwo
     Public frqTwo As Integer = 5000
 
     Private imageNumber, imageNumber2, imageCount, imageCount2, newsNumber, newsCount As Integer
-    Private Pics(200), Pics2(100), weatherPic As Image
+    Private Pics(200), Pics2(100) As Object
+    Private weatherPic As Image
     Private Full(100), slideFullSeparte, fullAnimate As Boolean
     Private despFontArray(2) As Font
     Private despBgColor, itemPanelColor, itemBorderColor, despColorArray(2) As Color
@@ -213,12 +214,20 @@ Public Class FrmDigitalBBTwo
         imageCount2 = SlideShowPics2.Count / 3
 
         For i = 1 To SlideShowPics.Count Step 3
-            Pics((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
+            If (SlideShowPics(i).ToString.Contains(".avi")) Then
+                Pics((i - 1) / 3) = SlideShowPics(i).ToString()
+            else
+                Pics((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
+            End If
         Next
 
         For i = 1 To SlideShowPics2.Count Step 3
-            Pics2((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics2(i).ToString()))
-            Full((i - 1) / 3) = CBool(SlideShowFull(i).ToString())
+            If (SlideShowPics(i).ToString.Contains(".avi")) Then
+                Pics2((i - 1) / 3) = SlideShowPics2(i).ToString()
+            Else
+                Pics2((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics2(i).ToString()))
+                Full((i - 1) / 3) = CBool(SlideShowFull(i).ToString())
+            End If
         Next
 
         Dim myImage As Image = Pics(0)
@@ -348,48 +357,63 @@ Public Class FrmDigitalBBTwo
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        Try
-            If Not slideFullSeparte Then
-                If (Not Full(imageNumber2)) Then
-                    'Change Background Image
-                    PictureBox1.AnimatedFadeImage = Pics(imageNumber)
-                    PictureBox1.BackgroundImage = Pics(imageNumber)
-                    PictureBox1.BackColor = Color.Transparent
-                End If
+        If TypeOf Pics(imageNumber) Is String Then
+            'vdp.URL = Pics(imageNumber)
+            'If (vdp.currentMedia.duration >= Timer1.Interval) Then
+            '    Timer1.Interval = vdp.currentMedia.duration + 10
+            '    vdp.Visible = True
+            '    vdp.Ctlcontrols.play()
+            'End If
 
-                'Change image number
-                imageNumber += 1
-                If imageNumber >= imageCount Then
-                    imageNumber = 0
-                End If
-
-                'Animate (Foreground) Image
-                PictureBox1.AnimatedImage = Pics(imageNumber)
-
-                'Highlight Menu Item
-                updatePanel(Not FullPictureBox.Visible)
-
-                If animationOneList IsNot Nothing Then
-                    'Search for Unique AnimationType
-                    Dim animationSearch = animationOneList.IndexOf(SlideShowPics(imageNumber * 3 + 2))
-                    If animationSearch <> -1 Then
-                        PictureBox1.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationOneList(animationSearch + 1)), AnimationTypes)
-                    End If
-                End If
-
-                FullPictureBox.Visible = False
-                PictureBox1.Animate(frqOne / 100)
+            'Change image number
+            imageNumber += 1
+            If imageNumber >= imageCount Then
+                imageNumber = 0
             End If
+        ElseIf TypeOf Pics(imageNumber) Is Image Then
+            Try
+                If Not slideFullSeparte Then
+                    If (Not Full(imageNumber2)) Then
+                        'Change Background Image
+                        PictureBox1.AnimatedFadeImage = Pics(imageNumber)
+                        PictureBox1.BackgroundImage = Pics(imageNumber)
+                        PictureBox1.BackColor = Color.Transparent
+                    End If
 
-            Timer1.Stop()
-            TimerDelay.Start()
-        Catch exArg As ArgumentOutOfRangeException
-            updateSlideShow()
-        Catch ex As IndexOutOfRangeException
-            updateSlideShow()
-        Catch exNull As NullReferenceException
-            updateSlideShow()
-        End Try
+                    'Change image number
+                    imageNumber += 1
+                    If imageNumber >= imageCount Then
+                        imageNumber = 0
+                    End If
+
+                    'Animate (Foreground) Image
+                    PictureBox1.AnimatedImage = Pics(imageNumber)
+
+                    'Highlight Menu Item
+                    updatePanel(Not FullPictureBox.Visible)
+
+                    If animationOneList IsNot Nothing Then
+                        'Search for Unique AnimationType
+                        Dim animationSearch = animationOneList.IndexOf(SlideShowPics(imageNumber * 3 + 2))
+                        If animationSearch <> -1 Then
+                            PictureBox1.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationOneList(animationSearch + 1)), AnimationTypes)
+                        End If
+                    End If
+
+                    FullPictureBox.Visible = False
+                    PictureBox1.Animate(frqOne / 100)
+                End If
+
+                Timer1.Stop()
+                TimerDelay.Start()
+            Catch exArg As ArgumentOutOfRangeException
+                updateSlideShow()
+            Catch ex As IndexOutOfRangeException
+                updateSlideShow()
+            Catch exNull As NullReferenceException
+                updateSlideShow()
+            End Try
+        End If
     End Sub
 
     Private Sub TimerDelay_Tick(sender As Object, e As EventArgs) Handles TimerDelay.Tick

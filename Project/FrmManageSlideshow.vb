@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Reflection
+Imports System.Threading
 
 Public Class FrmManageSlideshow
     Private picsArrayList As ArrayList
@@ -10,6 +11,9 @@ Public Class FrmManageSlideshow
     Private cmbCategorySelected As Integer
 
     Private Sub FrmManageSlideshow_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        'vdp.uiMode = "none"
+        'vdp.Visible = False
         LoadCategory()
         FillCategories()
         UpdateTreeView()
@@ -34,8 +38,6 @@ Public Class FrmManageSlideshow
         If (Not bgwThree.IsBusy) Then
             bgwThree.RunWorkerAsync()
         End If
-
-
     End Sub
 
     Private Sub bgwThree_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwThree.DoWork
@@ -225,9 +227,13 @@ Public Class FrmManageSlideshow
     Private Sub lstSlideShowPics_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstSlideShowPics.AfterSelect
         Try
             If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
-                Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
+                If SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1).ToString.Contains(".avi") Then
+                    PictureBox1.Visible = False
+                Else
+                    Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
 
-                PictureBox1.Image = myImage
+                    PictureBox1.Image = myImage
+                End If
             Else
                 MainMenu.vwOne.changeAnimaSelected(lstSlideShowPics.SelectedNode.Text)
             End If
@@ -240,7 +246,7 @@ Public Class FrmManageSlideshow
         If lstSlideShowPics.SelectedNode Is Nothing Then
             MessageBox.Show("Please Select an Item", "Error")
         Else
-            If (lstSlideShowPics.SelectedNode.Nodes.Count = 0) Then
+            If (lstSlideShowPics.SelectedNode.Nodes.Count = 0) Or Not SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1).ToString.Contains(".avi") Then
                 lstSlideShowPics.SelectedNode.Nodes.Add(anima.ToString())
             Else
                 MessageBox.Show(lstSlideShowPics.SelectedNode.Text & " already has animation: " & lstSlideShowPics.SelectedNode.Nodes(0).ToString.Substring(10), "Error")

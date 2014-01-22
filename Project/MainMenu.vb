@@ -1,8 +1,6 @@
 ﻿Imports System.Threading
 Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
-Imports System.Net.Mail
-Imports System.Net
 
 Public Class MainMenu
 
@@ -79,37 +77,10 @@ Public Class MainMenu
 
     End Class
 
+
     Private Sub MainMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim currentDomain As AppDomain = AppDomain.CurrentDomain
-        AddHandler currentDomain.UnhandledException, AddressOf ExceptionHandler
         Me.Cursor = Cursors.WaitCursor
         bgwLoad.RunWorkerAsync()
-    End Sub
-
-    Sub ExceptionHandler(sender As Object, args As UnhandledExceptionEventArgs)
-        Dim e As Exception = DirectCast(args.ExceptionObject, Exception)
-        Console.WriteLine("ExceptionHandler caught : " + e.Message)
-        Console.WriteLine("Runtime terminating: {0}", args.IsTerminating)
-        Try
-            Dim message As New MailMessage()
-            Dim smtp As New SmtpClient()
-
-            message.From = New MailAddress("nexdigital@hotmail.com")
-            message.[To].Add(New MailAddress("lukezhang213@gmail.com"))
-            message.Subject = e.GetType.ToString
-            message.Body = e.Message
-
-            smtp.Port = 25
-            smtp.Host = "smtp.live.com"
-            smtp.EnableSsl = True
-            smtp.UseDefaultCredentials = False
-            smtp.Credentials = New NetworkCredential("nexdigital@hotmail.com", "19930213LUKE")
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network
-            smtp.Send(message)
-        Catch ex As Exception
-
-        End Try
-        
     End Sub
 
     Private Sub bgwLoad_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwLoad.DoWork

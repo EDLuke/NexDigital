@@ -6,7 +6,7 @@ Public Class FrmViewSlideShow
 
     Private SlideShowPicsList As New ArrayList
     Private SlideShowPics As New ArrayList
-    Private Pic(100) As Image
+    Private Pic(100) As Object
     Private imageNumber As Integer = 0
 
     'Stores the frequency for the slide shows
@@ -55,7 +55,11 @@ Public Class FrmViewSlideShow
         Next
 
         For i = 1 To SlideShowPics.Count Step 3
-            Pic((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
+            If (SlideShowPics(i).ToString.Contains(".avi")) Then
+                Pic((i - 1) / 3) = SlideShowPics(i).ToString()
+            Else
+                Pic((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
+            End If
         Next
     End Sub
 

@@ -11,6 +11,7 @@ Public Class FrmDigitalBB
     Public weatherLocationCode As String = "2396503"
     Public internet As Boolean
     Public frqOne As Integer = 5000
+    Public frqTwo As Integer = 5000
 
     Private imageNumber, imageCount, newsNumber, newsCount As Integer
     Private Pics(100), weatherPic As Image
@@ -82,6 +83,7 @@ Public Class FrmDigitalBB
 
     Private Sub loadFrq()
         frqOne = Timer1.Interval
+        frqTwo = Timer1.Interval
     End Sub
 
     Private Sub loadThread()

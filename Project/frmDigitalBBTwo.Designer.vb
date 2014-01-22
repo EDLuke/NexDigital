@@ -23,7 +23,7 @@ Partial Class FrmDigitalBBTwo
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmDigitalBB))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmDigitalBBTwo))
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.flowPanel = New System.Windows.Forms.FlowLayoutPanel()
         Me.lblNow = New System.Windows.Forms.Label()
@@ -142,7 +142,7 @@ Partial Class FrmDigitalBBTwo
         Me.lblNews.TabIndex = 22
         Me.lblNews.Text = " "
         '
-        'FrmDigitalBB
+        'FrmDigitalBBTwo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -156,7 +156,7 @@ Partial Class FrmDigitalBBTwo
         Me.Controls.Add(Me.lblNow)
         Me.Controls.Add(Me.flowPanel)
         Me.Margin = New System.Windows.Forms.Padding(2)
-        Me.Name = "FrmDigitalBB"
+        Me.Name = "FrmDigitalBBTwo"
         Me.Text = "Digital Board"
         CType(Me.lblLogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

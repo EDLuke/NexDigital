@@ -191,6 +191,15 @@ Partial Class FrmManageSlideshow
         '
         Me.CategoryTableAdapter.ClearBeforeFill = True
         '
+        'bgwOne
+        '
+        '
+        'bgwTwo
+        '
+        '
+        'bgwThree
+        '
+        '
         'FrmManageSlideshow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)

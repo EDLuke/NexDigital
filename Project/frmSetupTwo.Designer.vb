@@ -55,7 +55,7 @@ Partial Class frmSetupTwo
         Me.cmbCategories.DataSource = Me.CategoryBindingSource
         Me.cmbCategories.DisplayMember = "CategoryName"
         Me.cmbCategories.FormattingEnabled = True
-        Me.cmbCategories.Location = New System.Drawing.Point(30, 34)
+        Me.cmbCategories.Location = New System.Drawing.Point(9, 32)
         Me.cmbCategories.Name = "cmbCategories"
         Me.cmbCategories.Size = New System.Drawing.Size(140, 21)
         Me.cmbCategories.TabIndex = 0
@@ -93,7 +93,7 @@ Partial Class frmSetupTwo
         '
         'btnMoveDown
         '
-        Me.btnMoveDown.Location = New System.Drawing.Point(268, 197)
+        Me.btnMoveDown.Location = New System.Drawing.Point(284, 197)
         Me.btnMoveDown.Name = "btnMoveDown"
         Me.btnMoveDown.Size = New System.Drawing.Size(45, 23)
         Me.btnMoveDown.TabIndex = 9
@@ -102,7 +102,7 @@ Partial Class frmSetupTwo
         '
         'btnMoveUp
         '
-        Me.btnMoveUp.Location = New System.Drawing.Point(268, 132)
+        Me.btnMoveUp.Location = New System.Drawing.Point(284, 132)
         Me.btnMoveUp.Name = "btnMoveUp"
         Me.btnMoveUp.Size = New System.Drawing.Size(45, 23)
         Me.btnMoveUp.TabIndex = 8
@@ -112,7 +112,7 @@ Partial Class frmSetupTwo
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(28, 18)
+        Me.Label3.Location = New System.Drawing.Point(7, 16)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(85, 13)
         Me.Label3.TabIndex = 7
@@ -130,7 +130,7 @@ Partial Class frmSetupTwo
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(27, 58)
+        Me.Label1.Location = New System.Drawing.Point(6, 56)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(110, 13)
         Me.Label1.TabIndex = 5
@@ -138,7 +138,7 @@ Partial Class frmSetupTwo
         '
         'btnRemove
         '
-        Me.btnRemove.Location = New System.Drawing.Point(119, 197)
+        Me.btnRemove.Location = New System.Drawing.Point(128, 197)
         Me.btnRemove.Name = "btnRemove"
         Me.btnRemove.Size = New System.Drawing.Size(45, 23)
         Me.btnRemove.TabIndex = 4
@@ -147,7 +147,7 @@ Partial Class frmSetupTwo
         '
         'btnAdd
         '
-        Me.btnAdd.Location = New System.Drawing.Point(119, 132)
+        Me.btnAdd.Location = New System.Drawing.Point(128, 132)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(45, 23)
         Me.btnAdd.TabIndex = 3
@@ -157,17 +157,17 @@ Partial Class frmSetupTwo
         'lstItems
         '
         Me.lstItems.FormattingEnabled = True
-        Me.lstItems.Location = New System.Drawing.Point(30, 81)
+        Me.lstItems.Location = New System.Drawing.Point(9, 81)
         Me.lstItems.Name = "lstItems"
-        Me.lstItems.Size = New System.Drawing.Size(82, 225)
+        Me.lstItems.Size = New System.Drawing.Size(113, 225)
         Me.lstItems.TabIndex = 1
         '
         'lstMenuItems
         '
         Me.lstMenuItems.FormattingEnabled = True
-        Me.lstMenuItems.Location = New System.Drawing.Point(170, 81)
+        Me.lstMenuItems.Location = New System.Drawing.Point(179, 81)
         Me.lstMenuItems.Name = "lstMenuItems"
-        Me.lstMenuItems.Size = New System.Drawing.Size(88, 225)
+        Me.lstMenuItems.Size = New System.Drawing.Size(99, 225)
         Me.lstMenuItems.TabIndex = 2
         '
         'CategoryTableAdapter
@@ -209,6 +209,12 @@ Partial Class frmSetupTwo
         Me.btnDesp.Text = "Description"
         Me.btnDesp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.btnDesp.UseVisualStyleBackColor = True
+        '
+        'bgwLoadOne
+        '
+        '
+        'bgwLoadTwo
+        '
         '
         'frmSetupTwo
         '
