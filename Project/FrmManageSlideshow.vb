@@ -236,7 +236,7 @@ Public Class FrmManageSlideshow
         Try
             If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
                 If SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1).ToString.Contains(".avi") Then
-                    video = New Video(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
+                    video = New Video(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
                     video.Owner = PictureBox1
                     video.Play()
                     AddHandler video.Ending, AddressOf BackLoopHandler
