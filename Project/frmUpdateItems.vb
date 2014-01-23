@@ -32,7 +32,7 @@ Public Class frmUpdateItem
     Private Sub btnButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnButton.Click
 
         ' read only image files
-        OpenFileDialog1.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif"
+        OpenFileDialog1.Filter = "PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|AVI Files (*.avi)|*.avi"
 
         Dim result As DialogResult = OpenFileDialog1.ShowDialog()
 

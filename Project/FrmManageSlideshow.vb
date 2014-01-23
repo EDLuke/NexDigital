@@ -2,6 +2,7 @@
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Reflection
 Imports System.Threading
+Imports Microsoft.DirectX.AudioVideoPlayback
 
 Public Class FrmManageSlideshow
     Private picsArrayList As ArrayList
@@ -9,11 +10,9 @@ Public Class FrmManageSlideshow
     Private AnimationOneList As New ArrayList
     Private AnimationList As ArrayList
     Private cmbCategorySelected As Integer
+    Private video As Video
 
     Private Sub FrmManageSlideshow_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-        'vdp.uiMode = "none"
-        'vdp.Visible = False
         LoadCategory()
         FillCategories()
         UpdateTreeView()
@@ -216,8 +215,17 @@ Public Class FrmManageSlideshow
     Private Sub lstPics_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstPics.SelectedIndexChanged
         Try
             If lstPics.SelectedItem <> Nothing Then
-                Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1))
-                PictureBox1.Image = myImage
+                If picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1).ToString.Contains(".avi") Then
+                    video = New Video(Directory.GetCurrentDirectory() & "\images\" & picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1))
+                    video.Owner = PictureBox1
+                    video.Size = New Size(386, 112)
+                    video.Play()
+                    AddHandler video.Ending, AddressOf BackLoopHandler
+                Else
+                    Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1))
+                    PictureBox1.Image = myImage
+                End If
+
             End If
         Catch ex As FileNotFoundException
             PictureBox1.Image = Nothing
@@ -228,7 +236,10 @@ Public Class FrmManageSlideshow
         Try
             If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
                 If SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1).ToString.Contains(".avi") Then
-                    PictureBox1.Visible = False
+                    video = New Video(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
+                    video.Owner = PictureBox1
+                    video.Play()
+                    AddHandler video.Ending, AddressOf BackLoopHandler
                 Else
                     Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
 
@@ -240,6 +251,13 @@ Public Class FrmManageSlideshow
         Catch ex As FileNotFoundException
             PictureBox1.Image = Nothing
         End Try
+    End Sub
+
+    Sub BackLoopHandler(sender As Object, args As EventArgs)
+        If (Not video.Disposed) Then
+            video.Stop()
+            'video.Dispose()
+        End If
     End Sub
 
     Public Sub AddAnimation(ByVal anima As AnimationTypes)
