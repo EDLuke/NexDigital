@@ -1,0 +1,586 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B39B0FDE-25F8-4ABA-BFF9-FD77805CAD59}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Project.My.MyApplication</StartupObject>
+    <RootNamespace>Project</RootNamespace>
+    <AssemblyName>Digital Board</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>457EB8082ABB1547FB199A70EA9B0B070377ADEF</ManifestCertificateThumbprint>
+    <ManifestKeyFile>Project_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>C:\Users\Luke\Desktop\Project 1.71\Digital Board\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <UpdateUrl>\\localhost\c%24\</UpdateUrl>
+    <ProductName>Digital Board</ProductName>
+    <PublisherName>Luke</PublisherName>
+    <ApplicationRevision>25</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Digital Board.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Digital Board.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.DirectX.AudioVideoPlayback, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Windows\assembly\GAC\Microsoft.DirectX.AudioVideoPlayback\1.0.2902.0__31bf3856ad364e35\Microsoft.DirectX.AudioVideoPlayback.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.RegularExpressions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimationControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AnimationTypes.vb" />
+    <Compile Include="CategoriesDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CategoriesDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CategoriesDataSet.vb">
+      <DependentUpon>CategoriesDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="categoriesDSfrmManageSlide.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>categoriesDSfrmManageSlide.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CategoriesFrmSetupDS.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CategoriesFrmSetupDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="clsNews.vb" />
+    <Compile Include="clsWeather.vb" />
+    <Compile Include="ColorChangedEventArgs.vb" />
+    <Compile Include="ColorHandler.vb" />
+    <Compile Include="ColorWheel.vb" />
+    <Compile Include="Digital Board.vb" />
+    <Compile Include="frmAdmin.Designer.vb">
+      <DependentUpon>frmAdmin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAdmin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCategorySetup.Designer.vb">
+      <DependentUpon>frmCategorySetup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCategorySetup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmColorDialogTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmColorDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatabaseDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseDataSet.vb">
+      <DependentUpon>DatabaseDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseDataSet1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseDataSet1.vb">
+      <DependentUpon>DatabaseDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="frmDigitalBBTwo.Designer.vb">
+      <DependentUpon>frmDigitalBBTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDigitalBBTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDigitalBB.Designer.vb">
+      <DependentUpon>frmDigitalBB.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDigitalBB.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFontDialogTwo.Designer.vb">
+      <DependentUpon>frmFontDialogTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmFontDialogTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFontDialog.Designer.vb">
+      <DependentUpon>frmFontDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmFontDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataLayer.vb" />
+    <Compile Include="frmAllItems.Designer.vb">
+      <DependentUpon>frmAllItems.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAllItems.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddItem.Designer.vb">
+      <DependentUpon>frmAddItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAddItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmManageSlideshowTwo.Designer.vb">
+      <DependentUpon>FrmManageSlideshowTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmManageSlideshowTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmManageSlideshow.Designer.vb">
+      <DependentUpon>FrmManageSlideshow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmManageSlideshow.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSetupTwo.Designer.vb">
+      <DependentUpon>frmSetupTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSetupTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSetup.Designer.vb">
+      <DependentUpon>frmSetup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSetup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUpdateItems.Designer.vb">
+      <DependentUpon>frmUpdateItems.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmUpdateItems.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmViewSlideShowTwo.Designer.vb">
+      <DependentUpon>FrmViewSlideShowTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmViewSlideShowTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmViewSlideShow.Designer.vb">
+      <DependentUpon>FrmViewSlideShow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmViewSlideShow.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItemsBindingDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ItemsBindingDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ItemsDSfrmAllItems.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ItemsDSfrmAllItems.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ItemsDSfrmAllItems.vb">
+      <DependentUpon>ItemsDSfrmAllItems.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="MainMenu.Designer.vb">
+      <DependentUpon>MainMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MainMenu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MarqueeLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="MenuItemLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="frmSplashScreen.Designer.vb">
+      <DependentUpon>frmSplashScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSplashScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThreadClass.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmAdmin.resx">
+      <DependentUpon>frmAdmin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCategorySetup.resx">
+      <DependentUpon>frmCategorySetup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmColorDialogTwo.resx">
+      <DependentUpon>frmColorDialogTwo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmColorDialog.resx">
+      <DependentUpon>frmColorDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDigitalBBTwo.resx">
+      <DependentUpon>frmDigitalBBTwo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDigitalBB.resx">
+      <DependentUpon>frmDigitalBB.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFontDialogTwo.resx">
+      <DependentUpon>frmFontDialogTwo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFontDialog.resx">
+      <DependentUpon>frmFontDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAllItems.resx">
+      <DependentUpon>frmAllItems.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddItem.resx">
+      <DependentUpon>frmAddItem.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmManageSlideshowTwo.resx">
+      <DependentUpon>FrmManageSlideshowTwo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmManageSlideshow.resx">
+      <DependentUpon>FrmManageSlideshow.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSetupTwo.resx">
+      <DependentUpon>frmSetupTwo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSetup.resx">
+      <DependentUpon>frmSetup.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUpdateItems.resx">
+      <DependentUpon>frmUpdateItems.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmViewSlideShowTwo.resx">
+      <DependentUpon>FrmViewSlideShowTwo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmViewSlideShow.resx">
+      <DependentUpon>FrmViewSlideShow.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainMenu.resx">
+      <DependentUpon>MainMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSplashScreen.resx">
+      <DependentUpon>frmSplashScreen.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="CategoriesDataSet.xsc">
+      <DependentUpon>CategoriesDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="CategoriesDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>CategoriesDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="CategoriesDataSet.xss">
+      <DependentUpon>CategoriesDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="categoriesDSfrmManageSlide.xsc">
+      <DependentUpon>categoriesDSfrmManageSlide.xsd</DependentUpon>
+    </None>
+    <None Include="categoriesDSfrmManageSlide.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>categoriesDSfrmManageSlide.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="categoriesDSfrmManageSlide.xss">
+      <DependentUpon>categoriesDSfrmManageSlide.xsd</DependentUpon>
+    </None>
+    <None Include="CategoriesFrmSetupDS.xsc">
+      <DependentUpon>CategoriesFrmSetupDS.xsd</DependentUpon>
+    </None>
+    <None Include="CategoriesFrmSetupDS.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>CategoriesFrmSetupDS.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="CategoriesFrmSetupDS.xss">
+      <DependentUpon>CategoriesFrmSetupDS.xsd</DependentUpon>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="DatabaseDataSet.xsc">
+      <DependentUpon>DatabaseDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DatabaseDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>DatabaseDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DatabaseDataSet.xss">
+      <DependentUpon>DatabaseDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DatabaseDataSet1.xsc">
+      <DependentUpon>DatabaseDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DatabaseDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>DatabaseDataSet1.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DatabaseDataSet1.xss">
+      <DependentUpon>DatabaseDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="ItemsBindingDataSet.xsc">
+      <DependentUpon>ItemsBindingDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ItemsBindingDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>ItemsBindingDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="ItemsBindingDataSet.xss">
+      <DependentUpon>ItemsBindingDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ItemsDSfrmAllItems.xsc">
+      <DependentUpon>ItemsDSfrmAllItems.xsd</DependentUpon>
+    </None>
+    <None Include="ItemsDSfrmAllItems.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>ItemsDSfrmAllItems.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="ItemsDSfrmAllItems.xss">
+      <DependentUpon>ItemsDSfrmAllItems.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Project_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.4.0">
+      <Visible>False</Visible>
+      <ProductName>SQL Server Compact 4.0 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Database.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="favicon.ico" />
+    <Content Include="New_Logo_PSed.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="Database.sdf">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Digital Board.pdb">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Digital Board.xml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
