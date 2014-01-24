@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Drawing.Drawing2D
 Imports System.Reflection
+Imports Microsoft.DirectX.AudioVideoPlayback
 
 Public Class FrmViewSlideShow
 
@@ -8,6 +9,7 @@ Public Class FrmViewSlideShow
     Private SlideShowPics As New ArrayList
     Private Pic(100) As Object
     Private imageNumber As Integer = 0
+    Private video As Video
 
     'Stores the frequency for the slide shows
     Public Shared slideShowFreq As Integer
@@ -21,17 +23,25 @@ Public Class FrmViewSlideShow
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         If SlideShowPicsList.Count <> 0 Then
-
-            PictureBox1.AnimatedFadeImage = Pic(imageNumber)
-            PictureBox1.BackgroundImage = Pic(imageNumber)
-            PictureBox1.BackColor = Color.Transparent
+            If TypeOf Pic(imageNumber) Is String Then
+                video = New Video(Pic(imageNumber))
+                video.Owner = PictureBox1
+                video.Play()
+                AddHandler video.Ending, AddressOf BackLoopHandler
+            Else
+                PictureBox1.AnimatedFadeImage = Pic(imageNumber)
+                PictureBox1.BackgroundImage = Pic(imageNumber)
+                PictureBox1.BackColor = Color.Transparent
+            End If
 
             imageNumber = imageNumber + 1
             If imageNumber = SlideShowPicsList.Count Then
                 imageNumber = 0
             End If
 
-            PictureBox1.AnimatedImage = Pic(imageNumber)
+            If TypeOf Pic(imageNumber) Is Image Then
+                PictureBox1.AnimatedImage = Pic(imageNumber)
+            End If
         End If
 
         Timer1.Stop()
@@ -56,7 +66,7 @@ Public Class FrmViewSlideShow
 
         For i = 1 To SlideShowPics.Count Step 3
             If (SlideShowPics(i).ToString.Contains(".avi")) Then
-                Pic((i - 1) / 3) = SlideShowPics(i).ToString()
+                Pic((i - 1) / 3) = Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()
             Else
                 Pic((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
             End If
@@ -64,12 +74,26 @@ Public Class FrmViewSlideShow
     End Sub
 
     Private Sub bgw_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw.RunWorkerCompleted
-        PictureBox1.AnimatedFadeImage = Pic(imageNumber)
-        PictureBox1.BackgroundImage = Pic(imageNumber)
-        PictureBox1.BackColor = Color.Transparent
+        If TypeOf Pic(imageNumber) Is String Then
+            video = New Video(Pic(imageNumber))
+            video.Owner = PictureBox1
+            video.Play()
+            AddHandler video.Ending, AddressOf BackLoopHandler
+        Else
+            PictureBox1.AnimatedFadeImage = Pic(imageNumber)
+            PictureBox1.BackgroundImage = Pic(imageNumber)
+            PictureBox1.BackColor = Color.Transparent
+        End If
 
         Me.Cursor = Cursors.Arrow
         Timer1.Start()
+    End Sub
+
+    Sub BackLoopHandler(sender As Object, args As EventArgs)
+        If (Not video.Disposed) Then
+            video.Stop()
+            'video.Dispose()
+        End If
     End Sub
 
     Public Sub loadTimerFreq()
@@ -90,7 +114,10 @@ Public Class FrmViewSlideShow
     End Function
 
     Private Sub TimerDelay_Tick(sender As Object, e As EventArgs) Handles TimerDelay.Tick
-        PictureBox1.Animate(30)
+        If (TypeOf Pic(imageNumber) Is Image) Then
+            PictureBox1.Animate(30)
+        End If
+
         TimerDelay.Stop()
         Timer1.Start()
     End Sub
