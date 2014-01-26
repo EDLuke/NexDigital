@@ -222,6 +222,9 @@ Public Class FrmManageSlideshow
                     video.Play()
                     AddHandler video.Ending, AddressOf BackLoopHandler
                 Else
+                    If (video IsNot Nothing) Then
+                        video.Dispose()
+                    End If
                     Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1))
                     PictureBox1.Image = myImage
                 End If
@@ -236,13 +239,19 @@ Public Class FrmManageSlideshow
         Try
             If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
                 If SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1).ToString.Contains(".avi") Then
+                    PictureBox1.Image = Nothing
                     video = New Video(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
                     video.Owner = PictureBox1
+                    video.Size = New Size(386, 112)
                     video.Play()
                     AddHandler video.Ending, AddressOf BackLoopHandler
                 Else
+                    If (video IsNot Nothing) Then
+                        video.Dispose()
+                    End If
                     Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
 
+                    PictureBox1.Size = New Size(386, 112)
                     PictureBox1.Image = myImage
                 End If
             Else

@@ -9,7 +9,6 @@ Public Class MainMenu
     Private _tabTwo As New Object
     Private digitalForm As Integer = 0
 
-    Public slideNum As String = ""
     Public digital As Object
     Public all As Object
     Public admin As Object

@@ -42,7 +42,7 @@ Partial Class FrmViewSlideShow
         '
         'TimerDelay
         '
-        Me.TimerDelay.Interval = 2000
+        Me.TimerDelay.Interval = 3000
         '
         'cmbAnimationType
         '

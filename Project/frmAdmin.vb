@@ -3,10 +3,11 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
 Public Class frmAdmin
 
-    Private adminList(2) As String
+    Private adminList(3) As String
     '0 Logo Image
     '1 Weather Location
-    '2 Style (TS as Two SlideShow, TM as Two Menu)
+    '2 Style (TS as Two SlideShows, TM as Two Menus)
+    '3 SlideNum (One as One SlideShow, Two as Two SlideShows)
 
     Private Sub showAdminControl()
         btnLogo.Visible = True
@@ -155,5 +156,11 @@ Public Class frmAdmin
             adminList(2) = "TS"
         End If
         BinarySerialize()
+    End Sub
+
+    Private Sub cmbSlideNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSlideNum.SelectedIndexChanged
+        adminList(3) = cmbSlideNum.SelectedItem.ToString
+        BinarySerialize()
+        MainMenu.digital.checkFullSeparte()
     End Sub
 End Class

@@ -6,6 +6,7 @@ Imports System.Net
 Imports System.ComponentModel
 Imports System.Threading
 Imports System.Reflection
+Imports Microsoft.DirectX.AudioVideoPlayback
 
 Public Class FrmDigitalBB
     Public weatherLocationCode As String = "2396503"
@@ -14,8 +15,10 @@ Public Class FrmDigitalBB
     Public frqTwo As Integer = 5000
 
     Private imageNumber, imageCount, newsNumber, newsCount As Integer
-    Private Pics(100), weatherPic As Image
+    Private Pics(100) As Object
+    Private weatherPic As Image
     Private Full(100), slideFullSeparte, fullAnimate As Boolean
+    Private slideNum As String
     Private despFontArray(2) As Font
     Private despBgColor, itemPanelColor, itemBorderColor, despColorArray(2) As Color
     Private newsArrayList, animationOneList, animationTwoList, SlideShowPics As ArrayList
@@ -23,6 +26,7 @@ Public Class FrmDigitalBB
     Private n_Thread As CallBackThread
     Private n As New clsNews
     Private w As New clsWeather(weatherLocationCode, "f")
+    Private video As Video
 
     
     Private Sub FrmViewSlideShow_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -62,9 +66,9 @@ Public Class FrmDigitalBB
     End Sub
 
     Public Sub checkFullSeparte()
-        If MainMenu.slideNum = "None" Then
+        If slideNum = "One" Then
             slideFullSeparte = True
-        ElseIf MainMenu.slideNum = "Both" Then
+        ElseIf slideNum = "Two" Then
             slideFullSeparte = False
         End If
 
@@ -204,7 +208,11 @@ Public Class FrmDigitalBB
         imageCount = SlideShowPics.Count / 3
 
         For i = 1 To SlideShowPics.Count Step 3
-            Pics((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
+            If (SlideShowPics(i).ToString.Contains(".avi")) Then
+                Pics((i - 1) / 3) = Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()
+            Else
+                Pics((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
+            End If
         Next
 
         Dim myImage As Image = Pics(0)
@@ -422,6 +430,7 @@ Public Class FrmDigitalBB
                     lblLogo.Image = Image.FromFile(adminList(0))
                 End If
                 weatherLocationCode = adminList(1)
+                slideNum = adminList(3)
             End Using
         Catch ex As Exception
 
@@ -436,6 +445,13 @@ Public Class FrmDigitalBB
         If weatherPic IsNot Nothing Then
             Dim r As New Rectangle(Me.Width * 0.8, Me.Height * (-0.08), Me.Width * 0.2, Me.Width * 0.2)
             e.Graphics.DrawImage(weatherPic, r)
+        End If
+    End Sub
+
+    Sub BackLoopHandler(sender As Object, args As EventArgs)
+        If (Not video.Disposed) Then
+            video.Stop()
+            'video.Dispose()
         End If
     End Sub
 End Class
