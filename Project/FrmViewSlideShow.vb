@@ -62,10 +62,6 @@ Public Class FrmViewSlideShow
                 imageNumber = 0
             End If
 
-
-
-
-
         End If
 
         Timer1.Stop()

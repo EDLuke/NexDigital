@@ -272,6 +272,8 @@ Public Class FrmManageSlideshow
     Public Sub AddAnimation(ByVal anima As AnimationTypes)
         If lstSlideShowPics.SelectedNode Is Nothing Then
             MessageBox.Show("Please Select an Item", "Error")
+        ElseIf lstSlideShowPics.SelectedNode.Text.ToString.Contains(".avi") Then
+            MessageBox.Show("Cannot add animation to video", "Error")
         Else
             If (lstSlideShowPics.SelectedNode.Nodes.Count = 0) Or Not SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1).ToString.Contains(".avi") Then
                 lstSlideShowPics.SelectedNode.Nodes.Add(anima.ToString())

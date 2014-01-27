@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Reflection
+Imports Microsoft.DirectX.AudioVideoPlayback
 
 Public Class FrmManageSlideshowTwo
     Private picsArrayList As ArrayList
@@ -8,6 +9,7 @@ Public Class FrmManageSlideshowTwo
     Private AnimationTwoList As New ArrayList
     Private AnimationList As ArrayList
     Private cmbCategorySelected As Integer
+    Private video As Video
 
     Private Sub FrmManageSlideshow_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         LoadCategory()
@@ -214,8 +216,20 @@ Public Class FrmManageSlideshowTwo
     Private Sub lstPics_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstPics.SelectedIndexChanged
         Try
             If lstPics.SelectedItem <> Nothing Then
-                Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1))
-                PictureBox1.Image = myImage
+                If picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1).ToString.Contains(".avi") Then
+                    video = New Video(Directory.GetCurrentDirectory() & "\images\" & picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1))
+                    video.Owner = PictureBox1
+                    video.Size = New Size(386, 112)
+                    video.Play()
+                    AddHandler video.Ending, AddressOf BackLoopHandler
+                Else
+                    If (video IsNot Nothing) Then
+                        video.Dispose()
+                    End If
+                    Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1))
+                    PictureBox1.Image = myImage
+                End If
+
             End If
         Catch ex As FileNotFoundException
             PictureBox1.Image = Nothing
@@ -225,9 +239,22 @@ Public Class FrmManageSlideshowTwo
     Private Sub lstSlideShowPics_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstSlideShowPics.AfterSelect
         Try
             If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
-                Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
+                If SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1).ToString.Contains(".avi") Then
+                    PictureBox1.Image = Nothing
+                    video = New Video(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
+                    video.Owner = PictureBox1
+                    video.Size = New Size(386, 112)
+                    video.Play()
+                    AddHandler video.Ending, AddressOf BackLoopHandler
+                Else
+                    If (video IsNot Nothing) Then
+                        video.Dispose()
+                    End If
+                    Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
 
-                PictureBox1.Image = myImage
+                    PictureBox1.Size = New Size(386, 112)
+                    PictureBox1.Image = myImage
+                End If
             Else
                 MainMenu.vwOne.changeAnimaSelected(lstSlideShowPics.SelectedNode.Text)
             End If
@@ -236,9 +263,18 @@ Public Class FrmManageSlideshowTwo
         End Try
     End Sub
 
+    Sub BackLoopHandler(sender As Object, args As EventArgs)
+        If (Not video.Disposed) Then
+            video.Stop()
+            'video.Dispose()
+        End If
+    End Sub
+
     Public Sub AddAnimation(ByVal anima As AnimationTypes)
         If lstSlideShowPics.SelectedNode Is Nothing Then
             MessageBox.Show("Please Select an Item", "Error")
+        ElseIf lstSlideShowPics.SelectedNode.Text.ToString.Contains(".avi") Then
+            MessageBox.Show("Cannot add animation to video", "Error")
         Else
             If (lstSlideShowPics.SelectedNode.Nodes.Count = 0) Then
                 lstSlideShowPics.SelectedNode.Nodes.Add(anima.ToString())
