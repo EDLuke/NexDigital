@@ -235,41 +235,6 @@ Public Class FrmDigitalBBTwo
             End If
         Next
 
-        If (TypeOf Pics(0) Is Image) Then
-            Dim myImage As Image = Pics(0)
-            PictureBox1.AnimatedFadeImage = myImage
-            PictureBox1.BackgroundImage = myImage
-            PictureBox1.BackColor = Color.Transparent
-            FullPictureBox.AnimatedFadeImage = myImage
-            FullPictureBox.BackgroundImage = myImage
-            FullPictureBox.BackColor = Color.Transparent
-        ElseIf (TypeOf Pics(0) Is String) Then
-            PictureBox1.Visible = False
-            PictureBox2.Visible = False
-            FullPictureBox.Visible = True
-            video = New Video(Pics(0))
-            video.Owner = FullPictureBox
-            video.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
-            AddHandler video.Ending, AddressOf BackLoopHandler
-        End If
-
-
-        If (TypeOf Pics2(0) Is Image) Then
-            Dim myImage2 As Image = Pics2(0)
-            PictureBox2.AnimatedFadeImage = myImage2
-            PictureBox2.BackgroundImage = myImage2
-            PictureBox2.BackColor = Color.Transparent
-        ElseIf (TypeOf Pics2(0) Is String) Then
-            PictureBox1.Visible = False
-            PictureBox2.Visible = False
-            FullPictureBox.Visible = True
-            video = New Video(Pics2(0))
-            video.Size = FullPictureBox.Size
-            video.Owner = FullPictureBox
-            video.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
-            AddHandler video.Ending, AddressOf BackLoopHandler
-        End If
-
         imageNumber = 0
         imageNumber2 = 0
 
@@ -382,17 +347,31 @@ Public Class FrmDigitalBBTwo
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        If PictureBox1.AnimatedImage Is Nothing Then
+            PictureBox1.AnimatedFadeImage = Nothing
+            PictureBox1.BackgroundImage = Nothing
+        Else
+            PictureBox1.AnimatedFadeImage = PictureBox1.AnimatedImage
+            PictureBox1.BackgroundImage = PictureBox1.AnimatedImage
+        End If
+
+        If FullPictureBox.AnimatedImage Is Nothing Then
+            FullPictureBox.AnimatedFadeImage = Nothing
+            FullPictureBox.BackgroundImage = Nothing
+        Else
+            FullPictureBox.AnimatedFadeImage = FullPictureBox.AnimatedImage
+            FullPictureBox.BackgroundImage = FullPictureBox.AnimatedImage
+        End If
+
         If TypeOf Pics(imageNumber) Is String Then
             PictureBox1.Visible = False
             PictureBox2.Visible = False
             FullPictureBox.Visible = True
             FullPictureBox.BackgroundImage = Nothing
-            FullPictureBox.AnimatedFadeImage = Nothing
-            FullPictureBox.AnimatedImage = Nothing
             video = New Video(Pics(imageNumber))
             Dim duration As Integer = video.Duration * 1000
-            If (duration > Timer1.Interval) Then
-                Timer1.Interval = duration
+            If (duration > TimerDelay.Interval) Then
+                TimerDelay.Interval = duration
             End If
             video.Owner = FullPictureBox
             video.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
@@ -400,15 +379,18 @@ Public Class FrmDigitalBBTwo
             video.Play()
             AddHandler video.Ending, AddressOf BackLoopHandler
 
-            ''Change image number
-            'imageNumber += 1
-            'If imageNumber >= imageCount Then
-            '    imageNumber = 0
-            'End If
+            'Change image number
+            imageNumber += 1
+            If imageNumber >= imageCount Then
+                imageNumber = 0
+            End If
         ElseIf TypeOf Pics(imageNumber) Is Image Then
             Timer1.Interval = frqOne
             Try
                 If Not slideFullSeparte Then
+                    PictureBox1.Visible = True
+                    PictureBox2.Visible = True
+                    FullPictureBox.Visible = False
                     If (video IsNot Nothing) Then
                         video.Dispose()
                     End If
@@ -444,6 +426,22 @@ Public Class FrmDigitalBBTwo
 
                     FullPictureBox.Visible = False
                     PictureBox1.Animate(frqOne / 100)
+                Else
+                    FullPictureBox.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
+                    If (video IsNot Nothing) Then
+                        video.Dispose()
+                    End If
+
+                    FullPictureBox.AnimatedImage = Pics(imageNumber)
+                    FullPictureBox.Animate(30)
+
+                    FullPictureBox.BackColor = Color.Transparent
+
+                    'Change image number
+                    imageNumber += 1
+                    If imageNumber >= imageCount Then
+                        imageNumber = 0
+                    End If
                 End If
             Catch exArg As ArgumentOutOfRangeException
                 updateSlideShow()
@@ -464,44 +462,50 @@ Public Class FrmDigitalBBTwo
         Else
             fullSlideShowAnimate()
         End If
-        TimerDelay.Stop()
-        TimerSecondDelay.Start()
+        
     End Sub
 
     Private Sub fullSlideShowAnimate()
+        If FullPictureBox.AnimatedImage Is Nothing Then
+            FullPictureBox.AnimatedFadeImage = Nothing
+            FullPictureBox.BackgroundImage = Nothing
+        Else
+            FullPictureBox.AnimatedFadeImage = FullPictureBox.AnimatedImage
+            FullPictureBox.BackgroundImage = FullPictureBox.AnimatedImage
+        End If
+
         If TypeOf Pics(imageNumber) Is String Then
             FullPictureBox.BackgroundImage = Nothing
-            FullPictureBox.AnimatedFadeImage = Nothing
-            FullPictureBox.AnimatedImage = Nothing
             video = New Video(Pics(imageNumber))
             Dim duration As Integer = video.Duration * 1000
-            If (duration > Timer1.Interval) Then
-                Timer1.Interval = duration
+            If (duration > TimerSecondDelay.Interval) Then
+                TimerSecondDelay.Interval = duration
             End If
+
+
             video.Owner = FullPictureBox
             video.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
             FullPictureBox.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
             video.Play()
             AddHandler video.Ending, AddressOf BackLoopHandler
+
+            'Change image number
+            imageNumber += 1
+            If imageNumber >= imageCount Then
+                imageNumber = 0
+            End If
         Else
             TimerDelay.Interval = frqTwo
             FullPictureBox.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
             If (video IsNot Nothing) Then
                 video.Dispose()
             End If
-            FullPictureBox.AnimatedFadeImage = Pics(imageNumber)
-            FullPictureBox.BackgroundImage = Pics(imageNumber)
-            FullPictureBox.BackColor = Color.Transparent
+
+            FullPictureBox.AnimatedImage = Pics(imageNumber)
 
             imageNumber += 1
             If imageNumber >= imageCount Then
                 imageNumber = 0
-            End If
-
-            If TypeOf Pics(imageNumber) Is Image Then
-                FullPictureBox.AnimatedImage = Pics(imageNumber)
-            Else
-                FullPictureBox.AnimatedImage = Nothing
             End If
 
             'Un-highlight when Full Image is shown
@@ -517,7 +521,10 @@ Public Class FrmDigitalBBTwo
 
             fullAnimate = True
             FullPictureBox.Animate(frqOne / 100)
-            End If
+        End If
+
+        TimerDelay.Stop()
+        TimerSecondDelay.Start()
     End Sub
 
     Private Sub separateSlideShowAnimate()

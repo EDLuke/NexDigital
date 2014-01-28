@@ -29,10 +29,10 @@ Partial Class FrmViewSlideShowTwo
         Me.btnAdd = New System.Windows.Forms.Button()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.trkOne = New System.Windows.Forms.TrackBar()
-        Me.PictureBox1 = New Project.AnimationControl()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.bgw = New System.ComponentModel.BackgroundWorker()
+        Me.PictureBox1 = New Project.AnimationControl()
         CType(Me.trkOne, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -83,18 +83,6 @@ Partial Class FrmViewSlideShowTwo
         Me.trkOne.TickStyle = System.Windows.Forms.TickStyle.TopLeft
         Me.trkOne.Value = 6
         '
-        'PictureBox1
-        '
-        Me.PictureBox1.AnimationType = Project.AnimationTypes.LeftToRight
-        Me.PictureBox1.Location = New System.Drawing.Point(2, 1)
-        Me.PictureBox1.MinimumSize = New System.Drawing.Size(100, 100)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Opacity = 0.0R
-        Me.PictureBox1.Size = New System.Drawing.Size(366, 295)
-        Me.PictureBox1.TabIndex = 0
-        Me.PictureBox1.Text = "AnimationControl1"
-        Me.PictureBox1.Transparent = True
-        '
         'Label1
         '
         Me.Label1.AutoSize = True
@@ -116,7 +104,19 @@ Partial Class FrmViewSlideShowTwo
         'bgw
         '
         '
-        'FrmViewSlideShow
+        'PictureBox1
+        '
+        Me.PictureBox1.AnimationType = Project.AnimationTypes.LeftToRight
+        Me.PictureBox1.Location = New System.Drawing.Point(2, 1)
+        Me.PictureBox1.MinimumSize = New System.Drawing.Size(100, 100)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Opacity = 0.0R
+        Me.PictureBox1.Size = New System.Drawing.Size(366, 295)
+        Me.PictureBox1.TabIndex = 0
+        Me.PictureBox1.Text = "AnimationControl1"
+        Me.PictureBox1.Transparent = True
+        '
+        'FrmViewSlideShowTwo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -132,7 +132,7 @@ Partial Class FrmViewSlideShowTwo
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmViewSlideShow"
+        Me.Name = "FrmViewSlideShowTwo"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Slide Show"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized

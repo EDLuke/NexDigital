@@ -123,9 +123,6 @@ Public Class FrmViewSlideShowTwo
     End Function
 
     Private Sub TimerDelay_Tick(sender As Object, e As EventArgs) Handles TimerDelay.Tick
-        If video.Disposed = True Then
-            PictureBox1.Animate(30)
-        End If
         TimerDelay.Stop()
         Timer1.Start()
     End Sub
