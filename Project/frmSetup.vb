@@ -37,6 +37,8 @@ Public Class frmSetup
     'Stores the frequency for the slide shows
     Public slideShowFreq As Integer
 
+    Private tempSelected As Integer
+
     Private Sub frmSetup_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         LoadCategory()
         loadToolTip()
@@ -117,13 +119,14 @@ Public Class frmSetup
     End Sub
 
     Private Sub btnMoveUp_Click(sender As Object, e As EventArgs) Handles btnMoveUp.Click
-        Dim tempSelected = lstMenuItems.SelectedIndex
+        tempSelected = lstMenuItems.SelectedIndex
 
         If checkSelect(lstMenuItems) Then
             Return
         End If
         If lstMenuItems.SelectedIndex <> 0 Then
-            MoveUpMenu(1)
+            bgwUp.RunWorkerAsync()
+            'MoveUpMenu(1)
         End If
         updateUI()
 
@@ -134,34 +137,50 @@ Public Class frmSetup
         End If
     End Sub
 
-    Private Sub MoveUpMenu(ByVal menu As Integer)
-        'Store the item information to temp
-        Dim tempItemId As String = menuItemsArrayList(lstMenuItems.SelectedIndex * 4)
-        Dim tempItem As String = menuItemsArrayList(lstMenuItems.SelectedIndex * 4 + 1)
-        Dim tempItemPrice As String = menuItemsArrayList(lstMenuItems.SelectedIndex * 4 + 2)
-        Dim tempItemDesp As String = menuItemsArrayList(lstMenuItems.SelectedIndex * 4 + 3)
+    Private Sub bgwUp_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwUp.DoWork
+        MoveUpMenu(1)
+    End Sub
 
-        'Update in the datebase, switch the position of the item with the item before it
-        DataLayer.SwitchMenuOrder(CInt(tempItemId), CInt(menuItemsArrayList((lstMenuItems.SelectedIndex - 1) * 4)), menu)
-
-        'Remove them in the ArrayList
-        menuItemsArrayList.RemoveAt(lstMenuItems.SelectedIndex * 4)
-        menuItemsArrayList.RemoveAt(lstMenuItems.SelectedIndex * 4)
-        menuItemsArrayList.RemoveAt(lstMenuItems.SelectedIndex * 4)
-        menuItemsArrayList.RemoveAt(lstMenuItems.SelectedIndex * 4)
-
-        'Then insert them in the place in front of them
-        menuItemsArrayList.Insert((lstMenuItems.SelectedIndex - 1) * 4, tempItemId)
-        menuItemsArrayList.Insert((lstMenuItems.SelectedIndex - 1) * 4 + 1, tempItem)
-        menuItemsArrayList.Insert((lstMenuItems.SelectedIndex - 1) * 4 + 2, tempItemPrice)
-        menuItemsArrayList.Insert((lstMenuItems.SelectedIndex - 1) * 4 + 3, tempItemDesp)
+    Private Sub bgwUp_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwUp.RunWorkerCompleted
+        updateUI()
 
         ' Update the digital board at run time
         MainMenu.digital.updateDespPanel()
+
+        If tempSelected - 1 >= 0 Then
+            lstMenuItems.SelectedIndex = tempSelected - 1
+        Else
+            lstMenuItems.SelectedIndex = 0
+        End If
+    End Sub
+
+    Private Sub MoveUpMenu(ByVal menu As Integer)
+        'Store the item information to temp
+        Dim tempItemId As String = menuItemsArrayList(tempSelected * 4)
+        Dim tempItem As String = menuItemsArrayList(tempSelected * 4 + 1)
+        Dim tempItemPrice As String = menuItemsArrayList(tempSelected * 4 + 2)
+        Dim tempItemDesp As String = menuItemsArrayList(tempSelected * 4 + 3)
+
+        'Update in the datebase, switch the position of the item with the item before it
+        DataLayer.SwitchMenuOrder(CInt(tempItemId), CInt(menuItemsArrayList((tempSelected - 1) * 4)), menu)
+
+        'Remove them in the ArrayList
+        menuItemsArrayList.RemoveAt(tempSelected * 4)
+        menuItemsArrayList.RemoveAt(tempSelected * 4)
+        menuItemsArrayList.RemoveAt(tempSelected * 4)
+        menuItemsArrayList.RemoveAt(tempSelected * 4)
+
+        'Then insert them in the place in front of them
+        menuItemsArrayList.Insert((tempSelected - 1) * 4, tempItemId)
+        menuItemsArrayList.Insert((tempSelected - 1) * 4 + 1, tempItem)
+        menuItemsArrayList.Insert((tempSelected - 1) * 4 + 2, tempItemPrice)
+        menuItemsArrayList.Insert((tempSelected - 1) * 4 + 3, tempItemDesp)
+
+
     End Sub
 
     Private Sub btnMoveDown_Click(sender As Object, e As EventArgs) Handles btnMoveDown.Click
-        Dim tempSelected = lstMenuItems.SelectedIndex
+        tempSelected = lstMenuItems.SelectedIndex
 
         If checkSelect(lstMenuItems) Then
             Return

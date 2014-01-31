@@ -45,6 +45,8 @@ Partial Class frmSetup
         Me.ToolTip3 = New System.Windows.Forms.ToolTip(Me.components)
         Me.bgwLoadOne = New System.ComponentModel.BackgroundWorker()
         Me.bgwLoadTwo = New System.ComponentModel.BackgroundWorker()
+        Me.bgwUp = New System.ComponentModel.BackgroundWorker()
+        Me.bgwDown = New System.ComponentModel.BackgroundWorker()
         CType(Me.CategoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CategoriesFrmSetupDS, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -258,4 +260,6 @@ Partial Class frmSetup
     Friend WithEvents ToolTip3 As System.Windows.Forms.ToolTip
     Friend WithEvents bgwLoadOne As System.ComponentModel.BackgroundWorker
     Friend WithEvents bgwLoadTwo As System.ComponentModel.BackgroundWorker
+    Friend WithEvents bgwUp As System.ComponentModel.BackgroundWorker
+    Friend WithEvents bgwDown As System.ComponentModel.BackgroundWorker
 End Class

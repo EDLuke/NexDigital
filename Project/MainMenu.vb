@@ -92,17 +92,19 @@ Public Class MainMenu
     Private Sub styleSetup()
         Try
             Dim styleString As String = "TS"
-            Using str As FileStream = File.OpenRead("Admin.bin")
-                Dim bf As New BinaryFormatter()
-                Dim adminList = DirectCast(bf.Deserialize(str), String())
-                styleString = adminList(2)
-            End Using
-            If styleString = "TS" Then
-                digitalForm = 2
+            If (File.Exists("Admin.bin")) Then
+                Using str As FileStream = File.OpenRead("Admin.bin")
+                    Dim bf As New BinaryFormatter()
+                    Dim adminList = DirectCast(bf.Deserialize(str), String())
+                    styleString = adminList(2)
+                End Using
+                If styleString = "TS" Then
+                    digitalForm = 2
 
-            ElseIf styleString = "TM" Then
-                digitalForm = 1
+                ElseIf styleString = "TM" Then
+                    digitalForm = 1
 
+                End If
             End If
         Catch ex As Exception
 

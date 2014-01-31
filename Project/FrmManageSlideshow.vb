@@ -328,10 +328,13 @@ Public Class FrmManageSlideshow
         Dim people As New ArrayList
 
         Try
-            Using str As FileStream = File.OpenRead("AnimationListOne.bin")
-                Dim bf As New BinaryFormatter()
-                people = DirectCast(bf.Deserialize(str), ArrayList)
-            End Using
+            If (File.Exists("AnimationListOne.bin")) Then
+                Using str As FileStream = File.OpenRead("AnimationListOne.bin")
+                    Dim bf As New BinaryFormatter()
+                    people = DirectCast(bf.Deserialize(str), ArrayList)
+                End Using
+            End If
+
         Catch ex As FileNotFoundException
 
         End Try

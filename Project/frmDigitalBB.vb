@@ -314,32 +314,34 @@ Public Class FrmDigitalBB
     Private Sub updatePanel(ByVal goFull As Boolean)
         Try
             Dim SlideShowPics As ArrayList = DataLayer.GetSlideShowItems(1)
+            If (SlideShowPics.Count <> 0) Then
 
-            For Each pn As Panel In flowPanel.Controls
-                Dim tempLabelPanel As MenuItemLabel = pn.Controls(0)
-                If goFull Then
-                    If CInt(tempLabelPanel.ID) = SlideShowPics((imageNumber) * 3) Then
-                        turnOnBorder(pn)
+                For Each pn As Panel In flowPanel.Controls
+                    Dim tempLabelPanel As MenuItemLabel = pn.Controls(0)
+                    If goFull Then
+                        If CInt(tempLabelPanel.ID) = SlideShowPics((imageNumber) * 3) Then
+                            turnOnBorder(pn)
+                        Else
+                            turnOffBorder(pn)
+                        End If
                     Else
                         turnOffBorder(pn)
                     End If
-                Else
-                    turnOffBorder(pn)
-                End If
-            Next
+                Next
 
-            For Each pn As Panel In flowPanelTwo.Controls
-                Dim tempLabelPanel As MenuItemLabel = pn.Controls(0)
-                If goFull Then
-                    If CInt(tempLabelPanel.ID) = SlideShowPics((imageNumber) * 3) Then
-                        turnOnBorder(pn)
+                For Each pn As Panel In flowPanelTwo.Controls
+                    Dim tempLabelPanel As MenuItemLabel = pn.Controls(0)
+                    If goFull Then
+                        If CInt(tempLabelPanel.ID) = SlideShowPics((imageNumber) * 3) Then
+                            turnOnBorder(pn)
+                        Else
+                            turnOffBorder(pn)
+                        End If
                     Else
                         turnOffBorder(pn)
                     End If
-                Else
-                    turnOffBorder(pn)
-                End If
-            Next
+                Next
+            End If
         Catch ex As Exception
             updateSlideShow()
         End Try
