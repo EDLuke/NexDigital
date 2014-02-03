@@ -18,12 +18,6 @@
             End If
         End If
 
-        Try
-            txtSearch.Text = lstAllItems.SelectedItem.Row.ItemArray(1)
-        Catch ex As Exception
-
-        End Try
-
         Me.ActiveControl = txtSearch
 
     End Sub

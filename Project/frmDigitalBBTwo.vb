@@ -24,6 +24,7 @@ Public Class FrmDigitalBBTwo
     Private newsArrayList, animationOneList, animationTwoList, SlideShowPics, SlideShowPics2, SlideShowFull As ArrayList
     Private w_Thread As CallBackThread
     Private n_Thread As CallBackThread
+    Private i_Thread As CallBackThread
     Private n As New clsNews
     Private w As New clsWeather(weatherLocationCode, "f")
     Private video As Video
@@ -105,8 +106,11 @@ Public Class FrmDigitalBBTwo
         Try
             While True
                 w = New clsWeather(weatherLocationCode, "f")
-                w_Thread.UpdateUI(internet.ToString)
-                Threading.Thread.Sleep(10000)
+                If (Me.IsHandleCreated) Then
+                    w_Thread.UpdateUI(internet.ToString)
+                    Threading.Thread.Sleep(10000)
+                End If
+
             End While
         Catch ex As Exception
             loadNews()
@@ -116,8 +120,11 @@ Public Class FrmDigitalBBTwo
     Private Sub newsThread()
         Try
             While True
-                n_Thread.UpdateUI(internet.ToString)
-                Threading.Thread.Sleep(50)
+                If (Me.IsHandleCreated) Then
+                    n_Thread.UpdateUI(internet.ToString)
+                    Threading.Thread.Sleep(50)
+                End If
+
             End While
         Catch ex As Exception
 
@@ -227,7 +234,7 @@ Public Class FrmDigitalBBTwo
         Next
 
         For i = 1 To SlideShowPics2.Count Step 3
-            If (SlideShowPics(i).ToString.Contains(".avi")) Then
+            If (SlideShowPics2(i).ToString.Contains(".avi")) Then
                 Pics2((i - 1) / 3) = Directory.GetCurrentDirectory() & "\images\" & SlideShowPics2(i).ToString()
             Else
                 Pics2((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics2(i).ToString()))
@@ -528,96 +535,125 @@ Public Class FrmDigitalBBTwo
     End Sub
 
     Private Sub separateSlideShowAnimate()
-        If Not Full(imageNumber2) Then
-            PictureBox2.AnimatedFadeImage = Pics2(imageNumber2)
-            PictureBox2.BackgroundImage = Pics2(imageNumber2)
-            PictureBox2.BackColor = Color.Transparent
-        End If
-
-        imageNumber2 += 1
-        If imageNumber2 >= imageCount2 Then
-            imageNumber2 = 0
-        End If
-
-        If (Full(imageNumber2)) Then
-            FullPictureBox.AnimatedImage = Pics2(imageNumber2)
+        If PictureBox2.AnimatedImage Is Nothing Then
+            PictureBox2.AnimatedFadeImage = Nothing
+            PictureBox2.BackgroundImage = Nothing
         Else
-            PictureBox2.AnimatedImage = Pics2(imageNumber2)
+            PictureBox2.AnimatedFadeImage = PictureBox2.AnimatedImage
+            PictureBox2.BackgroundImage = PictureBox2.AnimatedImage
         End If
 
-        If (Full(imageNumber2)) Then
-            Dim bmp As New Bitmap(CInt(Me.Width * 0.65), CInt(Me.Height * 0.96))
-            Using g As Graphics = Graphics.FromImage(bmp)
-                g.DrawImage(PictureBox1.AnimatedImage, New Point(0, 0))
-                g.DrawImage(PictureBox2.BackgroundImage, New Point(0, Me.Height * 0.48))
-            End Using
-
-            FullPictureBox.AnimatedFadeImage = bmp
-            FullPictureBox.BackgroundImage = bmp
-            FullPictureBox.BackColor = Color.Transparent
-            FullPictureBox.AnimationType = AnimationTypes.LeftToRight
-
+        If TypeOf Pics2(imageNumber2) Is String Then
+            PictureBox1.Visible = False
+            PictureBox2.Visible = False
             FullPictureBox.Visible = True
+            FullPictureBox.BackgroundImage = Nothing
+            video = New Video(Pics2(imageNumber2))
+            Dim duration As Integer = video.Duration * 1000
+            If (duration > TimerSecondDelay.Interval) Then
+                TimerSecondDelay.Interval = duration
+            End If
+            video.Owner = FullPictureBox
+            video.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
+            FullPictureBox.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
+            video.Play()
+            AddHandler video.Ending, AddressOf BackLoopHandler
 
-            'Change background image
-            Dim bmpBottom As New Bitmap(CInt(Me.Width * 0.65), CInt(Me.Height * 0.48))
-            Using gBottom As Graphics = Graphics.FromImage(bmpBottom)
-                Dim fm_rect As New Rectangle(0, FullPictureBox.AnimatedImage.Height / 2, FullPictureBox.AnimatedImage.Width, FullPictureBox.AnimatedImage.Height / 2)
-                Dim to_rect As New Rectangle(0, 0, Me.Width * 0.65, Me.Height * 0.48)
+            'Change image number
+            imageNumber2 += 1
+            If imageNumber2 >= imageCount2 Then
+                imageNumber2 = 0
+            End If
+        ElseIf TypeOf Pics2(imageNumber2) Is Image Then
+            TimerDelay.Interval = frqTwo
 
-                gBottom.DrawImage(FullPictureBox.AnimatedImage, to_rect, fm_rect, GraphicsUnit.Pixel)
-            End Using
-            Dim bmpTop As New Bitmap(CInt(Me.Width * 0.65), CInt(Me.Height * 0.48))
-            Using gTop As Graphics = Graphics.FromImage(bmpTop)
-                Dim fm_rect As New Rectangle(0, 0, FullPictureBox.AnimatedImage.Width, FullPictureBox.AnimatedImage.Height / 2)
-                Dim to_rect As New Rectangle(0, 0, Me.Width * 0.65, Me.Height * 0.48)
+            If (Full(imageNumber2)) Then
+                Dim bmp As New Bitmap(CInt(Me.Width * 0.65), CInt(Me.Height * 0.96))
+                Using g As Graphics = Graphics.FromImage(bmp)
+                    g.DrawImage(PictureBox1.AnimatedImage, New Point(0, 0))
+                    g.DrawImage(PictureBox2.BackgroundImage, New Point(0, Me.Height * 0.48))
+                End Using
 
-                gTop.DrawImage(FullPictureBox.AnimatedImage, to_rect, fm_rect, GraphicsUnit.Pixel)
-            End Using
+                FullPictureBox.AnimatedFadeImage = bmp
+                FullPictureBox.BackgroundImage = bmp
+                FullPictureBox.BackColor = Color.Transparent
+                FullPictureBox.Visible = True
 
-            PictureBox1.AnimatedImage = bmpTop
-            PictureBox1.AnimatedFadeImage = bmpTop
-            PictureBox1.BackgroundImage = bmpTop
-            PictureBox1.BackColor = Color.Transparent
+                'Change background image
+                Dim bmpBottom As New Bitmap(CInt(Me.Width * 0.65), CInt(Me.Height * 0.48))
+                Using gBottom As Graphics = Graphics.FromImage(bmpBottom)
+                    Dim fm_rect As New Rectangle(0, FullPictureBox.AnimatedImage.Height / 2, FullPictureBox.AnimatedImage.Width, FullPictureBox.AnimatedImage.Height / 2)
+                    Dim to_rect As New Rectangle(0, 0, Me.Width * 0.65, Me.Height * 0.48)
 
-            PictureBox2.AnimatedImage = bmpBottom
-            PictureBox2.AnimatedFadeImage = bmpBottom
-            PictureBox2.BackgroundImage = bmpBottom
-            PictureBox2.BackColor = Color.Transparent
+                    gBottom.DrawImage(FullPictureBox.AnimatedImage, to_rect, fm_rect, GraphicsUnit.Pixel)
+                End Using
+                Dim bmpTop As New Bitmap(CInt(Me.Width * 0.65), CInt(Me.Height * 0.48))
+                Using gTop As Graphics = Graphics.FromImage(bmpTop)
+                    Dim fm_rect As New Rectangle(0, 0, FullPictureBox.AnimatedImage.Width, FullPictureBox.AnimatedImage.Height / 2)
+                    Dim to_rect As New Rectangle(0, 0, Me.Width * 0.65, Me.Height * 0.48)
 
-            'highlight when Full Image is shown
-            updatePanel(FullPictureBox.Visible)
+                    gTop.DrawImage(FullPictureBox.AnimatedImage, to_rect, fm_rect, GraphicsUnit.Pixel)
+                End Using
 
-            Try
-                If animationTwoList IsNot Nothing And SlideShowPics2.Count <> 0 Then
-                    'Search for Unique AnimationType
-                    Dim animationSearch = animationTwoList.IndexOf(SlideShowPics2(imageNumber2 * 3 + 2))
-                    If animationSearch <> -1 Then
-                        FullPictureBox.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationTwoList(animationSearch + 1)), AnimationTypes)
-                    End If
+                PictureBox1.AnimatedImage = bmpTop
+                PictureBox1.AnimatedFadeImage = bmpTop
+                PictureBox1.BackgroundImage = bmpTop
+                PictureBox1.BackColor = Color.Transparent
+
+                PictureBox2.AnimatedImage = bmpBottom
+                PictureBox2.AnimatedFadeImage = bmpBottom
+                PictureBox2.BackgroundImage = bmpBottom
+                PictureBox2.BackColor = Color.Transparent
+
+                'highlight when Full Image is shown
+                updatePanel(FullPictureBox.Visible)
+
+                imageNumber2 += 1
+                If imageNumber2 >= imageCount2 Then
+                    imageNumber2 = 0
                 End If
-            Catch ex As Exception
 
-            End Try
-
-
-            FullPictureBox.Animate(frqOne / 100)
-        Else
-            FullPictureBox.Visible = False
-
-            Try
-                If animationTwoList IsNot Nothing And SlideShowPics2.Count <> 0 Then
-                    'Search for Unique AnimationType
-                    Dim animationSearch = animationTwoList.IndexOf(SlideShowPics2(imageNumber2 * 3 + 2))
-                    If animationSearch <> -1 Then
-                        PictureBox2.AnimationType = animationTwoList(animationSearch + 1)
+                Try
+                    If animationTwoList IsNot Nothing And SlideShowPics2 IsNot Nothing And SlideShowPics2.Count <> 0 Then
+                        'Search for Unique AnimationType
+                        Dim animationSearch = animationTwoList.IndexOf(SlideShowPics2(imageNumber2 * 3 + 2))
+                        If animationSearch <> -1 Then
+                            FullPictureBox.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationTwoList(animationSearch + 1)), AnimationTypes)
+                        End If
                     End If
+                Catch ex As Exception
+
+                End Try
+
+
+                FullPictureBox.Animate(frqOne / 100)
+            Else
+                FullPictureBox.Visible = False
+
+                Try
+                    If animationTwoList IsNot Nothing And SlideShowPics2 IsNot Nothing And SlideShowPics2.Count <> 0 Then
+                        'Search for Unique AnimationType
+                        Dim animationSearch = animationTwoList.IndexOf(SlideShowPics2(imageNumber2 * 3 + 2))
+                        If animationSearch <> -1 Then
+                            PictureBox2.AnimationType = animationTwoList(animationSearch + 1)
+                        End If
+                    End If
+                Catch ex As Exception
+
+                End Try
+
+                imageNumber2 += 1
+                If imageNumber2 >= imageCount2 Then
+                    imageNumber2 = 0
                 End If
-            Catch ex As Exception
 
-            End Try
+                If TypeOf Pics2(imageNumber2) Is Image Then
+                    'Animate (Foreground) Image
+                    PictureBox2.AnimatedImage = Pics2(imageNumber2)
+                End If
 
-            PictureBox2.Animate(frqTwo / 100)
+                PictureBox2.Animate(frqTwo / 100)
+            End If
         End If
     End Sub
 

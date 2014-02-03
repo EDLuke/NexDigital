@@ -71,22 +71,25 @@ Public Class clsWeather
     End Function
 
     Sub New(ByVal p As String, ByVal U As String)
-        Dim rq As HttpWebRequest = WebRequest.Create("http://xml.weather.yahoo.com/forecastrss?w=" & p & "&u=" & U)
-        rq.KeepAlive = False
-        rq.Timeout = 1000
-
         Try
-            Dim response = rq.GetResponse
+            If My.Computer.Network.IsAvailable = True Then
+                Dim rq As HttpWebRequest = WebRequest.Create("http://xml.weather.yahoo.com/forecastrss?w=" & p & "&u=" & U)
+                rq.KeepAlive = False
+                rq.Timeout = 1500
 
-            Dim reader = response.GetResponseStream
 
-            Dim doc As New System.Xml.XmlDocument()
+                Dim response = rq.GetResponse
 
-            'Load data   
-            doc.Load(reader)
-            Dim str = doc.OuterXml
-            FullTextXML = doc.OuterXml
-            PartTextXML = GetStr(str)
+                Dim reader = response.GetResponseStream
+
+                Dim doc As New System.Xml.XmlDocument()
+
+                'Load data   
+                doc.Load(reader)
+                Dim str = doc.OuterXml
+                FullTextXML = doc.OuterXml
+                PartTextXML = GetStr(str)
+            End If
         Catch ex As Exception
 
         End Try

@@ -50,23 +50,25 @@ Public Class clsNews
 
     Sub New()
         Try
-            Dim rq As HttpWebRequest = WebRequest.Create("http://news.yahoo.com/rss/")
-            rq.KeepAlive = False
-            rq.Timeout = 1500
+            If My.Computer.Network.IsAvailable = True Then
+                Dim rq As HttpWebRequest = WebRequest.Create("http://news.yahoo.com/rss/")
+                rq.KeepAlive = False
+                rq.Timeout = 1500
 
-            Dim response = rq.GetResponse
+                Dim response = rq.GetResponse
 
-            Dim reader = response.GetResponseStream
+                Dim reader = response.GetResponseStream
 
-            Dim doc As New System.Xml.XmlDocument()
+                Dim doc As New System.Xml.XmlDocument()
 
-            'Load data   
-            doc.Load(reader)
-            Dim str = doc.OuterXml
-            FullTextXML = doc.OuterXml
-            PartTextXML = GetXML(str)
-            Disect(PartTextXML)
-        Catch ex As Exception
+                'Load data   
+                doc.Load(reader)
+                Dim str = doc.OuterXml
+                FullTextXML = doc.OuterXml
+                PartTextXML = GetXML(str)
+                Disect(PartTextXML)
+            End If
+        Catch ex As WebException
 
         End Try
         
