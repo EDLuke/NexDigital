@@ -125,27 +125,9 @@ Public Class frmSetup
             Return
         End If
         If lstMenuItems.SelectedIndex <> 0 Then
-            bgwUp.RunWorkerAsync()
-            'MoveUpMenu(1)
+            MoveUpMenu(1)
         End If
         updateUI()
-
-        If tempSelected - 1 >= 0 Then
-            lstMenuItems.SelectedIndex = tempSelected - 1
-        Else
-            lstMenuItems.SelectedIndex = 0
-        End If
-    End Sub
-
-    Private Sub bgwUp_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwUp.DoWork
-        MoveUpMenu(1)
-    End Sub
-
-    Private Sub bgwUp_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwUp.RunWorkerCompleted
-        updateUI()
-
-        ' Update the digital board at run time
-        MainMenu.digital.updateDespPanel()
 
         If tempSelected - 1 >= 0 Then
             lstMenuItems.SelectedIndex = tempSelected - 1
