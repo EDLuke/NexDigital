@@ -96,7 +96,7 @@ Public Class FrmManageSlideshow
         AddToSlideShow()
 
         'Update the slideshow at run time
-        MainMenu.tabTwo.loadSlideShowPic()
+        Digital_Board.mainFrm.tabTwo.loadSlideShowPic()
     End Sub
 
     Private Sub btnAdd_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAdd.Click
@@ -107,7 +107,7 @@ Public Class FrmManageSlideshow
         AddToSlideShow()
 
         'Update the slideshow at run time
-        MainMenu.tabTwo.loadSlideShowPic()
+        Digital_Board.mainFrm.tabTwo.loadSlideShowPic()
     End Sub
 
     Private Sub AddToSlideShow()
@@ -143,7 +143,7 @@ Public Class FrmManageSlideshow
         LoadAnimationList()
 
         'Update the digital board at run time
-        MainMenu.digital.updateSlideShow()
+        Digital_Board.mainFrm.digital.updateSlideShow()
     End Sub
 
     Private Function checkRep(input As String) As Boolean
@@ -163,7 +163,7 @@ Public Class FrmManageSlideshow
         RemoveFromSlideShow()
 
         'Update the slideshow at run time
-        MainMenu.tabTwo.loadSlideShowPic()
+        Digital_Board.mainFrm.tabTwo.loadSlideShowPic()
     End Sub
 
     Private Sub RemoveFromSlideShow()
@@ -189,7 +189,7 @@ Public Class FrmManageSlideshow
         lstSlideShowPics.Nodes.Remove(lstSlideShowPics.SelectedNode)
 
         'Update the digital board at run time
-        MainMenu.digital.updateSlideShow()
+        Digital_Board.mainFrm.digital.updateSlideShow()
     End Sub
 
     Private Sub FillSlideShowPics()
@@ -255,7 +255,7 @@ Public Class FrmManageSlideshow
                     PictureBox1.Image = myImage
                 End If
             Else
-                MainMenu.vwOne.changeAnimaSelected(lstSlideShowPics.SelectedNode.Text)
+                Digital_Board.mainFrm.vwOne.changeAnimaSelected(lstSlideShowPics.SelectedNode.Text)
             End If
         Catch ex As FileNotFoundException
             PictureBox1.Image = Nothing

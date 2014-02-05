@@ -7,11 +7,11 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B39B0FDE-25F8-4ABA-BFF9-FD77805CAD59}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Project.My.MyApplication</StartupObject>
+    <StartupObject>Project.Digital_Board</StartupObject>
     <RootNamespace>Project</RootNamespace>
     <AssemblyName>Digital Board</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>

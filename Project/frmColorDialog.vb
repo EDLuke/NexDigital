@@ -372,22 +372,22 @@ Public Class frmColorDialog
     End Sub
 
     Public Sub loadPanel()
-        labelDetail = DataLayer.GetItemDetails(MainMenu.tabOne.selectedItemId)
+        labelDetail = DataLayer.GetItemDetails(Digital_Board.mainFrm.tabOne.selectedItemId)
 
         labelName.Width = flowPanel.Width
 
-        labelName.TitleFont = MainMenu.tabOne.despFontArray(0)
-        labelName.PriceFont = MainMenu.tabOne.despFontArray(1)
-        labelName.TitleColor = MainMenu.tabOne.despColorArray(0)
-        labelName.PriceColor = MainMenu.tabOne.despColorArray(1)
+        labelName.TitleFont = Digital_Board.mainFrm.tabOne.despFontArray(0)
+        labelName.PriceFont = Digital_Board.mainFrm.tabOne.despFontArray(1)
+        labelName.TitleColor = Digital_Board.mainFrm.tabOne.despColorArray(0)
+        labelName.PriceColor = Digital_Board.mainFrm.tabOne.despColorArray(1)
 
-        labelName.TitleFont = MainMenu.tabOne.despFontArray(0)
-        labelName.PriceFont = MainMenu.tabOne.despFontArray(1)
-        labelName.DespFont = MainMenu.tabOne.despFontArray(2)
-        labelName.TitleColor = MainMenu.tabOne.despColorArray(0)
-        labelName.PriceColor = MainMenu.tabOne.despColorArray(1)
-        labelName.DespColor = MainMenu.tabOne.despColorArray(2)
-        labelName.BorderColor = MainMenu.tabOne.itemBorderColor
+        labelName.TitleFont = Digital_Board.mainFrm.tabOne.despFontArray(0)
+        labelName.PriceFont = Digital_Board.mainFrm.tabOne.despFontArray(1)
+        labelName.DespFont = Digital_Board.mainFrm.tabOne.despFontArray(2)
+        labelName.TitleColor = Digital_Board.mainFrm.tabOne.despColorArray(0)
+        labelName.PriceColor = Digital_Board.mainFrm.tabOne.despColorArray(1)
+        labelName.DespColor = Digital_Board.mainFrm.tabOne.despColorArray(2)
+        labelName.BorderColor = Digital_Board.mainFrm.tabOne.itemBorderColor
 
         labelName.Title = labelDetail(0)
         labelName.Money = labelDetail(2)
@@ -416,15 +416,15 @@ Public Class frmColorDialog
     End Sub
 
     Private Function chooseSelected() As Integer
-        If MainMenu.tabOne.btnArray(0) Then
+        If Digital_Board.mainFrm.tabOne.btnArray(0) Then
             selectedColor = labelName.TitleColor
             lblSel.Text = "Name Color is selected"
             Return 0
-        ElseIf MainMenu.tabOne.btnArray(1) Then
+        ElseIf Digital_Board.mainFrm.tabOne.btnArray(1) Then
             selectedColor = labelName.PriceColor
             lblSel.Text = "Price Color is selected"
             Return 1
-        ElseIf MainMenu.tabOne.btnArray(2) Then
+        ElseIf Digital_Board.mainFrm.tabOne.btnArray(2) Then
             selectedColor = labelName.DespColor
             lblSel.Text = "Description Color is selected"
             Return 2
@@ -578,20 +578,20 @@ Handles nudRed.TextChanged, nudBlue.TextChanged, nudGreen.TextChanged, nudHue.Te
 
         Select Case sel
             Case 0
-                MainMenu.tabOne.despColorArray(0) = selectedColor
+                Digital_Board.mainFrm.tabOne.despColorArray(0) = selectedColor
                 str = "Title"
             Case 1
-                MainMenu.tabOne.despColorArray(1) = selectedColor
+                Digital_Board.mainFrm.tabOne.despColorArray(1) = selectedColor
                 str = "Price"
             Case 2
-                MainMenu.tabOne.despColorArray(2) = selectedColor
+                Digital_Board.mainFrm.tabOne.despColorArray(2) = selectedColor
                 str = "Description"
             Case -1
                 Return
         End Select
 
-        MainMenu.setup.BinarySerialize()
-        MainMenu.digital.updateDespPanel()
+        Digital_Board.mainFrm.setup.BinarySerialize()
+        Digital_Board.mainFrm.digital.updateDespPanel()
 
         MsgBox(str & "'s Color has changed")
     End Sub

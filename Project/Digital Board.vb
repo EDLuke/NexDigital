@@ -4,6 +4,8 @@ Imports System.Threading
 
 Public Class Digital_Board
 
+    Public Shared mainFrm As MainMenu
+
     <STAThread()> _
     Public Shared Sub Main()
         Application.EnableVisualStyles()
@@ -14,18 +16,19 @@ Public Class Digital_Board
         Dim currentDomain As AppDomain = AppDomain.CurrentDomain
         AddHandler currentDomain.UnhandledException, AddressOf UnhandledExceptionHandler
 
-        Application.Run(New MainMenu)
+        mainFrm = New MainMenu
+        Application.Run(mainFrm)
 
     End Sub
 
     Shared Sub UnhandledExceptionHandler(sender As Object, args As UnhandledExceptionEventArgs)
         Dim e As Exception = DirectCast(args.ExceptionObject, Exception)
-        'Log(e)
+        Log(e)
     End Sub
 
     Shared Sub ThreadExceptionHandler(sender As Object, args As ThreadExceptionEventArgs)
         Dim e As Exception = args.Exception
-        'Log(e)
+        Log(e)
     End Sub
 
     Public Shared Sub Log(ByVal ex As Exception)

@@ -265,18 +265,18 @@ Public Class FrmDigitalBBTwo
         Timer1.Stop()
 
         flowPanel.Controls.Clear()
-        MainMenu.setup.loadDefaults()
+        Digital_Board.mainFrm.setup.loadDefaults()
 
         Dim despList = DataLayer.GetMenuItems(1)
 
-        Array.Copy(MainMenu.setup.despColorArray, despColorArray, 3)
-        Array.Copy(MainMenu.setup.despFontArray, despFontArray, 3)
+        Array.Copy(Digital_Board.mainFrm.setup.despColorArray, despColorArray, 3)
+        Array.Copy(Digital_Board.mainFrm.setup.despFontArray, despFontArray, 3)
 
-        despBgColor = MainMenu.setup.despBgColor
-        itemPanelColor = MainMenu.setup.itemPanelColor
-        itemBorderColor = MainMenu.setup.itemBorderColor
-        lblNews.NewsColor = MainMenu.setup.newsColor
-        lblNow.ForeColor = MainMenu.setup.weatherColor
+        despBgColor = Digital_Board.mainFrm.setup.despBgColor
+        itemPanelColor = Digital_Board.mainFrm.setup.itemPanelColor
+        itemBorderColor = Digital_Board.mainFrm.setup.itemBorderColor
+        lblNews.NewsColor = Digital_Board.mainFrm.setup.newsColor
+        lblNow.ForeColor = Digital_Board.mainFrm.setup.weatherColor
 
         'Change the background color
         Me.BackColor = despBgColor

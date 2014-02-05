@@ -64,10 +64,10 @@ Public Class frmUpdateItem
 
         Dim result As Boolean = DataLayer.UpdateItem(currentItemId, item, desc, price, picture, full, categoryid)
         MessageBox.Show("Item has been updated!", "Success")
-        MainMenu.tabOne.loadItems()
+        Digital_Board.mainFrm.tabOne.loadItems()
 
         ' Update the digital board at run time
-        MainMenu.reloadData()
+        Digital_Board.mainFrm.reloadData()
     End Sub
 
     Private Sub btnRemovePic_Click(sender As Object, e As EventArgs) Handles btnRemovePic.Click

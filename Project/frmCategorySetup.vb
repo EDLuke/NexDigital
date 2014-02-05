@@ -35,8 +35,8 @@
         End If
         ' Fill new categories
         Me.CategoryTableAdapter.Fill(Me.CategoriesDataSet.Category)
-        MainMenu.tabOne.loadItems()
-        MainMenu.reloadData()
+        Digital_Board.mainFrm.tabOne.loadItems()
+        Digital_Board.mainFrm.reloadData()
     End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
@@ -55,6 +55,6 @@
 
         ' Fill new categories
         Me.CategoryTableAdapter.Fill(Me.CategoriesDataSet.Category)
-        MainMenu.reloadData()
+        Digital_Board.mainFrm.reloadData()
     End Sub
 End Class

@@ -13,8 +13,8 @@
     Private Sub lstAllItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstAllItems.SelectedIndexChanged
         If Not (lstAllItems.SelectedItem Is Nothing) Then
             selectedItemId = lstAllItems.SelectedItem.Row.ItemArray(0)
-            If MainMenu.tabTwo.Text = "Update Items" Then
-                MainMenu.tabTwo.setFormData(selectedItemId)
+            If Digital_Board.mainFrm.tabTwo.Text = "Update Items" Then
+                Digital_Board.mainFrm.tabTwo.setFormData(selectedItemId)
             End If
         End If
 
@@ -23,8 +23,8 @@
     End Sub
 
     Private Sub lstAllItems_MouseDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstAllItems.MouseDoubleClick
-        MainMenu.tabSec.SelectTab(1)
-        MainMenu.tabTwo.setFormData(MainMenu.tabOne.selectedItemId)
+        Digital_Board.mainFrm.tabSec.SelectTab(1)
+        Digital_Board.mainFrm.tabTwo.setFormData(Digital_Board.mainFrm.tabOne.selectedItemId)
     End Sub
 
     Public Sub loadItems()

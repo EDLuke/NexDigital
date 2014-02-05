@@ -73,7 +73,7 @@ Public Class frmAddItem
 
 
         MessageBox.Show("Item has been added", "Success")
-        MainMenu.tabOne.loadItems()
+        Digital_Board.mainFrm.tabOne.loadItems()
         ClearTextBoxes()
     End Sub
 

@@ -202,7 +202,7 @@ Public Class frmSetup
         menuItemsArrayList.Insert((lstMenuItems.SelectedIndex + 1) * 4 + 3, tempItemDesp)
 
         ' Update the digital board at run time
-        MainMenu.digital.updateDespPanel()
+        Digital_Board.mainFrm.digital.updateDespPanel()
     End Sub
 
     Private Function checkSelect(ByVal e As ListBox) As Boolean
@@ -245,7 +245,7 @@ Public Class frmSetup
         End If
 
         ' Update the digital board at run time
-        MainMenu.digital.updateDespPanel()
+        Digital_Board.mainFrm.digital.updateDespPanel()
     End Sub
 
     Private Sub RemoveFromMenu()
@@ -275,7 +275,7 @@ Public Class frmSetup
         Dim response As Boolean = DataLayer.RemoveFromMenu(CInt(itemId), 1)
 
         ' Update the digital board at run time
-        MainMenu.digital.updateDespPanel()
+        Digital_Board.mainFrm.digital.updateDespPanel()
     End Sub
 
     Public Sub FillCategories()
@@ -349,46 +349,46 @@ Public Class frmSetup
     Private Sub btnName_CheckedChanged(sender As Object, e As EventArgs) Handles btnName.CheckedChanged
         btnArray(0) = Not btnArray(0)
 
-        Select Case MainMenu.tabTwo.Name
+        Select Case Digital_Board.mainFrm.tabTwo.Name
             Case "Font"
-                despFontArray(0) = MainMenu.tabTwo.btnOk_Click
+                despFontArray(0) = Digital_Board.mainFrm.tabTwo.btnOk_Click
             Case "Color"
-                despColorArray(0) = MainMenu.tabTwo.btnOk_Click
+                despColorArray(0) = Digital_Board.mainFrm.tabTwo.btnOk_Click
         End Select
 
-        MainMenu.tabTwo.changeSelected(btnName.Text)
+        Digital_Board.mainFrm.tabTwo.changeSelected(btnName.Text)
     End Sub
 
     Private Sub btnPrice_CheckedChanged(sender As Object, e As EventArgs) Handles btnPrice.CheckedChanged
         btnArray(1) = Not btnArray(1)
 
-        Select Case MainMenu.tabTwo.Name
+        Select Case Digital_Board.mainFrm.tabTwo.Name
             Case "Font"
-                despFontArray(1) = MainMenu.tabTwo.btnOk_Click
+                despFontArray(1) = Digital_Board.mainFrm.tabTwo.btnOk_Click
             Case "Color"
-                despColorArray(1) = MainMenu.tabTwo.btnOk_Click
+                despColorArray(1) = Digital_Board.mainFrm.tabTwo.btnOk_Click
         End Select
 
-        MainMenu.tabTwo.changeSelected(btnPrice.Text)
+        Digital_Board.mainFrm.tabTwo.changeSelected(btnPrice.Text)
     End Sub
 
     Private Sub btnDesp_CheckedChanged(sender As Object, e As EventArgs) Handles btnDesp.CheckedChanged
         btnArray(2) = Not btnArray(2)
 
-        Select Case MainMenu.tabTwo.Name
+        Select Case Digital_Board.mainFrm.tabTwo.Name
             Case "Font"
-                despFontArray(2) = MainMenu.tabTwo.btnOk_Click
+                despFontArray(2) = Digital_Board.mainFrm.tabTwo.btnOk_Click
             Case "Color"
-                despColorArray(2) = MainMenu.tabTwo.btnOk_Click
+                despColorArray(2) = Digital_Board.mainFrm.tabTwo.btnOk_Click
         End Select
 
-        MainMenu.tabTwo.changeSelected(btnDesp.Text)
+        Digital_Board.mainFrm.tabTwo.changeSelected(btnDesp.Text)
     End Sub
 
     Private Sub lstMenuItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstMenuItems.SelectedIndexChanged
         selectedItemId = menuItemsArrayList(lstMenuItems.SelectedIndex * 4)
-        MainMenu.fontD.loadPanel()
-        MainMenu.colorD.loadPanel()
+        Digital_Board.mainFrm.fontD.loadPanel()
+        Digital_Board.mainFrm.colorD.loadPanel()
     End Sub
 
     Public Sub BinarySerialize()

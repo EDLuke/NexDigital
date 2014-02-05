@@ -106,7 +106,7 @@ Public Class FrmViewSlideShowTwo
     End Sub
 
     Public Sub loadTimerFreq()
-        slideShowFreq = MainMenu.digital.frqTwo / 1000 * 2
+        slideShowFreq = Digital_Board.mainFrm.digital.frqTwo / 1000 * 2
     End Sub
 
     Private Function resizeImage(ByVal image As Image) As Image
@@ -128,8 +128,8 @@ Public Class FrmViewSlideShowTwo
     End Sub
 
     Public Function btnAdd_Click(sender As Object, e As EventArgs) As AnimationTypes Handles btnAdd.Click
-        MainMenu.tabOne.AddAnimation(cmbAnimationType.SelectedItem)
-        MainMenu.digital.updateSlideShow()
+        Digital_Board.mainFrm.tabOne.AddAnimation(cmbAnimationType.SelectedItem)
+        Digital_Board.mainFrm.digital.updateSlideShow()
     End Function
 
     Private Sub cmbAnimationType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAnimationType.SelectedIndexChanged
@@ -140,8 +140,8 @@ Public Class FrmViewSlideShowTwo
     Private Sub trkOne_Scroll(sender As Object, e As EventArgs) Handles trkOne.MouseLeave
         slideShowFreq = trkOne.Value / 2 * 1000
         TimerDelay.Interval = slideShowFreq
-        MainMenu.digital.frqTwo = slideShowFreq
-        MainMenu.digital.setFrequency(2)
+        Digital_Board.mainFrm.digital.frqTwo = slideShowFreq
+        Digital_Board.mainFrm.digital.setFrequency(2)
     End Sub
 
     Public Sub changeAnimaSelected(ByVal animaIn As String)

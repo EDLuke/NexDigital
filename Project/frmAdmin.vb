@@ -52,10 +52,10 @@ Public Class frmAdmin
 
     Private Sub btnBgColor_Click(sender As Object, e As EventArgs) Handles btnBgColor.Click
         If ColorDialog1.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
-            MainMenu.digital.changeBackColor(ColorDialog1.Color)
-            MainMenu.setup.despBgColor = ColorDialog1.Color
-            MainMenu.setup.BinarySerialize()
-            MainMenu.digital.updateDespPanel()
+            Digital_Board.mainFrm.digital.changeBackColor(ColorDialog1.Color)
+            Digital_Board.mainFrm.setup.despBgColor = ColorDialog1.Color
+            Digital_Board.mainFrm.setup.BinarySerialize()
+            Digital_Board.mainFrm.digital.updateDespPanel()
         End If
     End Sub
 
@@ -74,12 +74,12 @@ Public Class frmAdmin
                     FileCopy(OpenFileDialog1.FileName, Directory.GetCurrentDirectory() & "\images\" & picture)
                 End If
 
-                MainMenu.digital.changeRestLogo(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & picture))
+                Digital_Board.mainFrm.digital.changeRestLogo(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & picture))
                 adminList(0) = Directory.GetCurrentDirectory() & "\images\" & picture
             Catch ex As Exception
 
             End Try
-            
+
         Catch ex As FileNotFoundException
             picture = ""
         End Try
@@ -96,7 +96,7 @@ Public Class frmAdmin
 
     Private Sub btnWL_Click(sender As Object, e As EventArgs) Handles btnWL.Click
         Dim newWeatherLocation As String = InputBox("Please enter a Location Code", "Weather Location", "2396503")
-        MainMenu.digital.weatherLocationCode = newWeatherLocation
+        Digital_Board.mainFrm.digital.weatherLocationCode = newWeatherLocation
         adminList(1) = newWeatherLocation
 
         BinarySerialize()
@@ -112,33 +112,33 @@ Public Class frmAdmin
 
     Private Sub btnHL_Click(sender As Object, e As EventArgs) Handles btnHL.Click
         If ColorDialog2.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
-            MainMenu.setup.itemPanelColor = ColorDialog2.Color
-            MainMenu.setup.BinarySerialize()
-            MainMenu.digital.updateDespPanel()
+            Digital_Board.mainFrm.setup.itemPanelColor = ColorDialog2.Color
+            Digital_Board.mainFrm.setup.BinarySerialize()
+            Digital_Board.mainFrm.digital.updateDespPanel()
         End If
     End Sub
 
     Private Sub btnHLB_Click(sender As Object, e As EventArgs) Handles btnHLB.Click
         If ColorDialog3.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
-            MainMenu.setup.itemBorderColor = ColorDialog3.Color
-            MainMenu.setup.BinarySerialize()
-            MainMenu.digital.updateDespPanel()
+            Digital_Board.mainFrm.setup.itemBorderColor = ColorDialog3.Color
+            Digital_Board.mainFrm.setup.BinarySerialize()
+            Digital_Board.mainFrm.digital.updateDespPanel()
         End If
     End Sub
 
     Private Sub btnWeatherColor_Click(sender As Object, e As EventArgs) Handles btnWeatherColor.Click
         If ColorDialog4.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
-            MainMenu.setup.weatherColor = ColorDialog4.Color
-            MainMenu.setup.BinarySerialize()
-            MainMenu.digital.updateDespPanel()
+            Digital_Board.mainFrm.setup.weatherColor = ColorDialog4.Color
+            Digital_Board.mainFrm.setup.BinarySerialize()
+            Digital_Board.mainFrm.digital.updateDespPanel()
         End If
     End Sub
 
     Private Sub btnNewsColor_Click(sender As Object, e As EventArgs) Handles btnNewsColor.Click
         If ColorDialog5.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
-            MainMenu.setup.newsColor = ColorDialog5.Color
-            MainMenu.setup.BinarySerialize()
-            MainMenu.digital.updateDespPanel()
+            Digital_Board.mainFrm.setup.newsColor = ColorDialog5.Color
+            Digital_Board.mainFrm.setup.BinarySerialize()
+            Digital_Board.mainFrm.digital.updateDespPanel()
         End If
     End Sub
 
@@ -161,6 +161,6 @@ Public Class frmAdmin
     Private Sub cmbSlideNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSlideNum.SelectedIndexChanged
         adminList(3) = cmbSlideNum.SelectedItem.ToString
         BinarySerialize()
-        MainMenu.digital.checkFullSeparte()
+        Digital_Board.mainFrm.digital.checkFullSeparte()
     End Sub
 End Class
