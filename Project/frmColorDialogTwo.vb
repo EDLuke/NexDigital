@@ -590,8 +590,8 @@ Handles nudRed.TextChanged, nudBlue.TextChanged, nudGreen.TextChanged, nudHue.Te
                 Return
         End Select
 
-        Digital_Board.mainFrm.setup.BinarySerialize()
-        Digital_Board.mainFrm.digital.updateDespPanel()
+        Digital_Board.setup.BinarySerialize()
+        Digital_Board.digital.updateDespPanel()
 
         MsgBox(str & "'s Color has changed")
     End Sub

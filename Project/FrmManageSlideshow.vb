@@ -143,7 +143,7 @@ Public Class FrmManageSlideshow
         LoadAnimationList()
 
         'Update the digital board at run time
-        Digital_Board.mainFrm.digital.updateSlideShow()
+        Digital_Board.digital.updateSlideShow()
     End Sub
 
     Private Function checkRep(input As String) As Boolean
@@ -189,7 +189,7 @@ Public Class FrmManageSlideshow
         lstSlideShowPics.Nodes.Remove(lstSlideShowPics.SelectedNode)
 
         'Update the digital board at run time
-        Digital_Board.mainFrm.digital.updateSlideShow()
+        Digital_Board.digital.updateSlideShow()
     End Sub
 
     Private Sub FillSlideShowPics()
@@ -255,7 +255,7 @@ Public Class FrmManageSlideshow
                     PictureBox1.Image = myImage
                 End If
             Else
-                Digital_Board.mainFrm.vwOne.changeAnimaSelected(lstSlideShowPics.SelectedNode.Text)
+                Digital_Board.vwOne.changeAnimaSelected(lstSlideShowPics.SelectedNode.Text)
             End If
         Catch ex As FileNotFoundException
             PictureBox1.Image = Nothing

@@ -7,24 +7,6 @@ Public Class MainMenu
 #Region "Field"
     Private _tabOne As New Object
     Private _tabTwo As New Object
-    Private digitalForm As Integer = 0
-
-    Public digital As Object
-    Public all As Object
-    Public admin As Object
-    Public addItem As Object
-    Public updateItem As Object
-    Public cateSetup As Object
-    Public setup As Object
-    Public setupTwo As Object
-    Public fontD As Object
-    Public colorD As Object
-    Public fontD2 As Object
-    Public colorD2 As Object
-    Public mgOne As Object
-    Public mgTwo As Object
-    Public vwOne As Object
-    Public vwTwo As Object
 
     Property tabTwo() As Object
         Get
@@ -47,117 +29,9 @@ Public Class MainMenu
     End Property
 #End Region
 
-    Public Class PowerManager
-
-#Region "Constructor"
-        Private Sub New()
-            'keep compiler from creating default constructor to create utility class
-        End Sub
-#End Region
-        Private Declare Function SetThreadExecutionState Lib "kernel32" (ByVal esFlags As EXECUTION_STATE) As EXECUTION_STATE
-
-        Public Enum EXECUTION_STATE As Integer
-
-            ES_CONTINUOUS = &H80000000
-
-            ES_DISPLAY_REQUIRED = &H2
-
-            ES_SYSTEM_REQUIRED = &H1
-
-        End Enum
-
-        Public Shared Function PowerSaveOff() As EXECUTION_STATE
-            Return SetThreadExecutionState(EXECUTION_STATE.ES_SYSTEM_REQUIRED Or EXECUTION_STATE.ES_DISPLAY_REQUIRED Or EXECUTION_STATE.ES_CONTINUOUS)
-        End Function
-
-        Public Shared Function PowerSaveOn() As EXECUTION_STATE
-            Return SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS)
-        End Function
-
-    End Class
-
-
     Private Sub MainMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Cursor = Cursors.WaitCursor
         bgwLoad.RunWorkerAsync()
-    End Sub
-
-    Private Sub bgwLoad_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwLoad.DoWork
-        styleSetup()
-        formSetup()
-        mdiSetup()
-        idleSetup()
-    End Sub
-
-    Private Sub styleSetup()
-        Try
-            Dim styleString As String = "TS"
-            If (File.Exists("Admin.bin")) Then
-                Using str As FileStream = File.OpenRead("Admin.bin")
-                    Dim bf As New BinaryFormatter()
-                    Dim adminList = DirectCast(bf.Deserialize(str), String())
-                    styleString = adminList(2)
-                End Using
-                If styleString = "TS" Then
-                    digitalForm = 2
-
-                ElseIf styleString = "TM" Then
-                    digitalForm = 1
-
-                End If
-            End If
-        Catch ex As Exception
-
-        End Try
-    End Sub
-
-    Private Sub formSetup()
-        Select Case digitalForm
-            Case 2
-                digital = New FrmDigitalBBTwo
-            Case Else
-                digital = New FrmDigitalBB
-        End Select
-
-        all = New frmAllItems
-        admin = New frmAdmin
-        addItem = New frmAddItem
-        updateItem = New frmUpdateItem
-        cateSetup = New frmCategorySetup
-        setup = New frmSetup
-        setupTwo = New frmSetupTwo
-        fontD = New frmFontDialog
-        colorD = New frmColorDialog
-        fontD2 = New frmFontDialogTwo
-        colorD2 = New frmColorDialogTwo
-        mgOne = New FrmManageSlideshow
-        vwOne = New FrmViewSlideShow
-        mgTwo = New FrmManageSlideshowTwo
-        vwTwo = New FrmViewSlideShowTwo
-    End Sub
-
-    Public Sub reloadData()
-        digital.updateDespPanel()
-        digital.updateSlideShow()
-        addItem.LoadItems()
-        all.loadItems()
-        cateSetup.loadCategory()
-        setup.LoadCategory()
-        setup.FillCategories()
-        setup.FillMenuItems()
-        setupTwo.LoadCategory()
-        setupTwo.FillCategories()
-        setupTwo.FillMenuItems()
-        mgOne.LoadCategory()
-        mgOne.FillCategories()
-        mgOne.UpdateTreeView()
-        vwOne.loadSlideShowPic()
-        vwOne.loadTimerFreq()
-        mgTwo.LoadCategory()
-        mgTwo.FillCategories()
-        mgTwo.UpdateTreeView()
-        vwTwo.loadSlideShowPic()
-        vwTwo.loadTimerFreq()
     End Sub
 
     Private Sub loadComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoad.RunWorkerCompleted
@@ -171,37 +45,6 @@ Public Class MainMenu
         Me.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub idleSetup()
-        PowerManager.PowerSaveOff()
-    End Sub
-
-    Private Sub mdiSetup()
-        Dim formArray As New ArrayList
-        formArray.Add(all)
-        formArray.Add(addItem)
-        formArray.Add(admin)
-        formArray.Add(updateItem)
-        formArray.Add(cateSetup)
-        formArray.Add(setup)
-        formArray.Add(setupTwo)
-        formArray.Add(fontD)
-        formArray.Add(fontD2)
-        formArray.Add(colorD)
-        formArray.Add(colorD2)
-        formArray.Add(mgOne)
-        formArray.Add(vwOne)
-        formArray.Add(mgTwo)
-        formArray.Add(vwTwo)
-
-        For Each formTemp As Form In formArray
-            formTemp.TopLevel = False
-            formTemp.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-            formTemp.AutoSize = False
-            formTemp.Width = tabItemSetup.Width
-            formTemp.Height = tabItemSetup.Height
-        Next
-    End Sub
-
     Private Sub tabMain_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tabMain.SelectedIndexChanged
         tabSec.Controls.Clear()
         showMainForm()
@@ -210,14 +53,13 @@ Public Class MainMenu
     End Sub
 
     Private Sub changeStyle()
-        Select Case digitalForm
-            Case 2
-                tabMenuSetupTwo.Name = "tabMgSlideTwo"
-                tabMenuSetupTwo.Text = "Manage SlideShow Two"
-            Case Else
-                tabMenuSetupTwo.Name = "tabMenuSetupTwo"
-                tabMenuSetupTwo.Text = "Menu Setup Two"
-        End Select
+        If TypeOf (Digital_Board.digital) Is FrmDigitalBB Then
+            tabMenuSetupTwo.Name = "tabMgSlideTwo"
+            tabMenuSetupTwo.Text = "Manage SlideShow Two"
+        ElseIf TypeOf (Digital_Board.digital) Is FrmDigitalBBTwo Then
+            tabMenuSetupTwo.Name = "tabMenuSetupTwo"
+            tabMenuSetupTwo.Text = "Menu Setup Two"
+        End If
     End Sub
 
     Private Sub tabSec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tabSec.SelectedIndexChanged
@@ -229,15 +71,15 @@ Public Class MainMenu
     Private Sub showMainForm()
         Select Case tabMain.SelectedTab.Name
             Case "tabItemSetup"
-                _tabOne = all
+                _tabOne = Digital_Board.all
             Case "tabMenuSetup"
-                _tabOne = setup
+                _tabOne = Digital_Board.setup
             Case "tabMenuSetupTwo"
-                _tabOne = setupTwo
+                _tabOne = Digital_Board.setupTwo
             Case "tabMgSlideOne"
-                _tabOne = mgOne
+                _tabOne = Digital_Board.mgOne
             Case "tabMgSlideTwo"
-                _tabOne = mgTwo
+                _tabOne = Digital_Board.mgTwo
         End Select
 
         tabMain.SelectedTab.Controls.Add(_tabOne)
@@ -266,14 +108,13 @@ Public Class MainMenu
     End Sub
 
     Public Sub updateSecForm()
-
         Select Case tabSec.SelectedTab.Text
             Case "Add Item"
-                _tabTwo = addItem
+                _tabTwo = Digital_Board.addItem
             Case "Update Item"
-                _tabTwo = updateItem
+                _tabTwo = Digital_Board.updateItem
                 Try
-                    updateItem.setFormData(_tabOne.selectedItemId)
+                    Digital_Board.updateItem.setFormData(_tabOne.selectedItemId)
                 Catch ex As Exception
 
                 End Try
@@ -281,33 +122,31 @@ Public Class MainMenu
                 checkDelete()
                 Return
             Case "Category Setup"
-                _tabTwo = cateSetup
+                _tabTwo = Digital_Board.cateSetup
             Case "Admin"
-                _tabTwo = admin
+                _tabTwo = Digital_Board.admin
             Case "Font"
-                _tabTwo = fontD
+                _tabTwo = Digital_Board.fontD
             Case "Color"
-                _tabTwo = colorD
+                _tabTwo = Digital_Board.colorD
             Case "Font Two"
-                _tabTwo = fontD2
+                _tabTwo = Digital_Board.fontD2
             Case "Color Two"
-                _tabTwo = colorD2
+                _tabTwo = Digital_Board.colorD2
             Case "View SlideShow One"
-                _tabTwo = vwOne
+                _tabTwo = Digital_Board.vwOne
             Case "View SlideShow Two"
-                _tabTwo = vwTwo
+                _tabTwo = Digital_Board.vwTwo
         End Select
 
-        admin.hideAdminControl()
+        Digital_Board.admin.hideAdminControl()
         tabSec.SelectedTab.Controls.Add(_tabTwo)
         _tabTwo.Show()
     End Sub
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
-        digital.Dispose()
+        Digital_Board.digital.Dispose()
         GC.Collect()
-
-        PowerManager.PowerSaveOn()
         Me.Dispose()
     End Sub
 
@@ -318,11 +157,11 @@ Public Class MainMenu
             If result = True Then
                 MsgBox("Item Deleted!")
                 _tabOne.loadItems()
-                reloadData()
+                Digital_Board.reloadData()
                 Try
                     'Update the digital board at run time
-                    digital.updateDespPanel()
-                    digital.updateSlideShow()
+                    Digital_Board.digital.updateDespPanel()
+                    Digital_Board.digital.updateSlideShow()
                 Catch ex As Exception
 
                 End Try
@@ -346,37 +185,31 @@ Public Class MainMenu
     End Sub
 
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
-        setup.BinaryDeserialize()
+        Digital_Board.setup.BinaryDeserialize()
 
-        If TypeOf digital Is FrmDigitalBB Or TypeOf digital Is FrmDigitalBBTwo Then
-            digital.Dispose()
+        If Digital_Board.digital.IsDisposed() Then
+            Digital_Board.digitalSetup()
         End If
 
-        Select Case digitalForm
-            Case 2
-                digital = New FrmDigitalBBTwo
-            Case Else
-                digital = New FrmDigitalBB
-        End Select
-        digital.loadform()
+        Digital_Board.digital.loadform()
         Application.DoEvents()
 
         If btnFull.Checked = True Then
-            digital.FormBorderStyle = Windows.Forms.FormBorderStyle.None
+            Digital_Board.digital.FormBorderStyle = Windows.Forms.FormBorderStyle.None
         Else
-            digital.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+            Digital_Board.digital.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
         End If
 
         Dim screens = Screen.AllScreens
         If screens.Length = 2 Then
             If btnSec.Checked = True Then
-                setFormLocation(digital, screens(1), True)
+                setFormLocation(Digital_Board.digital, screens(1), True)
             Else
-                setFormLocation(digital, screens(0), False)
+                setFormLocation(Digital_Board.digital, screens(0), False)
             End If
         End If
 
-        digital.Show()
+        Digital_Board.digital.Show()
     End Sub
 
     Private Sub btnFull_Click(sender As Object, e As EventArgs) Handles btnFull.CheckedChanged

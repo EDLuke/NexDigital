@@ -202,7 +202,7 @@ Public Class frmSetup
         menuItemsArrayList.Insert((lstMenuItems.SelectedIndex + 1) * 4 + 3, tempItemDesp)
 
         ' Update the digital board at run time
-        Digital_Board.mainFrm.digital.updateDespPanel()
+        Digital_Board.digital.updateDespPanel()
     End Sub
 
     Private Function checkSelect(ByVal e As ListBox) As Boolean
@@ -245,7 +245,7 @@ Public Class frmSetup
         End If
 
         ' Update the digital board at run time
-        Digital_Board.mainFrm.digital.updateDespPanel()
+        Digital_Board.digital.updateDespPanel()
     End Sub
 
     Private Sub RemoveFromMenu()
@@ -275,7 +275,7 @@ Public Class frmSetup
         Dim response As Boolean = DataLayer.RemoveFromMenu(CInt(itemId), 1)
 
         ' Update the digital board at run time
-        Digital_Board.mainFrm.digital.updateDespPanel()
+        Digital_Board.digital.updateDespPanel()
     End Sub
 
     Public Sub FillCategories()
@@ -387,8 +387,8 @@ Public Class frmSetup
 
     Private Sub lstMenuItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstMenuItems.SelectedIndexChanged
         selectedItemId = menuItemsArrayList(lstMenuItems.SelectedIndex * 4)
-        Digital_Board.mainFrm.fontD.loadPanel()
-        Digital_Board.mainFrm.colorD.loadPanel()
+        Digital_Board.fontD.loadPanel()
+        Digital_Board.colorD.loadPanel()
     End Sub
 
     Public Sub BinarySerialize()

@@ -243,19 +243,19 @@ Public Class FrmDigitalBB
 
         flowPanel.Controls.Clear()
         flowPanelTwo.Controls.Clear()
-        Digital_Board.mainFrm.setup.loadDefaults()
+        Digital_Board.setup.loadDefaults()
 
         Dim despList = DataLayer.GetMenuItems(1)
         Dim despListTwo = DataLayer.GetMenuItems(2)
 
-        Array.Copy(Digital_Board.mainFrm.setup.despColorArray, despColorArray, 3)
-        Array.Copy(Digital_Board.mainFrm.setup.despFontArray, despFontArray, 3)
+        Array.Copy(Digital_Board.setup.despColorArray, despColorArray, 3)
+        Array.Copy(Digital_Board.setup.despFontArray, despFontArray, 3)
 
-        despBgColor = Digital_Board.mainFrm.setup.despBgColor
-        itemPanelColor = Digital_Board.mainFrm.setup.itemPanelColor
-        itemBorderColor = Digital_Board.mainFrm.setup.itemBorderColor
-        lblNews.NewsColor = Digital_Board.mainFrm.setup.newsColor
-        lblNow.ForeColor = Digital_Board.mainFrm.setup.weatherColor
+        despBgColor = Digital_Board.setup.despBgColor
+        itemPanelColor = Digital_Board.setup.itemPanelColor
+        itemBorderColor = Digital_Board.setup.itemBorderColor
+        lblNews.NewsColor = Digital_Board.setup.newsColor
+        lblNow.ForeColor = Digital_Board.setup.weatherColor
 
         'Change the background color
         Me.BackColor = despBgColor

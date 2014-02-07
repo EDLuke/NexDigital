@@ -75,8 +75,7 @@ Public Class clsWeather
             If My.Computer.Network.IsAvailable = True Then
                 Dim rq As HttpWebRequest = WebRequest.Create("http://xml.weather.yahoo.com/forecastrss?w=" & p & "&u=" & U)
                 rq.KeepAlive = False
-                rq.Timeout = 1500
-
+                rq.Timeout = 3000
 
                 Dim response = rq.GetResponse
 

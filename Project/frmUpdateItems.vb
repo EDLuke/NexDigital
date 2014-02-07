@@ -67,7 +67,7 @@ Public Class frmUpdateItem
         Digital_Board.mainFrm.tabOne.loadItems()
 
         ' Update the digital board at run time
-        Digital_Board.mainFrm.reloadData()
+        Digital_Board.reloadData()
     End Sub
 
     Private Sub btnRemovePic_Click(sender As Object, e As EventArgs) Handles btnRemovePic.Click
