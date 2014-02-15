@@ -50,6 +50,7 @@ Public Class MainMenu
         showMainForm()
         showSecForm()
         updateSecForm()
+        _tabOne.Select()
     End Sub
 
     Private Sub changeStyle()
@@ -84,6 +85,7 @@ Public Class MainMenu
 
         tabMain.SelectedTab.Controls.Add(_tabOne)
         _tabOne.Show()
+        _tabOne.Select()
     End Sub
 
     Private Sub showSecForm()
@@ -142,6 +144,18 @@ Public Class MainMenu
         Digital_Board.admin.hideAdminControl()
         tabSec.SelectedTab.Controls.Add(_tabTwo)
         _tabTwo.Show()
+
+        If (_tabTwo IsNot Digital_Board.vwOne) Then
+            Digital_Board.vwOne.StopTimer()
+        Else
+            Digital_Board.vwOne.StartTimer()
+        End If
+
+        If (_tabTwo IsNot Digital_Board.vwTwo) Then
+            Digital_Board.vwTwo.StopTimer()
+        Else
+            Digital_Board.vwTwo.StartTimer()
+        End If
     End Sub
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click

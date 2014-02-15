@@ -10,6 +10,18 @@
         loadItems()
     End Sub
 
+    Private Sub fmrAllItems_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseWheel
+        If (e.Delta > 0) Then
+            If lstAllItems.SelectedIndex - 1 >= 0 Then
+                lstAllItems.SelectedIndex -= 1
+            End If
+        Else
+            If lstAllItems.SelectedIndex + 1 < lstAllItems.Items.Count Then
+                lstAllItems.SelectedIndex += 1
+            End If
+        End If
+    End Sub
+
     Private Sub lstAllItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstAllItems.SelectedIndexChanged
         If Not (lstAllItems.SelectedItem Is Nothing) Then
             selectedItemId = lstAllItems.SelectedItem.Row.ItemArray(0)
@@ -19,7 +31,6 @@
         End If
 
         Me.ActiveControl = txtSearch
-
     End Sub
 
     Private Sub lstAllItems_MouseDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstAllItems.MouseDoubleClick

@@ -21,6 +21,20 @@ Public Class FrmViewSlideShowTwo
         cmbAnimationType.DataSource = System.Enum.GetValues(GetType(AnimationTypes))
     End Sub
 
+    Public Sub StopTimer()
+        Timer1.Stop()
+        If video IsNot Nothing Then
+            video.Stop()
+        End If
+    End Sub
+
+    Public Sub StartTimer()
+        Timer1.Start()
+        If video IsNot Nothing Then
+            video.Stop()
+        End If
+    End Sub
+
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         If SlideShowPicsList.Count <> 0 Then
             If PictureBox1.AnimatedImage Is Nothing Then
