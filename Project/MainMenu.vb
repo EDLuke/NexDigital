@@ -109,6 +109,14 @@ Public Class MainMenu
         End Select
     End Sub
 
+    Private Sub tabMain_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tabMain.MouseEnter
+        _tabOne.Select()
+    End Sub
+
+    Private Sub tabSec_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tabSec.MouseEnter
+        _tabTwo.Select()
+    End Sub
+
     Public Sub updateSecForm()
         Select Case tabSec.SelectedTab.Text
             Case "Add Item"

@@ -14,7 +14,22 @@ Public Class frmAddItem
         If (Not bgw.IsBusy) Then
             bgw.RunWorkerAsync()
         End If
+    End Sub
 
+    Private Sub cmbCategories_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCategories.MouseEnter
+        cmbCategories.Select()
+    End Sub
+
+    Private Sub cmbCategories_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles cmbCategories.MouseWheel
+        If (e.Delta > 0) Then
+            If cmbCategories.SelectedIndex - 1 >= 0 Then
+                cmbCategories.SelectedIndex -= 1
+            End If
+        Else
+            If cmbCategories.SelectedIndex + 1 < cmbCategories.Items.Count Then
+                cmbCategories.SelectedIndex += 1
+            End If
+        End If
     End Sub
 
     Private Sub loadComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw.RunWorkerCompleted

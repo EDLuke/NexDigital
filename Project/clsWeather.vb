@@ -88,6 +88,8 @@ Public Class clsWeather
                 Dim str = doc.OuterXml
                 FullTextXML = doc.OuterXml
                 PartTextXML = GetStr(str)
+                response.Close()
+                reader.Close()
             End If
         Catch ex As Exception
 

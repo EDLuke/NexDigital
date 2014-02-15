@@ -10,7 +10,11 @@
         loadItems()
     End Sub
 
-    Private Sub fmrAllItems_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseWheel
+    Private Sub lstAllItems_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.MouseEnter
+        lstAllItems.Select()
+    End Sub
+
+    Private Sub lstAllItems_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseWheel
         If (e.Delta > 0) Then
             If lstAllItems.SelectedIndex - 1 >= 0 Then
                 lstAllItems.SelectedIndex -= 1

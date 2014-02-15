@@ -67,6 +67,8 @@ Public Class clsNews
                 FullTextXML = doc.OuterXml
                 PartTextXML = GetXML(str)
                 Disect(PartTextXML)
+                response.Close()
+                reader.Close()
             End If
         Catch ex As WebException
 
