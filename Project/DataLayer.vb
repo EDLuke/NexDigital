@@ -32,7 +32,7 @@ Public Class DataLayer
 
         Try
             ' SqlQuery for inserting data into the table
-            strSQL = "Insert into Items(Name, Description, Price, picture, CategoryID, slideFull) values (@item, @desc, @price, @pictureUrl, @categoryId, @slideFull)"
+            strSQL = "Insert into Items(Name, Description, Price, picture, CategoryID) values (@item, @desc, @price, @pictureUrl, @categoryId)"
 
             ' Set command type to text and set the query to strSql
             command.CommandType = CommandType.Text
@@ -43,7 +43,6 @@ Public Class DataLayer
             command.Parameters.AddWithValue("@price", price)
             command.Parameters.AddWithValue("@pictureUrl", pictureUrl)
             command.Parameters.AddWithValue("@categoryId", categoryId)
-            command.Parameters.AddWithValue("@slideFull", False)
 
             ' Run the query
             command.ExecuteNonQuery()
@@ -329,7 +328,7 @@ Public Class DataLayer
         ' create connection using the Conection String
         sqlConn = New SqlCeConnection(conString)
         ' Query statement to get all the records from the tblPersonnel 
-        sqlDA = New SqlCeDataAdapter("select itemid, name, price, description, menuItem" & menuNum & " from items WHERE menuItem != 0", sqlConn)
+        sqlDA = New SqlCeDataAdapter("select itemid, name, price, description, menuItem" & menuNum & " from items WHERE menuItem" & menuNum & " != 0", sqlConn)
 
         ' Create the dataset
         Dim datasetitems As New DataSet()
@@ -991,6 +990,50 @@ Public Class DataLayer
     Public Shared Function FixString(ByVal SourceString As String, ByVal StringToReplace As String, ByVal StringReplacement As String)
         SourceString = SourceString.Replace(StringToReplace, StringReplacement)
         Return SourceString
+    End Function
+
+    Public Shared Sub Validate()
+        ValidateMenu()
+        ValidateSlideShow()
+    End Sub
+
+    Private Shared Function ValidateSlideShow()
+
+    End Function
+
+    Private Shared Function ValidateMenu()
+        Dim maxMenuItem = FindMaxItemOrder(1)
+        Dim maxMenuItemTwo = FindMaxItemOrder(2)
+
+        Dim result As New ArrayList
+        Dim missing As New List(Of Integer)
+
+        Dim sqlConn As SqlCeConnection
+        Dim sqlDA As SqlCeDataAdapter
+        ' create connection using the Conection String
+        sqlConn = New SqlCeConnection(conString)
+        ' Query statement to get all the records from the tblPersonnel 
+        sqlDA = New SqlCeDataAdapter("select itemid, menuItem from items WHERE menuItem != 0", sqlConn)
+
+        ' Create the dataset
+        Dim datasetitems As New DataSet()
+        ' Fill the dataset from the database table using the data adapter
+        sqlDA.Fill(datasetitems)
+
+        For Each row As DataRow In datasetitems.Tables(0).Rows
+            Dim itemid As String = row("ItemId").ToString()
+            Dim menuOrder As Integer = CInt(row("MenuItem").ToString())
+            result.Add(itemid)
+            result.Add(menuOrder)
+        Next
+
+        For i = 0 To maxMenuItem
+            If Not result.Contains(i) Then
+                missing.Add(i)
+            End If
+        Next
+
+        Return missing
     End Function
 End Class
 

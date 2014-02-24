@@ -10,11 +10,13 @@
         Dim fontPos As Integer = 0
         For Each fnt As FontFamily In FontFamily.Families
             lstFont.Items.Add(fnt.Name)
-            If fnt.Name = Digital_Board.setup.despFontArray(0).Name Then
+            If fnt.Name = MainMenu.setup.despFontArray(0).Name Then
                 fontPos = fontRow
             End If
             fontRow += 1
         Next
+
+        'lstFont.Items.AddRange({"Arial", "Arial Black", "Comic Sans MS", "Courier New", "Georgia", "Impact", "Lucida Console", "Verdana", "Lucida Sans Unicode", "Arial", "Arial", "Palantion Linotype", "Tahoma", "Times New Roman", "Trebuchet MS", "MS Sans Serif", "MS Serif"})
         lstFontStyle.Items.AddRange({"Regular", "Italic", "Bold", "Bold Italic"})
         lstFontSize.Items.AddRange({"8", "9", "10", "12", "14", "16", "18", "20", "24", "36", "48", "72"})
         lstFont.SelectedIndex = fontPos
@@ -25,24 +27,24 @@
     End Sub
 
     Public Sub loadPanel()
-        labelDetail = DataLayer.GetItemDetails(Digital_Board.setup.selectedItemId)
+        labelDetail = DataLayer.GetItemDetails(MainMenu.setup.selectedItemId)
 
         If labelDetail.Count <> 0 Then
 
             labelName.Width = flowPanel.Width
 
-            labelName.TitleFont = Digital_Board.setup.despFontArray(0)
-            labelName.PriceFont = Digital_Board.setup.despFontArray(1)
-            labelName.TitleColor = Digital_Board.setup.despColorArray(0)
-            labelName.PriceColor = Digital_Board.setup.despColorArray(1)
+            labelName.TitleFont = MainMenu.setup.despFontArray(0)
+            labelName.PriceFont = MainMenu.setup.despFontArray(1)
+            labelName.TitleColor = MainMenu.setup.despColorArray(0)
+            labelName.PriceColor = MainMenu.setup.despColorArray(1)
 
-            labelName.TitleFont = Digital_Board.setup.despFontArray(0)
-            labelName.PriceFont = Digital_Board.setup.despFontArray(1)
-            labelName.DespFont = Digital_Board.setup.despFontArray(2)
-            labelName.TitleColor = Digital_Board.setup.despColorArray(0)
-            labelName.PriceColor = Digital_Board.setup.despColorArray(1)
-            labelName.DespColor = Digital_Board.setup.despColorArray(2)
-            MenuItemLabel.BorderColor = Digital_Board.setup.itemBorderColor
+            labelName.TitleFont = MainMenu.setup.despFontArray(0)
+            labelName.PriceFont = MainMenu.setup.despFontArray(1)
+            labelName.DespFont = MainMenu.setup.despFontArray(2)
+            labelName.TitleColor = MainMenu.setup.despColorArray(0)
+            labelName.PriceColor = MainMenu.setup.despColorArray(1)
+            labelName.DespColor = MainMenu.setup.despColorArray(2)
+            MenuItemLabel.BorderColor = MainMenu.setup.itemBorderColor
 
             labelName.Title = labelDetail(0)
             labelName.Money = labelDetail(2)
@@ -97,15 +99,15 @@
     End Sub
 
     Private Function chooseSelected() As Integer
-        If Digital_Board.setup.btnArray(0) Then
+        If MainMenu.setup.btnArray(0) Then
             selectedFont = labelName.TitleFont
             lblSel.Text = "Name Font is selected"
             Return 0
-        ElseIf Digital_Board.setup.btnArray(1) Then
+        ElseIf MainMenu.setup.btnArray(1) Then
             selectedFont = labelName.PriceFont
             lblSel.Text = "Price Font is selected"
             Return 1
-        ElseIf Digital_Board.setup.btnArray(2) Then
+        ElseIf MainMenu.setup.btnArray(2) Then
             selectedFont = labelName.DespFont
             lblSel.Text = "Description Font is selected"
             Return 2
@@ -138,20 +140,20 @@
 
         Select Case sel
             Case 0
-                Digital_Board.setup.despFontArray(0) = selectedFont
+                MainMenu.setup.despFontArray(0) = selectedFont
                 str = "Title"
             Case 1
-                Digital_Board.setup.despFontArray(1) = selectedFont
+                MainMenu.setup.despFontArray(1) = selectedFont
                 str = "Price"
             Case 2
-                Digital_Board.setup.despFontArray(2) = selectedFont
+                MainMenu.setup.despFontArray(2) = selectedFont
                 str = "Description"
             Case -1
                 Return
         End Select
 
-        Digital_Board.setup.BinarySerialize()
-        Digital_Board.digital.updateDespPanel()
+        MainMenu.setup.BinarySerialize()
+        MainMenu.digital.updateDespPanel()
 
         MsgBox(str & "'s Font has changed")
     End Sub
