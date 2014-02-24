@@ -42,6 +42,55 @@ Public Class frmSetupTwo
         End If
     End Sub
 
+    'MouseEnter Handler for the three Controls
+    Private Sub lstItems_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstItems.MouseEnter
+        lstItems.Select()
+    End Sub
+
+    Private Sub lstMenuItems_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstMenuItems.MouseEnter
+        lstMenuItems.Select()
+    End Sub
+
+    Private Sub cmbCategories_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCategories.MouseEnter
+        cmbCategories.Select()
+    End Sub
+
+    Private Sub lstMenuItems_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstMenuItems.MouseWheel
+        If (e.Delta > 0) Then
+            If lstMenuItems.SelectedIndex - 1 >= 0 Then
+                lstMenuItems.SelectedIndex -= 1
+            End If
+        Else
+            If lstMenuItems.SelectedIndex + 1 < lstMenuItems.Items.Count Then
+                lstMenuItems.SelectedIndex += 1
+            End If
+        End If
+    End Sub
+
+    Private Sub lstItems_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstItems.MouseWheel
+        If (e.Delta > 0) Then
+            If lstItems.SelectedIndex - 1 >= 0 Then
+                lstItems.SelectedIndex -= 1
+            End If
+        Else
+            If lstItems.SelectedIndex + 1 < lstItems.Items.Count Then
+                lstItems.SelectedIndex += 1
+            End If
+        End If
+    End Sub
+
+    Private Sub cmbCategories_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles cmbCategories.MouseWheel
+        If (e.Delta > 0) Then
+            If cmbCategories.SelectedIndex - 1 >= 0 Then
+                cmbCategories.SelectedIndex -= 1
+            End If
+        Else
+            If cmbCategories.SelectedIndex + 1 < cmbCategories.Items.Count Then
+                cmbCategories.SelectedIndex += 1
+            End If
+        End If
+    End Sub
+
     Public Sub LoadCategory()
         'TODO: This line of code loads data into the 'CategoriesFrmSetupDS.Category' table. You can move, or remove it, as needed.
         Me.CategoryTableAdapter.Connection.ConnectionString = DataLayer.conString

@@ -23,6 +23,62 @@ Public Class FrmManageSlideshowTwo
         Me.CategoryTableAdapter.Fill(Me.CategoriesDSfrmManageSlide.Category)
     End Sub
 
+    'MouseEnter Handler for the three Controls
+    Private Sub lstPics_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstPics.MouseEnter
+        lstPics.Select()
+    End Sub
+
+    Private Sub lstMenuItems_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstSlideShowPics.MouseEnter
+        lstSlideShowPics.Select()
+    End Sub
+
+    Private Sub cmbCategories_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCategories.MouseEnter
+        cmbCategories.Select()
+    End Sub
+
+    Private Sub lstMenuItems_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstSlideShowPics.MouseWheel
+        If (lstSlideShowPics.SelectedNode Is Nothing) Then
+            If lstSlideShowPics.Nodes(0) IsNot Nothing Then
+                lstSlideShowPics.SelectedNode = lstSlideShowPics.Nodes(0)
+            End If
+        Else
+            If (e.Delta > 0) Then
+                If lstSlideShowPics.SelectedNode.Index - 1 >= 0 Then
+                    lstSlideShowPics.SelectedNode = lstSlideShowPics.SelectedNode.PrevVisibleNode
+                End If
+            Else
+                If lstSlideShowPics.SelectedNode.Index + 1 < lstSlideShowPics.Nodes.Count Then
+                    lstSlideShowPics.SelectedNode = lstSlideShowPics.SelectedNode.NextVisibleNode
+                End If
+            End If
+        End If
+
+    End Sub
+
+    Private Sub lstPics_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstPics.MouseWheel
+        If (e.Delta > 0) Then
+            If lstPics.SelectedIndex - 1 >= 0 Then
+                lstPics.SelectedIndex -= 1
+            End If
+        Else
+            If lstPics.SelectedIndex + 1 < lstPics.Items.Count Then
+                lstPics.SelectedIndex += 1
+            End If
+        End If
+    End Sub
+
+    Private Sub cmbCategories_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles cmbCategories.MouseWheel
+        If (e.Delta > 0) Then
+            If cmbCategories.SelectedIndex - 1 >= 0 Then
+                cmbCategories.SelectedIndex -= 1
+            End If
+        Else
+            If cmbCategories.SelectedIndex + 1 < cmbCategories.Items.Count Then
+                cmbCategories.SelectedIndex += 1
+            End If
+        End If
+    End Sub
+
     Public Sub UpdateTreeView()
         lstSlideShowPics.Nodes.Clear()
         AnimationTwoList.Clear()
@@ -36,8 +92,6 @@ Public Class FrmManageSlideshowTwo
         If (Not bgwThree.IsBusy) Then
             bgwThree.RunWorkerAsync()
         End If
-
-
     End Sub
 
     Private Sub bgwThree_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwThree.DoWork

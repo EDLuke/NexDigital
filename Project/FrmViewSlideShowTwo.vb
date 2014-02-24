@@ -21,6 +21,23 @@ Public Class FrmViewSlideShowTwo
         cmbAnimationType.DataSource = System.Enum.GetValues(GetType(AnimationTypes))
     End Sub
 
+    'MouseEnter Handler for the three Controls
+    Private Sub cmbAnimationType_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.MouseEnter
+        cmbAnimationType.Select()
+    End Sub
+
+    Private Sub cmbAnimationType_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseWheel
+        If (e.Delta > 0) Then
+            If cmbAnimationType.SelectedIndex - 1 >= 0 Then
+                cmbAnimationType.SelectedIndex -= 1
+            End If
+        Else
+            If cmbAnimationType.SelectedIndex + 1 < cmbAnimationType.Items.Count Then
+                cmbAnimationType.SelectedIndex += 1
+            End If
+        End If
+    End Sub
+
     Public Sub StopTimer()
         Timer1.Stop()
         If video IsNot Nothing Then
