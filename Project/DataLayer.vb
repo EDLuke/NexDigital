@@ -785,7 +785,7 @@ Public Class DataLayer
             recordDeleted = False
         End Try
 
-        
+
         Return recordDeleted
     End Function
 
@@ -814,8 +814,9 @@ Public Class DataLayer
             result.Add(name)
         Next
 
-        Return result
+        sqlConn.Close()
 
+        Return result
     End Function
 
     ' Add item picture to slide show
@@ -956,6 +957,9 @@ Public Class DataLayer
         Next
 
         SortSlideShow(result, slideShow)
+
+        sqlConn.Close()
+
         Return result
 
     End Function
@@ -983,6 +987,9 @@ Public Class DataLayer
             result.Add(full)
             result.Add("")
         Next
+
+        sqlConn.Close()
+
         Return result
 
     End Function
@@ -993,17 +1000,107 @@ Public Class DataLayer
     End Function
 
     Public Shared Sub Validate()
-        ValidateMenu()
-        ValidateSlideShow()
+        For i = 1 To 2
+            Dim missingMenu As List(Of Integer) = ValidateMenu(i)
+            ReorderMenu(missingMenu, i)
+
+        Next
+        For i = 1 To 2
+            Dim missingSlide As List(Of Integer) = ValidateSlideShow(i)
+            ReorderSlideShow(missingSlide, i)
+        Next
     End Sub
 
-    Private Shared Function ValidateSlideShow()
+    Private Shared Sub ReorderMenu(ByRef missingMenu As List(Of Integer), ByVal menu As Integer)
+        If missingMenu.Count = 0 Then
+            Return
+        Else
+            Dim menuNum As String = ""
+            Select Case menu
+                Case 1
+                    menuNum = ""
+                Case 2
+                    menuNum = "2"
+            End Select
 
-    End Function
+            Dim sqlConn As New SqlCeConnection(conString)
+            Dim command As SqlCeCommand = sqlConn.CreateCommand()
+            Dim strSQL As String
 
-    Private Shared Function ValidateMenu()
-        Dim maxMenuItem = FindMaxItemOrder(1)
-        Dim maxMenuItemTwo = FindMaxItemOrder(2)
+            sqlConn.Open()
+
+            While missingMenu.Count > 0
+                Dim maxMenuOrder As Integer = FindMaxItemOrder(menu)
+                For i = missingMenu(0) + 1 To maxMenuOrder
+                    ' SqlQuery for updating data into the table
+                    strSQL = "Update Items SET menuItem" & menuNum & "=" & i - 1 & " WHERE menuItem" & menuNum & "=" & i & ""
+
+                    command.CommandType = CommandType.Text
+                    command.CommandText = strSQL
+                    ' Run the query
+                    command.ExecuteNonQuery()
+                Next
+                missingMenu.RemoveAt(0)
+                If missingMenu.Count <> 0 Then
+                    For i = 0 To missingMenu.Count
+                        missingMenu(i) -= 1
+                    Next
+                End If
+
+            End While
+        End If
+    End Sub
+
+    Private Shared Sub ReorderSlideShow(ByRef missingSlide As List(Of Integer), ByVal slide As Integer)
+        If missingSlide.Count = 0 Then
+            Return
+        Else
+            Dim slideNum As String = ""
+            Select Case slide
+                Case 1
+                    slideNum = ""
+                Case 2
+                    slideNum = "2"
+            End Select
+
+            Dim sqlConn As New SqlCeConnection(conString)
+            Dim command As SqlCeCommand = sqlConn.CreateCommand()
+            Dim strSQL As String
+
+            sqlConn.Open()
+
+            While missingSlide.Count > 0
+                Dim maxMenuOrder As Integer = FindMaxItemOrder(slide)
+                For i = missingSlide(0) + 1 To maxMenuOrder
+                    ' SqlQuery for updating data into the table
+                    strSQL = "Update Items SET slideshow" & slideNum & "=" & i - 1 & " WHERE slideshow" & slideNum & "=" & i & ""
+
+                    command.CommandType = CommandType.Text
+                    command.CommandText = strSQL
+                    ' Run the query
+                    command.ExecuteNonQuery()
+                Next
+                missingSlide.RemoveAt(0)
+                If missingSlide.Count <> 0 Then
+                    For i = 0 To missingSlide.Count
+                        missingSlide(i) -= 1
+                    Next
+                End If
+
+            End While
+        End If
+    End Sub
+
+    Private Shared Function ValidateSlideShow(ByVal slideShow As Integer)
+        Dim slideShowNum As String = ""
+        Select Case slideShow
+            Case 1
+                slideShowNum = ""
+            Case 2
+                slideShowNum = "2"
+        End Select
+
+        Dim maxSlideShowItem = FindMaxSlideShowOrder(slideShow)
 
         Dim result As New ArrayList
         Dim missing As New List(Of Integer)
@@ -1013,7 +1110,7 @@ Public Class DataLayer
         ' create connection using the Conection String
         sqlConn = New SqlCeConnection(conString)
         ' Query statement to get all the records from the tblPersonnel 
-        sqlDA = New SqlCeDataAdapter("select itemid, menuItem from items WHERE menuItem != 0", sqlConn)
+        sqlDA = New SqlCeDataAdapter("select itemid, menuItem" & slideShowNum & " from items WHERE menuItem" & slideShowNum & " != 0", sqlConn)
 
         ' Create the dataset
         Dim datasetitems As New DataSet()
@@ -1022,16 +1119,62 @@ Public Class DataLayer
 
         For Each row As DataRow In datasetitems.Tables(0).Rows
             Dim itemid As String = row("ItemId").ToString()
-            Dim menuOrder As Integer = CInt(row("MenuItem").ToString())
+            Dim menuOrder As Integer = CInt(row("MenuItem" & slideShowNum & "").ToString())
             result.Add(itemid)
             result.Add(menuOrder)
         Next
 
-        For i = 0 To maxMenuItem
+        For i = 1 To maxSlideShowItem
             If Not result.Contains(i) Then
                 missing.Add(i)
             End If
         Next
+
+        sqlConn.Close()
+
+        Return missing
+    End Function
+
+    Private Shared Function ValidateMenu(ByVal menu As Integer)
+        Dim menuNum As String = ""
+        Select Case menu
+            Case 1
+                menuNum = ""
+            Case 2
+                menuNum = "2"
+        End Select
+
+        Dim maxMenuItem = FindMaxItemOrder(menu)
+
+        Dim result As New ArrayList
+        Dim missing As New List(Of Integer)
+
+        Dim sqlConn As SqlCeConnection
+        Dim sqlDA As SqlCeDataAdapter
+        ' create connection using the Conection String
+        sqlConn = New SqlCeConnection(conString)
+        ' Query statement to get all the records from the tblPersonnel 
+        sqlDA = New SqlCeDataAdapter("select itemid, menuItem" & menuNum & " from items WHERE menuItem" & menuNum & " != 0", sqlConn)
+
+        ' Create the dataset
+        Dim datasetitems As New DataSet()
+        ' Fill the dataset from the database table using the data adapter
+        sqlDA.Fill(datasetitems)
+
+        For Each row As DataRow In datasetitems.Tables(0).Rows
+            Dim itemid As String = row("ItemId").ToString()
+            Dim menuOrder As Integer = CInt(row("MenuItem" & menuNum & "").ToString())
+            result.Add(itemid)
+            result.Add(menuOrder)
+        Next
+
+        For i = 1 To maxMenuItem
+            If Not result.Contains(i) Then
+                missing.Add(i)
+            End If
+        Next
+
+        sqlConn.Close()
 
         Return missing
     End Function

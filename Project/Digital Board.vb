@@ -41,6 +41,7 @@ Public Class Digital_Board
         digitalSetup()
         formSetup()
         mdiSetup()
+        DataLayer.Validate()
         mainFrm = New MainMenu
         Application.Run(mainFrm)
 
