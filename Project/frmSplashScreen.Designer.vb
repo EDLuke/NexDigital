@@ -23,25 +23,28 @@ Partial Class frmSplashScreen
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSplashScreen))
         Me.UpdateTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.lblStatus = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
-        'UpdateTimer
+        'lblStatus
         '
+        Me.lblStatus.Location = New System.Drawing.Point(27, 37)
+        Me.lblStatus.Name = "lblStatus"
+        Me.lblStatus.Size = New System.Drawing.Size(530, 90)
+        Me.lblStatus.TabIndex = 0
         '
         'frmSplashScreen
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.SystemColors.Control
-        Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
-        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(284, 261)
+        Me.ClientSize = New System.Drawing.Size(599, 176)
+        Me.Controls.Add(Me.lblStatus)
         Me.Name = "frmSplashScreen"
-        Me.Text = "SplashScreen"
+        Me.Text = "frmSplashScreen"
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents UpdateTimer As System.Windows.Forms.Timer
+    Friend WithEvents lblStatus As System.Windows.Forms.Label
 End Class
