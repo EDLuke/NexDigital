@@ -528,29 +528,38 @@ Public Class DataLayer
                 menuNum = "2"
         End Select
 
-        Try
-            ' Create a connection object and open the connection
-            Dim sqlConn As New SqlCeConnection(conString)
-            Dim command As SqlCeCommand = sqlConn.CreateCommand()
-            Dim strSQL As String
+        Using sqlConn As New SqlCeConnection(conString)
+            Try
+                ' Create a connection object and open the connection
+                Dim command As SqlCeCommand = sqlConn.CreateCommand()
+                Dim strSQL As String
 
-            sqlConn.Open()
+                sqlConn.Open()
 
-            'Find the max MenuItem int
-            strSQL = "select max(menuItem" & menuNum & ") from items"
-            command.CommandText = strSQL
+                'Find the max MenuItem int
+                strSQL = "select max(menuItem" & menuNum & ") from items"
+                command.CommandText = strSQL
 
-            ' Run the query
-            Dim max = command.ExecuteScalar()
-            sqlConn.Close()
-            Return max
-        Catch ex As Exception
-            Console.Write(ex)
-        End Try
+                ' Run the query
+                Dim max = command.ExecuteScalar()
+                sqlConn.Close()
+                Return max
+            Catch ex As Exception
+                Console.Write(ex)
+            Finally
+                If sqlConn.State = ConnectionState.Open Then
+                    sqlConn.Close()
+                End If
+            End Try
+
+        End Using
+
         Return 0
     End Function
 
     Public Shared Function FindMaxSlideShowOrder(ByVal slideShow As Integer) As Integer
+        Threading.Thread.SpinWait(1)
+
         Dim slideShowNum As String = ""
         Select Case slideShow
             Case 1
@@ -559,26 +568,33 @@ Public Class DataLayer
                 slideShowNum = "2"
         End Select
 
-        Try
-            ' Create a connection object and open the connection
-            Dim sqlConn As New SqlCeConnection(conString)
-            Dim command As SqlCeCommand = sqlConn.CreateCommand()
-            Dim strSQL As String
+        Using sqlConn As New SqlCeConnection(conString)
+            Try
+                ' Create a connection object and open the connection
 
-            sqlConn.Open()
+                Dim command As SqlCeCommand = sqlConn.CreateCommand()
+                Dim strSQL As String
 
-            'Find the max SlideShow int
+                sqlConn.Open()
 
-            strSQL = "select max(slideShow" & slideShowNum & ") from items"
-            command.CommandText = strSQL
+                'Find the max SlideShow int
 
-            ' Run the query
-            Dim max = command.ExecuteScalar()
-            sqlConn.Close()
-            Return max
-        Catch ex As Exception
-            Console.Write(ex)
-        End Try
+                strSQL = "select max(slideShow" & slideShowNum & ") from items"
+                command.CommandText = strSQL
+
+                ' Run the query
+                Dim max = command.ExecuteScalar()
+                sqlConn.Close()
+                Return max
+            Catch ex As Exception
+                Console.Write(ex)
+            Finally
+                If sqlConn.State = ConnectionState.Open Then
+                    sqlConn.Close()
+                End If
+            End Try
+        End Using
+
         Return 0
     End Function
 
@@ -1000,6 +1016,8 @@ Public Class DataLayer
     End Function
 
     Public Shared Sub Validate()
+        TestConnection()
+
         For i = 1 To 2
             Dim missingMenu As List(Of Integer) = ValidateMenu(i)
             ReorderMenu(missingMenu, i)
@@ -1009,6 +1027,20 @@ Public Class DataLayer
             Dim missingSlide As List(Of Integer) = ValidateSlideShow(i)
             ReorderSlideShow(missingSlide, i)
         Next
+    End Sub
+
+    Private Shared Sub TestConnection()
+        Using conn = New SqlCeConnection(conString)
+            Try
+                conn.Open()
+            Catch generatedExceptionName As SqlCeException
+                Console.WriteLine("Connection Failed")
+            Finally
+                If conn.State = ConnectionState.Open Then
+                    conn.Close()
+                End If
+            End Try
+        End Using
     End Sub
 
     Private Shared Sub ReorderMenu(ByRef missingMenu As List(Of Integer), ByVal menu As Integer)

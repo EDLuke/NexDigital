@@ -382,14 +382,12 @@ Public Class FrmManageSlideshowTwo
     Private Shared Function BinaryDeserialize() As ArrayList
         Dim people As New ArrayList
 
-        Try
+        If File.Exists("AnimationListTwo.bin") Then
             Using str As FileStream = File.OpenRead("AnimationListTwo.bin")
                 Dim bf As New BinaryFormatter()
                 people = DirectCast(bf.Deserialize(str), ArrayList)
             End Using
-        Catch ex As FileNotFoundException
-
-        End Try
+        End If
 
         Return people
     End Function

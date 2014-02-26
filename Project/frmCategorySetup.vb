@@ -15,11 +15,20 @@
         End Try
     End Sub
 
-    Public Sub OneTimeAdd()
-        For i As Integer = 0 To 100
-            Dim temp As String = i.ToString() + ""
-            'Dim result = DataLayer.CreateCategory(temp)
-        Next
+    Private Sub lstAllCate_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstAllCate.MouseEnter
+        lstAllCate.Select()
+    End Sub
+
+    Private Sub lstAllCate_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles lstAllCate.MouseWheel
+        If (e.Delta > 0) Then
+            If lstAllCate.SelectedIndex - 1 >= 0 Then
+                lstAllCate.SelectedIndex -= 1
+            End If
+        Else
+            If lstAllCate.SelectedIndex + 1 < lstAllCate.Items.Count Then
+                lstAllCate.SelectedIndex += 1
+            End If
+        End If
     End Sub
 
     Private Sub frmCategorySetup_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load

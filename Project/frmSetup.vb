@@ -468,7 +468,7 @@ Public Class frmSetup
     End Sub
 
     Public Sub BinaryDeserialize()
-        Try
+        If File.Exists("SetupColor.bin") Then
             Using str As FileStream = File.OpenRead("SetupColor.bin")
                 Dim bf As New BinaryFormatter()
                 Dim tempColor = DirectCast(bf.Deserialize(str), ArrayList)
@@ -481,11 +481,9 @@ Public Class frmSetup
                 weatherColor = tempColor(6)
                 newsColor = tempColor(7)
             End Using
-        Catch ex As Exception
+        End If
 
-        End Try
-
-        Try
+        If File.Exists("SetupFont.bin") Then
             Using str As FileStream = File.OpenRead("SetupFont.bin")
                 Dim bf As New BinaryFormatter()
                 Dim tempFont = DirectCast(bf.Deserialize(str), Font())
@@ -493,16 +491,13 @@ Public Class frmSetup
                 despFontArray(1) = tempFont(1)
                 despFontArray(2) = tempFont(2)
             End Using
-        Catch ex As Exception
+        End If
 
-        End Try
-        Try
+        If File.Exists("SetupFrq.bin") Then
             Using str As FileStream = File.OpenRead("SetupFrq.bin")
                 Dim bf As New BinaryFormatter()
                 slideShowFreq = DirectCast(bf.Deserialize(str), Integer)
             End Using
-        Catch ex As Exception
-
-        End Try
+        End If
     End Sub
 End Class

@@ -77,7 +77,7 @@ Public Class Digital_Board
         Select Case digitalForm
             Case 2
                 digital = New FrmDigitalBBTwo
-            Case 1
+            Case Else
                 digital = New FrmDigitalBB
         End Select
     End Sub
@@ -198,7 +198,7 @@ Public Class Digital_Board
         Dim logDirectory As String = IO.Path.Combine(Application.StartupPath, "ErrorLog")
         Dim logName As String = DateTime.Now.ToString("yyyyMMdd") & ".txt"
         Dim fullName As String = IO.Path.Combine(logDirectory, logName)
-        Dim errorString As String = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss") & " >> " & ex.Message & Environment.NewLine & ex.StackTrace & Environment.NewLine
+        Dim errorString As String = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss") & " >> " & ex.Message & Environment.NewLine & "" & Environment.NewLine & ex.StackTrace & Environment.NewLine
 
         Try
             If Not IO.Directory.Exists(logDirectory) Then

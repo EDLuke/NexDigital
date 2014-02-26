@@ -658,25 +658,21 @@ Public Class FrmDigitalBBTwo
     End Sub
 
     Public Sub loadBinaryDeserialize()
-        Try
+        If File.Exists("AdnimationListOne.bin") Then
             Using str As FileStream = File.OpenRead("AnimationListOne.bin")
                 Dim bf As New BinaryFormatter()
                 animationOneList = DirectCast(bf.Deserialize(str), ArrayList)
             End Using
-        Catch ex As Exception
+        End If
 
-        End Try
-
-        Try
+        If File.Exists("AdnimationListTwo.bin") Then
             Using str As FileStream = File.OpenRead("AnimationListTwo.bin")
                 Dim bf As New BinaryFormatter()
                 animationTwoList = DirectCast(bf.Deserialize(str), ArrayList)
             End Using
-        Catch ex As Exception
+        End If
 
-        End Try
-
-        Try
+        If File.Exists("Admin.bin") Then
             Using str As FileStream = File.OpenRead("Admin.bin")
                 Dim bf As New BinaryFormatter()
                 Dim adminList = DirectCast(bf.Deserialize(str), String())
@@ -686,9 +682,7 @@ Public Class FrmDigitalBBTwo
                 weatherLocationCode = adminList(1)
                 slideNum = adminList(3)
             End Using
-        Catch ex As Exception
-
-        End Try
+        End If
     End Sub
 
     Public Sub changeLogo(image As Image)
