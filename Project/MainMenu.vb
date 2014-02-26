@@ -167,7 +167,10 @@ Public Class MainMenu
     End Sub
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
-        Digital_Board.digital.Dispose()
+        If (Digital_Board.digital IsNot Nothing) Then
+            Digital_Board.digital.Dispose()
+        End If
+
         GC.Collect()
         Me.Dispose()
     End Sub

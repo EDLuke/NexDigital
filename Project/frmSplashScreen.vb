@@ -183,6 +183,58 @@ Public Class frmSplashScreen
 
 #End Region
 
+#Region "Event Handlers"
+    ' Tick Event handler for the Timer control.  Handle fade in and fade out and paint progress bar. 
+    Private Sub UpdateTimer_Tick(sender As Object, e As System.EventArgs)
+        lblStatus.Text = m_sStatus
+
+        ' Calculate opacity
+        If m_dblOpacityIncrement > 0 Then
+            ' Starting up splash screen
+            m_iActualTicks += 1
+            If Me.Opacity < 1 Then
+                Me.Opacity += m_dblOpacityIncrement
+            End If
+        Else
+            ' Closing down splash screen
+            If Me.Opacity > 0 Then
+                Me.Opacity += m_dblOpacityIncrement
+            Else
+                StoreIncrements()
+                UpdateTimer.[Stop]()
+                Me.Close()
+            End If
+        End If
+
+        ' Paint progress bar
+        If m_bFirstLaunch = False AndAlso m_dblLastCompletionFraction < m_dblCompletionFraction Then
+            m_dblLastCompletionFraction += m_dblPBIncrementPerTimerInterval
+            Dim width As Integer = CInt(Math.Floor(pnlStatus.ClientRectangle.Width * m_dblLastCompletionFraction))
+            Dim height As Integer = pnlStatus.ClientRectangle.Height
+            Dim x As Integer = pnlStatus.ClientRectangle.X
+            Dim y As Integer = pnlStatus.ClientRectangle.Y
+            If width > 0 AndAlso height > 0 Then
+                m_rProgress = New Rectangle(x, y, width, height)
+                If Not pnlStatus.IsDisposed Then
+                    Dim g As Graphics = pnlStatus.CreateGraphics()
+                    Dim brBackground As New LinearGradientBrush(m_rProgress, Color.FromArgb(58, 96, 151), Color.FromArgb(181, 237, 254), LinearGradientMode.Horizontal)
+                    g.FillRectangle(brBackground, m_rProgress)
+                    g.Dispose()
+                End If
+                Dim iSecondsLeft As Integer = 1 + CInt(Math.Truncate(TIMER_INTERVAL * ((1.0 - m_dblLastCompletionFraction) / m_dblPBIncrementPerTimerInterval))) \ 1000
+                m_sTimeRemaining = If((iSecondsLeft = 1), String.Format("1 second remaining"), String.Format("{0} seconds remaining", iSecondsLeft))
+            End If
+        End If
+        lblTimeRemaining.Text = m_sTimeRemaining
+    End Sub
+
+    ' Close the form if they double click on it.
+    Private Sub SplashScreen_DoubleClick(sender As Object, e As System.EventArgs)
+        ' Use the overload that doesn't set the parent form to this very window.
+        CloseForm()
+    End Sub
+#End Region
+
 #Region "Auxiliary Classes"
     ''' <summary>
     ''' A specialized class for managing XML storage for the splash screen.

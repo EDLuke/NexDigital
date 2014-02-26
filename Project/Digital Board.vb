@@ -43,7 +43,12 @@ Public Class Digital_Board
         mdiSetup()
         DataLayer.Validate()
         mainFrm = New MainMenu
-        Application.Run(mainFrm)
+        Try
+            Application.Run(mainFrm)
+        Catch ex As Exception
+            Log(ex)
+        End Try
+
 
     End Sub
 
