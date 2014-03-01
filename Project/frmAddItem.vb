@@ -70,12 +70,16 @@ Public Class frmAddItem
         Try
             picture = OpenFileDialog1.SafeFileName
 
-            If (Not System.IO.Directory.Exists(Directory.GetCurrentDirectory() & "\images")) Then
-                System.IO.Directory.CreateDirectory(Directory.GetCurrentDirectory() & "\images")
+            If picture <> "" Then
+                If (Not System.IO.Directory.Exists(Directory.GetCurrentDirectory() & "\images")) Then
+                    System.IO.Directory.CreateDirectory(Directory.GetCurrentDirectory() & "\images")
+                End If
+
+                ' Copy image file
+                FileCopy(OpenFileDialog1.FileName, Directory.GetCurrentDirectory() & "\images\" & picture)
             End If
 
-            ' Copy image file
-            FileCopy(OpenFileDialog1.FileName, Directory.GetCurrentDirectory() & "\images\" & picture)
+
         Catch ex As FileNotFoundException
             picture = ""
         End Try

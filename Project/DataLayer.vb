@@ -1102,7 +1102,7 @@ Public Class DataLayer
             sqlConn.Open()
 
             While missingSlide.Count > 0
-                Dim maxMenuOrder As Integer = FindMaxItemOrder(slide)
+                Dim maxMenuOrder As Integer = FindMaxSlideShowOrder(slide)
                 For i = missingSlide(0) + 1 To maxMenuOrder
                     ' SqlQuery for updating data into the table
                     strSQL = "Update Items SET slideshow" & slideNum & "=" & i - 1 & " WHERE slideshow" & slideNum & "=" & i & ""
