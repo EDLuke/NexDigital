@@ -1142,7 +1142,7 @@ Public Class DataLayer
         ' create connection using the Conection String
         sqlConn = New SqlCeConnection(conString)
         ' Query statement to get all the records from the tblPersonnel 
-        sqlDA = New SqlCeDataAdapter("select itemid, menuItem" & slideShowNum & " from items WHERE menuItem" & slideShowNum & " != 0", sqlConn)
+        sqlDA = New SqlCeDataAdapter("select itemid, slideShow" & slideShowNum & " from items WHERE slideShow" & slideShowNum & " != 0", sqlConn)
 
         ' Create the dataset
         Dim datasetitems As New DataSet()
@@ -1151,7 +1151,7 @@ Public Class DataLayer
 
         For Each row As DataRow In datasetitems.Tables(0).Rows
             Dim itemid As String = row("ItemId").ToString()
-            Dim menuOrder As Integer = CInt(row("MenuItem" & slideShowNum & "").ToString())
+            Dim menuOrder As Integer = CInt(row("slideShow" & slideShowNum & "").ToString())
             result.Add(itemid)
             result.Add(menuOrder)
         Next
