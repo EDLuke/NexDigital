@@ -1017,6 +1017,7 @@ Public Class DataLayer
 
     Public Shared Sub Validate()
         TestConnection()
+        CheckItemsImage()
 
         For i = 1 To 2
             Dim missingMenu As List(Of Integer) = ValidateMenu(i)
@@ -1027,6 +1028,43 @@ Public Class DataLayer
             Dim missingSlide As List(Of Integer) = ValidateSlideShow(i)
             ReorderSlideShow(missingSlide, i)
         Next
+    End Sub
+
+    Private Shared Sub CheckItemsImage()
+        Dim result As New ArrayList
+
+        Dim sqlConn As SqlCeConnection
+        Dim sqlDA As SqlCeDataAdapter
+        ' create connection using the Conection String
+        sqlConn = New SqlCeConnection(conString)
+        Dim command As SqlCeCommand = sqlConn.CreateCommand()
+        Dim strSQL As String
+        ' Query statement to get all the records from the tblPersonnel 
+        sqlDA = New SqlCeDataAdapter("select itemid, Picture from items WHERE Picture != '' ", sqlConn)
+
+        ' Create the dataset
+        Dim datasetitems As New DataSet()
+        ' Fill the dataset from the database table using the data adapter
+        sqlDA.Fill(datasetitems)
+
+        For Each row As DataRow In datasetitems.Tables(0).Rows
+            Dim itemid As String = row("ItemId").ToString()
+            Dim picUrl As [String] = row("Picture").ToString()
+            result.Add(itemid)
+            result.Add(picUrl)
+        Next
+
+        For i = 1 To result.Count Step 2
+            If (Not File.Exists(Directory.GetCurrentDirectory() & "\images\" & result(i))) Then
+                strSQL = "Update Items SET Picture = '' WHERE itemId = " & result(i - 1)
+                command.CommandType = CommandType.Text
+                command.CommandText = strSQL
+                ' Run the query
+                command.ExecuteNonQuery()
+            End If
+        Next
+
+        sqlConn.Close()
     End Sub
 
     Private Shared Sub TestConnection()
