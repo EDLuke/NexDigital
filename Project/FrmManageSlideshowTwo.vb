@@ -11,7 +11,7 @@ Public Class FrmManageSlideshowTwo
     Private cmbCategorySelected As Integer
     Private video As Video
 
-    Private Sub FrmManageSlideshow_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub FrmManageSlideshow_shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         LoadCategory()
         FillCategories()
         UpdateTreeView()

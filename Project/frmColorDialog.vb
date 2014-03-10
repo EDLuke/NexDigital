@@ -389,9 +389,11 @@ Public Class frmColorDialog
         labelName.DespColor = Digital_Board.mainFrm.tabOne.despColorArray(2)
         labelName.BorderColor = Digital_Board.mainFrm.tabOne.itemBorderColor
 
-        labelName.Title = labelDetail(0)
-        labelName.Money = labelDetail(2)
-        labelName.Desp = labelDetail(1)
+        If labelDetail.Count > 0 Then
+            labelName.Title = labelDetail(0)
+            labelName.Money = labelDetail(2)
+            labelName.Desp = labelDetail(1)
+        End If
 
         flowPanel.Controls.Add(labelName)
         flowPanel.BackColor = bgColor

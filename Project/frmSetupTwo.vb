@@ -29,7 +29,7 @@ Public Class frmSetupTwo
     Public despColorArray(2) As Color
 
 
-    Private Sub frmSetup_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub frmSetup_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         LoadCategory()
         loadToolTip()
         loadDefaults()

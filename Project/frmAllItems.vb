@@ -6,7 +6,7 @@
     Private searched As Boolean = False
     Private searchItem As System.Data.DataRowView
 
-    Private Sub frmAllItems_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub fmrAllItems_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         loadItems()
     End Sub
 

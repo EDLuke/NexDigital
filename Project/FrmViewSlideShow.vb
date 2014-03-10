@@ -14,7 +14,7 @@ Public Class FrmViewSlideShow
     'Stores the frequency for the slide shows
     Public Shared slideShowFreq As Integer
 
-    Private Sub FrmViewSlideShow_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub FrmViewSlideShow_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         loadSlideShowPic()
         loadTimerFreq()
 

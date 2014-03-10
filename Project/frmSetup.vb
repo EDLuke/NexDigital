@@ -39,7 +39,7 @@ Public Class frmSetup
 
     Private tempSelected As Integer
 
-    Private Sub frmSetup_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub frmSetup_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         LoadCategory()
         loadToolTip()
         loadDefaults()
@@ -51,6 +51,8 @@ Public Class frmSetup
             lstMenuItems.SelectedIndex = 0
         End If
     End Sub
+
+
 
     'MouseEnter Handler for the three Controls
     Private Sub lstItems_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstItems.MouseEnter

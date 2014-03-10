@@ -29,8 +29,7 @@ Public Class FrmDigitalBBTwo
     Private w As New clsWeather(weatherLocationCode, "f")
     Private video As Video
 
-
-    Private Sub FrmViewSlideShow_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub FrmViewSlideShow_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
         loadForm()
         Threading.Thread.CurrentThread.Priority = ThreadPriority.Highest

@@ -4,7 +4,7 @@
     Private labelDetail As New ArrayList
     Private selectedFont As Font
 
-    Private Sub frmFontDialog_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub frmFontDialog_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         'Populate list boxes
         Dim fontRow As Integer = 0
         Dim fontPos As Integer = 0

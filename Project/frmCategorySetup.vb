@@ -1,6 +1,9 @@
 ﻿Public Class frmCategorySetup
 
-    
+    Private Sub frmCategorySetup_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
+        loadCategory()
+    End Sub
+
     Public Sub loadCategory()
         'TODO: This line of code loads data into the 'ItemsDSfrmAllItems.Items' table. You can move, or remove it, as needed.
         Me.CategoryTableAdapter.Connection.ConnectionString = DataLayer.conString
@@ -31,9 +34,7 @@
         End If
     End Sub
 
-    Private Sub frmCategorySetup_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        loadCategory()
-    End Sub
+
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         Dim result As DialogResult = MessageBox.Show("Are you sure you want to delete " & lstAllCate.SelectedItem.Row.ItemArray(1) & "? All items in this category will be deleted as well", "Confirm", MessageBoxButtons.YesNo)

@@ -29,7 +29,7 @@ Public Class MainMenu
     End Property
 #End Region
 
-    Private Sub MainMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub MainMenu_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Me.Cursor = Cursors.WaitCursor
         bgwLoad.RunWorkerAsync()
     End Sub
@@ -70,6 +70,8 @@ Public Class MainMenu
     End Sub
 
     Private Sub showMainForm()
+        GC.Collect()
+
         Select Case tabMain.SelectedTab.Name
             Case "tabItemSetup"
                 _tabOne = Digital_Board.all
@@ -118,6 +120,8 @@ Public Class MainMenu
     End Sub
 
     Public Sub updateSecForm()
+        GC.Collect()
+
         Select Case tabSec.SelectedTab.Text
             Case "Add Item"
                 _tabTwo = Digital_Board.addItem
@@ -210,6 +214,8 @@ Public Class MainMenu
     End Sub
 
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
+        GC.Collect()
+
         Digital_Board.setup.BinaryDeserialize()
 
         If Digital_Board.digital.IsDisposed() Then

@@ -5,9 +5,25 @@ Public Class frmUpdateItem
 
     Dim currentItemId As Integer
 
-    Private Sub frmUpdateItem_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub frmUpdateItem_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Me.CategoryTableAdapter.Connection.ConnectionString = DataLayer.conString
         Me.CategoryTableAdapter.Fill(Me.DatabaseDataSet.Category)
+    End Sub
+
+    Private Sub cmbCategories_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCategories.MouseEnter
+        cmbCategories.Select()
+    End Sub
+
+    Private Sub cmbCategories_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles cmbCategories.MouseWheel
+        If (e.Delta > 0) Then
+            If cmbCategories.SelectedIndex - 1 >= 0 Then
+                cmbCategories.SelectedIndex -= 1
+            End If
+        Else
+            If cmbCategories.SelectedIndex + 1 < cmbCategories.Items.Count Then
+                cmbCategories.SelectedIndex += 1
+            End If
+        End If
     End Sub
 
     Public Sub setFormData(ByVal itemid As Integer)

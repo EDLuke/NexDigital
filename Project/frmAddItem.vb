@@ -5,7 +5,7 @@ Imports System.Reflection
 
 Public Class frmAddItem
 
-    Private Sub frmAddNewItem_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub frmAddNewItem_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         LoadItems()
     End Sub
 
