@@ -215,11 +215,6 @@ Public Class FrmDigitalBB
             End If
         Next
 
-        Dim myImage As Image = Pics(0)
-        PictureBox1.AnimatedFadeImage = myImage
-        PictureBox1.BackgroundImage = myImage
-        PictureBox1.BackColor = Color.Transparent
-
         imageNumber = 0
 
         Timer1.Start()
@@ -370,43 +365,67 @@ Public Class FrmDigitalBB
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        Try
-            'Change Background Image
-            PictureBox1.AnimatedFadeImage = Pics(imageNumber)
-            PictureBox1.BackgroundImage = Pics(imageNumber)
-            PictureBox1.BackColor = Color.Transparent
+        If PictureBox1.AnimatedImage Is Nothing Then
+            PictureBox1.AnimatedFadeImage = Nothing
+            PictureBox1.BackgroundImage = Nothing
+        Else
+            PictureBox1.AnimatedFadeImage = PictureBox1.AnimatedImage
+            PictureBox1.BackgroundImage = PictureBox1.AnimatedImage
+        End If
 
-            'Change image number
-            imageNumber += 1
-            If imageNumber >= imageCount Then
-                imageNumber = 0
+        If TypeOf Pics(imageNumber) Is String Then
+            video = New Video(Pics(imageNumber))
+            Dim duration As Integer = video.Duration * 1000
+            If (duration > TimerDelay.Interval) Then
+                TimerDelay.Interval = duration
             End If
+            video.Owner = PictureBox1
+            video.Size = New Size(Me.Height * 0.475, Me.Height * 0.475)
+            PictureBox1.Size = New Size(Me.Height * 0.475, Me.Height * 0.475)
+            video.Play()
+            AddHandler video.Ending, AddressOf BackLoopHandler
+        Else
+            Timer1.Interval = frqOne
+            Try
+                'Change Background Image
+                PictureBox1.AnimatedFadeImage = Pics(imageNumber)
+                PictureBox1.BackgroundImage = Pics(imageNumber)
+                PictureBox1.BackColor = Color.Transparent
 
-            'Animate (Foreground) Image
-            PictureBox1.AnimatedImage = Pics(imageNumber)
-
-            'Highlight Menu Item
-            updatePanel(Not FullPictureBox.Visible)
-
-            If animationOneList IsNot Nothing Then
-                'Search for Unique AnimationType
-                Dim animationSearch = animationOneList.IndexOf(SlideShowPics(imageNumber * 3 + 2))
-                If animationSearch <> -1 Then
-                    PictureBox1.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationOneList(animationSearch + 1)), AnimationTypes)
+                'Change image number
+                imageNumber += 1
+                If imageNumber >= imageCount Then
+                    imageNumber = 0
                 End If
-            End If
 
-            PictureBox1.Animate(frqOne / 100)
+                If TypeOf Pics(imageNumber) Is Image Then
+                    'Animate (Foreground) Image
+                    PictureBox1.AnimatedImage = Pics(imageNumber)
+                End If
 
-            Timer1.Stop()
-            TimerDelay.Start()
-        Catch exArg As ArgumentOutOfRangeException
-            updateSlideShow()
-        Catch ex As IndexOutOfRangeException
-            updateSlideShow()
-        Catch exNull As NullReferenceException
-            updateSlideShow()
-        End Try
+                'Highlight Menu Item
+                updatePanel(Not FullPictureBox.Visible)
+
+                If animationOneList IsNot Nothing Then
+                    'Search for Unique AnimationType
+                    Dim animationSearch = animationOneList.IndexOf(SlideShowPics(imageNumber * 3 + 2))
+                    If animationSearch <> -1 Then
+                        PictureBox1.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationOneList(animationSearch + 1)), AnimationTypes)
+                    End If
+                End If
+
+                PictureBox1.Animate(frqOne / 100)
+            Catch exArg As ArgumentOutOfRangeException
+                updateSlideShow()
+            Catch ex As IndexOutOfRangeException
+                updateSlideShow()
+            Catch exNull As NullReferenceException
+                updateSlideShow()
+            End Try
+        End If
+
+        Timer1.Stop()
+        TimerDelay.Start()
     End Sub
 
     Private Sub TimerDelay_Tick(sender As Object, e As EventArgs) Handles TimerDelay.Tick
