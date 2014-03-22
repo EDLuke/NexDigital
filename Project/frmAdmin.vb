@@ -33,6 +33,8 @@ Public Class frmAdmin
         cbxTM.Visible = False
         cbxTS.Visible = False
         lblNote.Visible = False
+        lblSlideShow.Visible = False
+        cmbSlideNum.Visible = False
     End Sub
 
     Private Sub frmAdmin_KeyDown(sender As System.Object, e As KeyEventArgs) Handles txtPasswd.KeyDown
@@ -92,6 +94,23 @@ Public Class frmAdmin
             Dim bf As New BinaryFormatter()
             bf.Serialize(str, adminList)
         End Using
+    End Sub
+
+    Private Sub BinaryDeserialize()
+        Dim styleString As String
+        If File.Exists("Admin.bin") Then
+            Using str As FileStream = File.OpenRead("Admin.bin")
+                Dim bf As New BinaryFormatter()
+                Dim adminList = DirectCast(bf.Deserialize(str), String())
+                styleString = adminList(2)
+            End Using
+            If styleString = "TS" Then
+                cbxTS.Checked = True
+            ElseIf styleString = "TM" Then
+                cbxTM.Checked = True
+            End If
+        End If
+
     End Sub
 
     Private Sub btnWL_Click(sender As Object, e As EventArgs) Handles btnWL.Click
@@ -154,6 +173,11 @@ Public Class frmAdmin
         If cbxTS.Checked = True Then
             cbxTM.Checked = False
             adminList(2) = "TS"
+            lblSlideShow.Visible = True
+            cmbSlideNum.Visible = True
+        Else
+            lblSlideShow.Visible = False
+            cmbSlideNum.Visible = False
         End If
         BinarySerialize()
     End Sub

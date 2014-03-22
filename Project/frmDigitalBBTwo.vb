@@ -448,6 +448,9 @@ Public Class FrmDigitalBBTwo
                     If imageNumber >= imageCount Then
                         imageNumber = 0
                     End If
+
+                    'Highlight Menu Item
+                    updatePanel(FullPictureBox.Visible)
                 End If
             Catch exArg As ArgumentOutOfRangeException
                 updateSlideShow()

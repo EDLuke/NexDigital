@@ -43,8 +43,6 @@ Public Class FrmDigitalBB
         'Stretch everything according to the screen
         stretchScreen()
 
-        'Check for the option to have only one slideshow or multiple
-        checkFullSeparte()
         fullAnimate = False
 
         'Update the description panel and the slideshow()
@@ -62,26 +60,6 @@ Public Class FrmDigitalBB
 
         'Update News Information with boolean 'internet' which is set by loadNews()
         updateNews(internet)
-    End Sub
-
-    Public Sub checkFullSeparte()
-        If slideNum = "One" Then
-            slideFullSeparte = True
-        ElseIf slideNum = "Two" Then
-            slideFullSeparte = False
-        End If
-
-        Try
-            If slideFullSeparte Then
-                PictureBox1.Visible = False
-                FullPictureBox.Visible = True
-            Else
-                PictureBox1.Visible = True
-                FullPictureBox.Visible = False
-            End If
-        Catch ex As InvalidOperationException
-
-        End Try
     End Sub
 
     Private Sub loadFrq()

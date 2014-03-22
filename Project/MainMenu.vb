@@ -54,10 +54,10 @@ Public Class MainMenu
     End Sub
 
     Private Sub changeStyle()
-        If TypeOf (Digital_Board.digital) Is FrmDigitalBB Then
+        If TypeOf (Digital_Board.digital) Is FrmDigitalBBTwo Then
             tabMenuSetupTwo.Name = "tabMgSlideTwo"
             tabMenuSetupTwo.Text = "Manage SlideShow Two"
-        ElseIf TypeOf (Digital_Board.digital) Is FrmDigitalBBTwo Then
+        ElseIf TypeOf (Digital_Board.digital) Is FrmDigitalBB Then
             tabMenuSetupTwo.Name = "tabMenuSetupTwo"
             tabMenuSetupTwo.Text = "Menu Setup Two"
         End If

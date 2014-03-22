@@ -40,7 +40,7 @@ Partial Class frmAdmin
         Me.cbxTM = New System.Windows.Forms.CheckBox()
         Me.cbxTS = New System.Windows.Forms.CheckBox()
         Me.lblNote = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lblSlideShow = New System.Windows.Forms.Label()
         Me.cmbSlideNum = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
@@ -164,15 +164,15 @@ Partial Class frmAdmin
         Me.lblNote.TabIndex = 10
         Me.lblNote.Text = "Note: exit and re-enter the program after changing the style"
         '
-        'Label2
+        'lblSlideShow
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.SystemColors.ControlDark
-        Me.Label2.Location = New System.Drawing.Point(69, 271)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(60, 13)
-        Me.Label2.TabIndex = 12
-        Me.Label2.Text = "SlideShow:"
+        Me.lblSlideShow.AutoSize = True
+        Me.lblSlideShow.BackColor = System.Drawing.SystemColors.ControlDark
+        Me.lblSlideShow.Location = New System.Drawing.Point(69, 271)
+        Me.lblSlideShow.Name = "lblSlideShow"
+        Me.lblSlideShow.Size = New System.Drawing.Size(60, 13)
+        Me.lblSlideShow.TabIndex = 12
+        Me.lblSlideShow.Text = "SlideShow:"
         '
         'cmbSlideNum
         '
@@ -188,7 +188,7 @@ Partial Class frmAdmin
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(421, 462)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.lblSlideShow)
         Me.Controls.Add(Me.cmbSlideNum)
         Me.Controls.Add(Me.lblNote)
         Me.Controls.Add(Me.cbxTS)
@@ -226,6 +226,6 @@ Partial Class frmAdmin
     Friend WithEvents cbxTM As System.Windows.Forms.CheckBox
     Friend WithEvents cbxTS As System.Windows.Forms.CheckBox
     Friend WithEvents lblNote As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents lblSlideShow As System.Windows.Forms.Label
     Friend WithEvents cmbSlideNum As System.Windows.Forms.ComboBox
 End Class

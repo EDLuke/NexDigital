@@ -150,23 +150,23 @@
 
         Dim titleWidth As Integer = TextRenderer.MeasureText(e.Graphics, titleText, TitleFont).Width
         Dim titleHeight As Integer = TextRenderer.MeasureText(e.Graphics, titleText, TitleFont).Height + 5
-        Dim moneyWidth As Integer = TextRenderer.MeasureText(e.Graphics, moneyText, PriceFont).Width
+        Dim moneyWidth As Integer = TextRenderer.MeasureText(e.Graphics, moneyText, PriceFont).Width + 20
         Dim despWidth As Integer = TextRenderer.MeasureText(e.Graphics, despText, DespFont).Width
         Dim despHeight As Integer = TextRenderer.MeasureText(e.Graphics, despText, DespFont).Height
 
         Dim titleHeightRatio = titleWidth / Me.ClientSize.Width + 1
         Dim despHeightRatio = despWidth / Me.ClientSize.Width + 1
 
-        rectOne = New Rectangle(0, 0, Me.ClientSize.Width - moneyWidth, titleHeight * titleHeightRatio)
+        rectOne = New Rectangle(0, 0, Me.ClientSize.Width - moneyWidth, titleHeight)
         rectTwo = New Rectangle(0, rectOne.Height, Me.ClientSize.Width, despHeight * despHeightRatio)
-        rectOneBorder = New Rectangle(0, 0, Me.ClientSize.Width - moneyWidth + 1, titleHeight * titleHeightRatio)
-        rectTwoBorder = New Rectangle(0, rectOne.Height, Me.ClientSize.Width + 1, despHeight * despHeightRatio + 12)
+        rectOneBorder = New Rectangle(0, 0, Me.ClientSize.Width - moneyWidth - 20, titleHeight)
+        rectTwoBorder = New Rectangle(0, rectOne.Height, Me.ClientSize.Width - 20, despHeight * despHeightRatio + 12)
 
         Me.Height = rectOne.Height + rectTwo.Height + 13
 
         TextRenderer.DrawText(e.Graphics, titleText, TitleFont, rectOne, TitleColor, TextFormatFlags.HorizontalCenter Or TextFormatFlags.VerticalCenter Or TextFormatFlags.WordBreak)
         TextRenderer.DrawText(e.Graphics, moneyText, PriceFont, New Point(Me.ClientSize.Width - (moneyWidth), 0), PriceColor)
-        TextRenderer.DrawText(e.Graphics, despText, DespFont, rectTwo, DespColor, TextFormatFlags.WordBreak)
+        TextRenderer.DrawText(e.Graphics, despText, DespFont, rectTwo, DespColor, TextFormatFlags.WordBreak Or TextFormatFlags.Bottom)
 
         If (BorderOn) Then
             Dim rectThree = Rectangle.Union(rectOneBorder, rectTwoBorder)
