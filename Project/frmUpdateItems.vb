@@ -32,12 +32,42 @@ Public Class frmUpdateItem
 
             Dim result As ArrayList = DataLayer.GetItemDetails(currentItemId)
 
-            txtName.Text = result.Item(0).ToString()
-            txtDescription.Text = result.Item(1).ToString()
-            txtPrice.Text = result.Item(2).ToString()
-            txtPicture.Text = result.Item(3).ToString()
-            chkFull.Checked = CBool(result.Item(4).ToString())
-            cmbCategories.SelectedValue = CInt(result.Item(5).ToString())
+            'Prevent from retrieving null values
+            Try
+                txtName.Text = result.Item(0).ToString()
+            Catch ex As Exception
+                txtName.Text = ""
+            End Try
+
+            Try
+                txtDescription.Text = result.Item(1).ToString()
+            Catch ex As Exception
+                txtDescription.Text = ""
+            End Try
+
+            Try
+                txtPrice.Text = result.Item(2).ToString()
+            Catch ex As Exception
+                txtPicture.Text = ""
+            End Try
+
+            Try
+                txtPicture.Text = result.Item(3).ToString()
+            Catch ex As Exception
+                txtPicture.Text = ""
+            End Try
+
+            Try
+                chkFull.Checked = CBool(result.Item(4).ToString())
+            Catch ex As Exception
+                chkFull.Checked = False
+            End Try
+
+            Try
+                cmbCategories.SelectedValue = CInt(result.Item(5).ToString())
+            Catch ex As Exception
+                cmbCategories.SelectedValue = Nothing
+            End Try
         End If
     End Sub
 

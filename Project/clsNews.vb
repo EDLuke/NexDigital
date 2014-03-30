@@ -72,6 +72,8 @@ Public Class clsNews
             End If
         Catch ex As WebException
 
+        Catch exe As Exception
+
         End Try
         
     End Sub
