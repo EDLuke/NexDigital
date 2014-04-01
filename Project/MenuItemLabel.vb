@@ -150,7 +150,7 @@
 
         Dim titleWidth As Integer = TextRenderer.MeasureText(e.Graphics, titleText, TitleFont).Width
         Dim titleHeight As Integer = TextRenderer.MeasureText(e.Graphics, titleText, TitleFont).Height + 5
-        Dim moneyWidth As Integer = TextRenderer.MeasureText(e.Graphics, moneyText, PriceFont).Width + 20
+        Dim moneyWidth As Integer = TextRenderer.MeasureText(e.Graphics, moneyText, PriceFont).Width + 50
         Dim despWidth As Integer = TextRenderer.MeasureText(e.Graphics, despText, DespFont).Width
         Dim despHeight As Integer = TextRenderer.MeasureText(e.Graphics, despText, DespFont).Height
 

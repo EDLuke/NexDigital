@@ -185,6 +185,8 @@ Public Class frmAdmin
     Private Sub cmbSlideNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSlideNum.SelectedIndexChanged
         adminList(3) = cmbSlideNum.SelectedItem.ToString
         BinarySerialize()
-        Digital_Board.digital.checkFullSeparte()
+        If (Digital_Board.digital Is FrmDigitalBBTwo) Then
+            Digital_Board.digital.checkFullSeparte()
+        End If
     End Sub
 End Class
