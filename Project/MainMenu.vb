@@ -35,6 +35,7 @@ Public Class MainMenu
     End Sub
 
     Private Sub loadComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwLoad.RunWorkerCompleted
+        changeTrial()
         changeStyle()
         showMainForm()
         tabMain.SelectedIndex = 0
@@ -61,6 +62,11 @@ Public Class MainMenu
             tabMenuSetupTwo.Name = "tabMenuSetupTwo"
             tabMenuSetupTwo.Text = "Menu Setup Two"
         End If
+    End Sub
+
+    Private Sub changeTrial()
+        Dim daysLeft As TimeSpan = Digital_Board.endDate - Date.Now
+        lblTrial.Text = daysLeft.Days.ToString + " days left for trial"
     End Sub
 
     Private Sub tabSec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tabSec.SelectedIndexChanged
@@ -263,6 +269,5 @@ Public Class MainMenu
             'form.Location = New Point(0, screen.Bounds.Y)
             form.Left = 0
         End If
-
     End Sub
 End Class

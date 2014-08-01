@@ -42,6 +42,7 @@ Partial Class frmAdmin
         Me.lblNote = New System.Windows.Forms.Label()
         Me.lblSlideShow = New System.Windows.Forms.Label()
         Me.cmbSlideNum = New System.Windows.Forms.ComboBox()
+        Me.btnTrial = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -168,7 +169,7 @@ Partial Class frmAdmin
         '
         Me.lblSlideShow.AutoSize = True
         Me.lblSlideShow.BackColor = System.Drawing.SystemColors.ControlDark
-        Me.lblSlideShow.Location = New System.Drawing.Point(69, 271)
+        Me.lblSlideShow.Location = New System.Drawing.Point(69, 320)
         Me.lblSlideShow.Name = "lblSlideShow"
         Me.lblSlideShow.Size = New System.Drawing.Size(60, 13)
         Me.lblSlideShow.TabIndex = 12
@@ -178,16 +179,26 @@ Partial Class frmAdmin
         '
         Me.cmbSlideNum.FormattingEnabled = True
         Me.cmbSlideNum.Items.AddRange(New Object() {"One", "Two"})
-        Me.cmbSlideNum.Location = New System.Drawing.Point(153, 268)
+        Me.cmbSlideNum.Location = New System.Drawing.Point(153, 317)
         Me.cmbSlideNum.Name = "cmbSlideNum"
         Me.cmbSlideNum.Size = New System.Drawing.Size(95, 21)
         Me.cmbSlideNum.TabIndex = 11
+        '
+        'btnTrial
+        '
+        Me.btnTrial.Location = New System.Drawing.Point(15, 269)
+        Me.btnTrial.Name = "btnTrial"
+        Me.btnTrial.Size = New System.Drawing.Size(114, 23)
+        Me.btnTrial.TabIndex = 13
+        Me.btnTrial.Text = "Start Trial"
+        Me.btnTrial.UseVisualStyleBackColor = True
         '
         'frmAdmin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(421, 462)
+        Me.Controls.Add(Me.btnTrial)
         Me.Controls.Add(Me.lblSlideShow)
         Me.Controls.Add(Me.cmbSlideNum)
         Me.Controls.Add(Me.lblNote)
@@ -228,4 +239,5 @@ Partial Class frmAdmin
     Friend WithEvents lblNote As System.Windows.Forms.Label
     Friend WithEvents lblSlideShow As System.Windows.Forms.Label
     Friend WithEvents cmbSlideNum As System.Windows.Forms.ComboBox
+    Friend WithEvents btnTrial As System.Windows.Forms.Button
 End Class

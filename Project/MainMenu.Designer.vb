@@ -34,6 +34,7 @@ Partial Class MainMenu
         Me.tabItemSetup = New System.Windows.Forms.TabPage()
         Me.tabMain = New System.Windows.Forms.TabControl()
         Me.tabMgSlideOne = New System.Windows.Forms.TabPage()
+        Me.lblTrial = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -89,11 +90,14 @@ Partial Class MainMenu
         '
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.SystemColors.ControlDark
-        Me.Label1.Location = New System.Drawing.Point(487, 525)
+        Me.Label1.Location = New System.Drawing.Point(308, 526)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(260, 13)
         Me.Label1.TabIndex = 6
         Me.Label1.Text = "Press Alt + F4 to close Digital Board when Full-Screen"
+        '
+        'bgwLoad
+        '
         '
         'tabMenuSetup
         '
@@ -148,12 +152,22 @@ Partial Class MainMenu
         Me.tabMgSlideOne.TabIndex = 5
         Me.tabMgSlideOne.Text = "Manage SlideShow One"
         '
+        'lblTrial
+        '
+        Me.lblTrial.AutoSize = True
+        Me.lblTrial.BackColor = System.Drawing.SystemColors.ControlDark
+        Me.lblTrial.Location = New System.Drawing.Point(574, 526)
+        Me.lblTrial.Name = "lblTrial"
+        Me.lblTrial.Size = New System.Drawing.Size(0, 13)
+        Me.lblTrial.TabIndex = 6
+        '
         'MainMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(860, 555)
         Me.ControlBox = False
+        Me.Controls.Add(Me.lblTrial)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btnSec)
         Me.Controls.Add(Me.btnFull)
@@ -182,5 +196,6 @@ Partial Class MainMenu
     Friend WithEvents tabItemSetup As System.Windows.Forms.TabPage
     Friend WithEvents tabMain As System.Windows.Forms.TabControl
     Friend WithEvents tabMgSlideOne As System.Windows.Forms.TabPage
+    Friend WithEvents lblTrial As System.Windows.Forms.Label
 
 End Class

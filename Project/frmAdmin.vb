@@ -3,11 +3,12 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
 Public Class frmAdmin
 
-    Private adminList(3) As String
+    Private adminList(4) As String
     '0 Logo Image
     '1 Weather Location
     '2 Style (TS as Two SlideShows, TM as Two Menus)
     '3 SlideNum (One as One SlideShow, Two as Two SlideShows)
+    '4 Trial End Date
 
     Private Sub showAdminControl()
         btnLogo.Visible = True
@@ -188,5 +189,12 @@ Public Class frmAdmin
         If (Digital_Board.digital Is FrmDigitalBBTwo) Then
             Digital_Board.digital.checkFullSeparte()
         End If
+    End Sub
+
+    Private Sub btnTrial_Click(sender As Object, e As EventArgs) Handles btnTrial.Click
+        Dim dateString As String
+        dateString = DateValue(Now).AddDays(30).ToString("yyyy-MM-dd")
+        adminList(4) = dateString
+        BinarySerialize()
     End Sub
 End Class

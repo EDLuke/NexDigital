@@ -1041,6 +1041,7 @@ Public Class DataLayer
         Dim strSQL As String
         ' Query statement to get all the records from the tblPersonnel 
         sqlDA = New SqlCeDataAdapter("select itemid, Picture from items WHERE Picture != '' ", sqlConn)
+        sqlConn.Open()
 
         ' Create the dataset
         Dim datasetitems As New DataSet()

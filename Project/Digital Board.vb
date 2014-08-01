@@ -24,7 +24,10 @@ Public Class Digital_Board
     Public Shared vwOne As FrmViewSlideShow
     Public Shared vwTwo As FrmViewSlideShowTwo
 
+    Public Shared endDate As Date
+
     Private Shared digitalForm As Integer = 0
+
 
     <STAThread()> _
     Public Shared Sub Main()
@@ -36,21 +39,44 @@ Public Class Digital_Board
         Dim currentDomain As AppDomain = AppDomain.CurrentDomain
         AddHandler currentDomain.UnhandledException, AddressOf UnhandledExceptionHandler
 
-        styleSetup()
-        idleSetup()
-        digitalSetup()
-        formSetup()
-        mdiSetup()
-        DataLayer.Validate()
-        mainFrm = New MainMenu
-        Try
-            Application.Run(mainFrm)
-        Catch ex As Exception
-            Log(ex)
-        End Try
-
+        If checkTrial() Then
+            styleSetup()
+            idleSetup()
+            digitalSetup()
+            formSetup()
+            mdiSetup()
+            DataLayer.Validate()
+            mainFrm = New MainMenu
+            Try
+                Application.Run(mainFrm)
+            Catch ex As Exception
+                Log(ex)
+            End Try
+        Else
+            MsgBox("Trial has ended")
+        End If
 
     End Sub
+
+    Private Shared Function checkTrial() As Boolean
+        Try
+            If (File.Exists("Admin.bin")) Then
+                Using str As FileStream = File.OpenRead("Admin.bin")
+                    Dim bf As New BinaryFormatter()
+                    Dim adminList = DirectCast(bf.Deserialize(str), String())
+                    endDate = Date.ParseExact(adminList(4), "yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo)
+                End Using
+                If Date.Now.CompareTo(endDate) < 1 Then
+                    Return True
+                Else
+                    Return False
+                End If
+            End If
+        Catch ex As Exception
+
+        End Try
+        Return True
+    End Function
 
     Private Shared Sub styleSetup()
         Try
