@@ -1113,7 +1113,7 @@ Public Class DataLayer
                 Next
                 missingMenu.RemoveAt(0)
                 If missingMenu.Count <> 0 Then
-                    For i = 0 To missingMenu.Count
+                    For i = 0 To missingMenu.Count - 1
                         missingMenu(i) -= 1
                     Next
                 End If

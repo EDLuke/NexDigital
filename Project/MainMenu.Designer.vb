@@ -160,6 +160,7 @@ Partial Class MainMenu
         Me.lblTrial.Name = "lblTrial"
         Me.lblTrial.Size = New System.Drawing.Size(0, 13)
         Me.lblTrial.TabIndex = 6
+        Me.lblTrial.Visible = False
         '
         'MainMenu
         '
