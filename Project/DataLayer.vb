@@ -193,40 +193,48 @@ Public Class DataLayer
             ' Run the query
             command.ExecuteNonQuery()
 
-            'Move all the item behind the delete item in front in menu
-            If deletedMenuOrder <> maxMenuOrder And deletedMenuOrder <> 0 Then
-                For i = deletedMenuOrder To maxMenuOrder - 1
-                    strSQL = "Update Items SET menuItem =" & i & " WHERE menuItem=" & (i + 1) & ""
-                    command.CommandText = strSQL
-                    command.ExecuteNonQuery()
-                Next
+            If Not IsDBNull(deletedMenuOrder) Then
+                'Move all the item behind the delete item in front in menu
+                If deletedMenuOrder <> maxMenuOrder And deletedMenuOrder <> 0 Then
+                    For i = deletedMenuOrder To maxMenuOrder - 1
+                        strSQL = "Update Items SET menuItem =" & i & " WHERE menuItem=" & (i + 1) & ""
+                        command.CommandText = strSQL
+                        command.ExecuteNonQuery()
+                    Next
+                End If
             End If
 
-            'Move all the item behind the delete item in front in menu2
-            If deletedMenuOrderTwo <> maxMenuOrderTwo And deletedMenuOrderTwo <> 0 Then
-                For i = deletedMenuOrderTwo To maxMenuOrder - 1
-                    strSQL = "Update Items SET menuItem2 =" & i & " WHERE menuItem2=" & (i + 1) & ""
-                    command.CommandText = strSQL
-                    command.ExecuteNonQuery()
-                Next
+            If Not IsDBNull(deletedMenuOrderTwo) Then
+                'Move all the item behind the delete item in front in menu2
+                If deletedMenuOrderTwo <> maxMenuOrderTwo And deletedMenuOrderTwo <> 0 Then
+                    For i = deletedMenuOrderTwo To maxMenuOrder - 1
+                        strSQL = "Update Items SET menuItem2 =" & i & " WHERE menuItem2=" & (i + 1) & ""
+                        command.CommandText = strSQL
+                        command.ExecuteNonQuery()
+                    Next
+                End If
             End If
 
-            'Move all the item behind the delete item in front in slideshow
-            If deletedSlideOrder <> maxSlideOrder And deletedSlideOrder <> 0 Then
-                For i = deletedSlideOrder To maxSlideOrder - 1
-                    strSQL = "Update Items SET slideshow =" & i & " WHERE slideshow=" & (i + 1) & ""
-                    command.CommandText = strSQL
-                    command.ExecuteNonQuery()
-                Next
+            If Not IsDBNull(deletedSlideOrder) Then
+                'Move all the item behind the delete item in front in slideshow
+                If deletedSlideOrder <> maxSlideOrder And deletedSlideOrder <> 0 Then
+                    For i = deletedSlideOrder To maxSlideOrder - 1
+                        strSQL = "Update Items SET slideshow =" & i & " WHERE slideshow=" & (i + 1) & ""
+                        command.CommandText = strSQL
+                        command.ExecuteNonQuery()
+                    Next
+                End If
             End If
 
-            'Move all the item behind the delete item in front in slideshow2
-            If deletedSlideOrderTwo <> maxSlideOrderTwo And deletedMenuOrderTwo <> 0 Then
-                For i = deletedSlideOrderTwo To maxSlideOrderTwo - 1
-                    strSQL = "Update Items SET slideshow2 =" & i & " WHERE slideshow2 =" & (i + 1) & ""
-                    command.CommandText = strSQL
-                    command.ExecuteNonQuery()
-                Next
+            If Not IsDBNull(deletedSlideOrderTwo) Then
+                'Move all the item behind the delete item in front in slideshow2
+                If deletedSlideOrderTwo <> maxSlideOrderTwo And deletedMenuOrderTwo <> 0 Then
+                    For i = deletedSlideOrderTwo To maxSlideOrderTwo - 1
+                        strSQL = "Update Items SET slideshow2 =" & i & " WHERE slideshow2 =" & (i + 1) & ""
+                        command.CommandText = strSQL
+                        command.ExecuteNonQuery()
+                    Next
+                End If
             End If
 
             trans.Commit()
