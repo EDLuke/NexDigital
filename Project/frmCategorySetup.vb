@@ -1,4 +1,6 @@
-﻿Public Class frmCategorySetup
+﻿Imports System.Threading
+
+Public Class frmCategorySetup
 
     Private Sub frmCategorySetup_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         loadCategory()
@@ -46,6 +48,7 @@
         ' Fill new categories
         Me.CategoryTableAdapter.Fill(Me.CategoriesDataSet.Category)
         Digital_Board.mainFrm.tabOne.loadItems()
+        Thread.Sleep(5000) 'Temporary solution
         Digital_Board.reloadData()
     End Sub
 

@@ -32,7 +32,7 @@ Public Class DataLayer
 
         Try
             ' SqlQuery for inserting data into the table
-            strSQL = "Insert into Items(Name, Description, Price, picture, CategoryID) values (@item, @desc, @price, @pictureUrl, @categoryId)"
+            strSQL = "Insert into Items(Name, Description, Price, picture, CategoryID, slideFull) values (@item, @desc, @price, @pictureUrl, @categoryId, @slideFull)"
 
             ' Set command type to text and set the query to strSql
             command.CommandType = CommandType.Text
@@ -43,6 +43,7 @@ Public Class DataLayer
             command.Parameters.AddWithValue("@price", price)
             command.Parameters.AddWithValue("@pictureUrl", pictureUrl)
             command.Parameters.AddWithValue("@categoryId", categoryId)
+            command.Parameters.AddWithValue("@slideFull", 1)
 
             ' Run the query
             command.ExecuteNonQuery()
