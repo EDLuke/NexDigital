@@ -209,7 +209,8 @@ Public Class frmSetup
         menuItemsArrayList.Insert((tempSelected - 1) * 4 + 2, tempItemPrice)
         menuItemsArrayList.Insert((tempSelected - 1) * 4 + 3, tempItemDesp)
 
-
+        ' Update the digital board at run time
+        Digital_Board.digital.updateDespPanel()
     End Sub
 
     Private Sub btnMoveDown_Click(sender As Object, e As EventArgs) Handles btnMoveDown.Click
