@@ -131,10 +131,6 @@ Partial Class frmUpdateItem
         Me.Label1.TabIndex = 14
         Me.Label1.Text = "Item Name:"
         '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        '
         'chkFull
         '
         Me.chkFull.AutoSize = True

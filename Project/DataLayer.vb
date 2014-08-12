@@ -11,7 +11,7 @@ Imports System.IO
 ''' </summary>
 Public Class DataLayer
 
-    Public Shared conString As String = "Data Source=|DataDirectory|\Database.sdf"
+    Public Shared conString As String = "Data Source=" + Directory.GetCurrentDirectory().ToString().Remove(Directory.GetCurrentDirectory.ToString.Length - 10) + "\Database.sdf"
 
     Public Shared Function InsertItem(ByVal categoryId As Integer, ByVal item As String, ByVal desc As String, ByVal price As Double, ByVal pictureUrl As String) As Boolean
         Dim recordSaved As Boolean

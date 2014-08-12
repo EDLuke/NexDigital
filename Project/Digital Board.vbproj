@@ -509,7 +509,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Database.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="New_Logo_PSed.ico" />
