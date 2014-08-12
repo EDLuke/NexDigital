@@ -25,7 +25,7 @@
     End Sub
 
     Public Sub loadPanel()
-        labelDetail = DataLayer.GetItemDetails(Digital_Board.setup.selectedItemId)
+        labelDetail = DataLayer.GetItemDetails(Digital_Board.setupTwo.selectedItemId)
 
         If labelDetail.Count <> 0 Then
 

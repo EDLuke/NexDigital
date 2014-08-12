@@ -426,8 +426,8 @@ Public Class frmSetupTwo
 
     Private Sub lstMenuItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstMenuItems.SelectedIndexChanged
         selectedItemId = menuItemsArrayList(lstMenuItems.SelectedIndex * 4)
-        Digital_Board.fontD.loadPanel()
-        Digital_Board.colorD.loadPanel()
+        Digital_Board.fontD2.loadPanel()
+        Digital_Board.colorD2.loadPanel()
     End Sub
 
     Public Sub BinarySerialize()
