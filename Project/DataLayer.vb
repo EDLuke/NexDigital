@@ -317,8 +317,30 @@ Public Class DataLayer
             result.Add(desp)
         Next
 
-        Return result
+        Return SortAlpha(result)
 
+    End Function
+
+    Private Shared Function SortAlpha(ByRef result As ArrayList) As ArrayList
+        If result.Count = 4 Or result.Count = 0 Then
+            Return result
+        Else
+            Dim arrayName As New ArrayList
+            For i = 1 To result.Count Step 4
+                arrayName.Insert((i - 1) / 4, result(i))
+            Next
+            arrayName.Sort()
+
+            Dim arraySorted As New ArrayList
+            For i = 0 To arrayName.Count - 1
+                arraySorted.Insert(i * 4, result(result.IndexOf(arrayName(i)) - 1))
+                arraySorted.Insert(i * 4 + 1, arrayName(i))
+                arraySorted.Insert(i * 4 + 2, result(result.IndexOf(arrayName(i)) + 1))
+                arraySorted.Insert(i * 4 + 3, result(result.IndexOf(arrayName(i)) + 2))
+            Next
+
+            Return arraySorted
+        End If
     End Function
 
     Public Shared Function GetMenuItems(ByVal menu As Integer) As ArrayList

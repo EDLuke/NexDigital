@@ -97,8 +97,12 @@ Public Class frmSetup
                 cmbCategories.SelectedIndex -= 1
             End If
         Else
-            If cmbCategories.SelectedIndex + 1 < cmbCategories.Items.Count Then
-                cmbCategories.SelectedIndex += 1
+            If cmbCategories.SelectedIndex = -1 Then
+                cmbCategories.SelectedIndex = 0
+            Else
+                If cmbCategories.SelectedIndex + 1 < cmbCategories.Items.Count Then
+                    cmbCategories.SelectedIndex += 1
+                End If
             End If
         End If
     End Sub
