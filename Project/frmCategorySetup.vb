@@ -48,7 +48,9 @@ Public Class frmCategorySetup
         ' Fill new categories
         Me.CategoryTableAdapter.Fill(Me.CategoriesDataSet.Category)
         Digital_Board.mainFrm.tabOne.loadItems()
-        Thread.Sleep(5000) 'Temporary solution
+        Me.Cursor = Cursors.WaitCursor
+        Thread.Sleep(1000) 'Temporary solution
+        Me.Cursor = Cursors.Default
         Digital_Board.reloadData()
     End Sub
 

@@ -91,22 +91,6 @@ Public Class frmSetup
         End If
     End Sub
 
-    Private Sub cmbCategories_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles cmbCategories.MouseWheel
-        If (e.Delta > 0) Then
-            If cmbCategories.SelectedIndex - 1 >= 0 Then
-                cmbCategories.SelectedIndex -= 1
-            End If
-        Else
-            If cmbCategories.SelectedIndex = -1 Then
-                cmbCategories.SelectedIndex = 0
-            Else
-                If cmbCategories.SelectedIndex + 1 < cmbCategories.Items.Count Then
-                    cmbCategories.SelectedIndex += 1
-                End If
-            End If
-        End If
-    End Sub
-
     Public Sub LoadCategory()
         'TODO: This line of code loads data into the 'CategoriesFrmSetupDS.Category' table. You can move, or remove it, as needed.
         Me.CategoryTableAdapter.Connection.ConnectionString = DataLayer.conString
