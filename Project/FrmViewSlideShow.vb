@@ -2,6 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Reflection
 Imports Microsoft.DirectX.AudioVideoPlayback
+Imports System.Runtime.Serialization.Formatters.Binary
 
 Public Class FrmViewSlideShow
 
@@ -9,12 +10,15 @@ Public Class FrmViewSlideShow
     Private SlideShowPics As New ArrayList
     Private Pic(100) As Object
     Private imageNumber As Integer = 0
-    Private video As Video
+
+    'Stores the animation for the first slideshow
+    Public Shared animation As AnimationTypes
 
     'Stores the frequency for the slide shows
     Public Shared slideShowFreq As Integer
 
     Private Sub FrmViewSlideShow_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
+        BinaryDeserialize()
         loadSlideShowPic()
         loadTimerFreq()
 
@@ -57,30 +61,9 @@ Public Class FrmViewSlideShow
                 PictureBox1.BackgroundImage = PictureBox1.AnimatedImage
             End If
 
-            If TypeOf Pic(imageNumber) Is String Then
-                PictureBox1.BackgroundImage = Nothing
-                video = New Video(Pic(imageNumber))
-                Dim duration As Integer = video.Duration * 1000
-                If (duration > Timer1.Interval) Then
-                    Timer1.Interval = duration
-                End If
-                video.Owner = PictureBox1
-                video.Size = New Size(366, 295)
-                PictureBox1.Size = New Size(366, 295)
-                video.Play()
-                AddHandler video.Ending, AddressOf BackLoopHandler
-            Else
-                Timer1.Interval = slideShowFreq
-                PictureBox1.Size = New Size(366, 295)
-                If (video IsNot Nothing) Then
-                    video.Dispose()
-                End If
-
-                PictureBox1.AnimatedImage = Pic(imageNumber)
-                PictureBox1.Animate(30)
-            End If
-
-
+            Timer1.Interval = slideShowFreq
+            PictureBox1.AnimatedImage = Pic(imageNumber)
+            PictureBox1.Animate(30)
             PictureBox1.BackColor = Color.Transparent
 
             imageNumber = imageNumber + 1
@@ -111,24 +94,13 @@ Public Class FrmViewSlideShow
         Next
 
         For i = 1 To SlideShowPics.Count Step 3
-            If (SlideShowPics(i).ToString.Contains(".avi")) Then
-                Pic((i - 1) / 3) = Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()
-            Else
-                Pic((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
-            End If
+            Pic((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
         Next
     End Sub
 
     Private Sub bgw_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw.RunWorkerCompleted
         Me.Cursor = Cursors.Arrow
         Timer1.Start()
-    End Sub
-
-    Sub BackLoopHandler(sender As Object, args As EventArgs)
-        If (Not video.Disposed) Then
-            video.Stop()
-            'video.Dispose()
-        End If
     End Sub
 
     Public Sub loadTimerFreq()
@@ -153,14 +125,14 @@ Public Class FrmViewSlideShow
         Timer1.Start()
     End Sub
 
-    Public Function btnAdd_Click(sender As Object, e As EventArgs) As AnimationTypes Handles btnAdd.Click
-        Digital_Board.mainFrm.tabOne.AddAnimation(cmbAnimationType.SelectedItem)
+    Public Function btnSetAnima_Click(sender As Object, e As EventArgs) As AnimationTypes Handles btnSetAnima.Click
+        BinarySerialize()
         Digital_Board.digital.updateSlideShow()
     End Function
 
     Private Sub cmbAnimationType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAnimationType.SelectedIndexChanged
         PictureBox1.AnimationType = cmbAnimationType.SelectedItem
-        Me.ActiveControl = btnAdd
+        Me.ActiveControl = btnSetAnima
     End Sub
 
     Private Sub trkOne_Scroll(sender As Object, e As EventArgs) Handles trkOne.MouseLeave
@@ -176,5 +148,22 @@ Public Class FrmViewSlideShow
                 cmbAnimationType.SelectedItem = anima
             End If
         Next
+    End Sub
+
+    Private Shared Sub BinarySerialize()
+        Using str As FileStream = File.Create("AnimationOne.bin")
+            Dim bf As New BinaryFormatter()
+            bf.Serialize(str, animation)
+        End Using
+    End Sub
+
+    ' Deserialize an Animation object from a binary file.
+    Private Shared Sub BinaryDeserialize()
+        If (File.Exists("AnimationOne.bin")) Then
+            Using str As FileStream = File.OpenRead("AnimationOne.bin")
+                Dim bf As New BinaryFormatter()
+                animation = DirectCast(bf.Deserialize(str), AnimationTypes)
+            End Using
+        End If
     End Sub
 End Class

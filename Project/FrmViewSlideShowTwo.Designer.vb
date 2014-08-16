@@ -26,7 +26,7 @@ Partial Class FrmViewSlideShowTwo
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TimerDelay = New System.Windows.Forms.Timer(Me.components)
         Me.cmbAnimationType = New System.Windows.Forms.ComboBox()
-        Me.btnAdd = New System.Windows.Forms.Button()
+        Me.btnSetAnima = New System.Windows.Forms.Button()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.trkOne = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -47,25 +47,25 @@ Partial Class FrmViewSlideShowTwo
         'cmbAnimationType
         '
         Me.cmbAnimationType.FormattingEnabled = True
-        Me.cmbAnimationType.Location = New System.Drawing.Point(12, 318)
+        Me.cmbAnimationType.Location = New System.Drawing.Point(12, 328)
         Me.cmbAnimationType.Name = "cmbAnimationType"
-        Me.cmbAnimationType.Size = New System.Drawing.Size(253, 21)
+        Me.cmbAnimationType.Size = New System.Drawing.Size(277, 21)
         Me.cmbAnimationType.TabIndex = 1
         '
-        'btnAdd
+        'btnSetAnima
         '
-        Me.btnAdd.Location = New System.Drawing.Point(281, 318)
-        Me.btnAdd.Name = "btnAdd"
-        Me.btnAdd.Size = New System.Drawing.Size(68, 21)
-        Me.btnAdd.TabIndex = 2
-        Me.btnAdd.Text = "Add"
-        Me.btnAdd.UseVisualStyleBackColor = True
+        Me.btnSetAnima.Location = New System.Drawing.Point(295, 327)
+        Me.btnSetAnima.Name = "btnSetAnima"
+        Me.btnSetAnima.Size = New System.Drawing.Size(87, 21)
+        Me.btnSetAnima.TabIndex = 2
+        Me.btnSetAnima.Text = "Set Animation"
+        Me.btnSetAnima.UseVisualStyleBackColor = True
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(12, 372)
+        Me.Label4.Location = New System.Drawing.Point(12, 406)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(95, 15)
         Me.Label4.TabIndex = 30
@@ -74,11 +74,11 @@ Partial Class FrmViewSlideShowTwo
         'trkOne
         '
         Me.trkOne.LargeChange = 2
-        Me.trkOne.Location = New System.Drawing.Point(113, 361)
+        Me.trkOne.Location = New System.Drawing.Point(110, 395)
         Me.trkOne.Maximum = 20
         Me.trkOne.Minimum = 6
         Me.trkOne.Name = "trkOne"
-        Me.trkOne.Size = New System.Drawing.Size(215, 45)
+        Me.trkOne.Size = New System.Drawing.Size(272, 45)
         Me.trkOne.TabIndex = 29
         Me.trkOne.TickStyle = System.Windows.Forms.TickStyle.TopLeft
         Me.trkOne.Value = 6
@@ -86,7 +86,7 @@ Partial Class FrmViewSlideShowTwo
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(110, 342)
+        Me.Label1.Location = New System.Drawing.Point(107, 379)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(35, 13)
         Me.Label1.TabIndex = 31
@@ -95,7 +95,7 @@ Partial Class FrmViewSlideShowTwo
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(304, 342)
+        Me.Label2.Location = New System.Drawing.Point(352, 379)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(30, 13)
         Me.Label2.TabIndex = 31
@@ -111,7 +111,7 @@ Partial Class FrmViewSlideShowTwo
         Me.PictureBox1.MinimumSize = New System.Drawing.Size(100, 100)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Opacity = 0.0R
-        Me.PictureBox1.Size = New System.Drawing.Size(366, 295)
+        Me.PictureBox1.Size = New System.Drawing.Size(380, 311)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.Text = "AnimationControl1"
         Me.PictureBox1.Transparent = True
@@ -121,12 +121,12 @@ Partial Class FrmViewSlideShowTwo
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.ClientSize = New System.Drawing.Size(370, 452)
+        Me.ClientSize = New System.Drawing.Size(400, 452)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.trkOne)
-        Me.Controls.Add(Me.btnAdd)
+        Me.Controls.Add(Me.btnSetAnima)
         Me.Controls.Add(Me.cmbAnimationType)
         Me.Controls.Add(Me.PictureBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -145,7 +145,7 @@ Partial Class FrmViewSlideShowTwo
     Friend WithEvents PictureBox1 As Project.AnimationControl
     Friend WithEvents TimerDelay As System.Windows.Forms.Timer
     Friend WithEvents cmbAnimationType As System.Windows.Forms.ComboBox
-    Friend WithEvents btnAdd As System.Windows.Forms.Button
+    Friend WithEvents btnSetAnima As System.Windows.Forms.Button
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents trkOne As System.Windows.Forms.TrackBar
     Friend WithEvents Label1 As System.Windows.Forms.Label

@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Reflection
 Imports System.Threading
 Imports Microsoft.DirectX.AudioVideoPlayback
@@ -257,27 +256,6 @@ Public Class FrmManageSlideshow
             End If
         End If
     End Sub
-
-    Private Shared Sub BinarySerialize(list As ArrayList)
-        Using str As FileStream = File.Create("AnimationOne.bin")
-            Dim bf As New BinaryFormatter()
-            bf.Serialize(str, list)
-        End Using
-    End Sub
-
-    ' Deserialize an ArrayList object from a binary file.
-    Private Shared Function BinaryDeserialize() As ArrayList
-        Dim people As New ArrayList
-
-        If (File.Exists("AnimationOne.bin")) Then
-            Using str As FileStream = File.OpenRead("AnimationOne.bin")
-                Dim bf As New BinaryFormatter()
-                people = DirectCast(bf.Deserialize(str), ArrayList)
-            End Using
-        End If
-
-        Return people
-    End Function
 
     Private Sub btnUp_Click(sender As Object, e As EventArgs) Handles btnUp.Click
         If lstSlideShowPics.SelectedItem Is Nothing Then
