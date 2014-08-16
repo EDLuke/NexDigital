@@ -33,7 +33,7 @@ Partial Class FrmManageSlideshow
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnRemove = New System.Windows.Forms.Button()
         Me.btnAdd = New System.Windows.Forms.Button()
-        Me.lstSlideShowPics = New System.Windows.Forms.TreeView()
+        Me.lstSlideShowPics = New System.Windows.Forms.ListBox()
         Me.lstPics = New System.Windows.Forms.ListBox()
         Me.cmbCategories = New System.Windows.Forms.ComboBox()
         Me.CategoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -152,7 +152,7 @@ Partial Class FrmManageSlideshow
         '
         'lstSlideShowPics
         '
-        Me.lstSlideShowPics.HideSelection = False
+        Me.lstSlideShowPics.FormattingEnabled = True
         Me.lstSlideShowPics.Location = New System.Drawing.Point(192, 81)
         Me.lstSlideShowPics.Name = "lstSlideShowPics"
         Me.lstSlideShowPics.Size = New System.Drawing.Size(158, 225)
@@ -191,14 +191,6 @@ Partial Class FrmManageSlideshow
         '
         Me.CategoryTableAdapter.ClearBeforeFill = True
         '
-        'bgwOne
-        '
-        '
-        'bgwTwo
-        '
-        '
-        'bgwThree
-        '
         '
         'FrmManageSlideshow
         '
@@ -223,7 +215,7 @@ Partial Class FrmManageSlideshow
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents btnRemove As System.Windows.Forms.Button
     Friend WithEvents btnAdd As System.Windows.Forms.Button
-    Friend WithEvents lstSlideShowPics As System.Windows.Forms.TreeView
+    Friend WithEvents lstSlideShowPics As System.Windows.Forms.ListBox
     Friend WithEvents lstPics As System.Windows.Forms.ListBox
     Friend WithEvents cmbCategories As System.Windows.Forms.ComboBox
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox

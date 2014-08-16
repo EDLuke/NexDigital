@@ -7,15 +7,12 @@ Imports Microsoft.DirectX.AudioVideoPlayback
 Public Class FrmManageSlideshow
     Private picsArrayList As ArrayList
     Private SlideShowPicsArrayList As ArrayList
-    Private AnimationOneList As New ArrayList
-    Private AnimationList As ArrayList
     Private cmbCategorySelected As Integer
-    Private video As Video
 
     Private Sub FrmManageSlideshow_shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         LoadCategory()
         FillCategories()
-        UpdateTreeView()
+        UpdateListView()
     End Sub
 
     Public Sub LoadCategory()
@@ -38,18 +35,16 @@ Public Class FrmManageSlideshow
     End Sub
 
     Private Sub lstMenuItems_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstSlideShowPics.MouseWheel
-        If (lstSlideShowPics.SelectedNode Is Nothing) Then
-            If lstSlideShowPics.Nodes(0) IsNot Nothing Then
-                lstSlideShowPics.SelectedNode = lstSlideShowPics.Nodes(0)
-            End If
+        If (lstSlideShowPics.SelectedItem Is Nothing) Then
+            lstSlideShowPics.SelectedItem = lstSlideShowPics.Items(0)
         Else
             If (e.Delta > 0) Then
-                If lstSlideShowPics.SelectedNode.Index - 1 >= 0 Then
-                    lstSlideShowPics.SelectedNode = lstSlideShowPics.SelectedNode.PrevVisibleNode
+                If lstSlideShowPics.SelectedIndex - 1 >= 0 Then
+                    lstSlideShowPics.SelectedIndex -= 1
                 End If
             Else
-                If lstSlideShowPics.SelectedNode.Index + 1 < lstSlideShowPics.Nodes.Count Then
-                    lstSlideShowPics.SelectedNode = lstSlideShowPics.SelectedNode.NextVisibleNode
+                If lstSlideShowPics.SelectedIndex + 1 < lstSlideShowPics.Items.Count Then
+                    lstSlideShowPics.SelectedIndex += 1
                 End If
             End If
         End If
@@ -80,42 +75,9 @@ Public Class FrmManageSlideshow
         End If
     End Sub
 
-    Public Sub UpdateTreeView()
-        lstSlideShowPics.Nodes.Clear()
-        AnimationOneList.Clear()
-
+    Public Sub UpdateListView()
+        lstSlideShowPics.Items.Clear()
         FillSlideShowPics()
-        LoadAnimationList()
-    End Sub
-
-    Private Sub LoadAnimationList()
-        Me.Cursor = Cursors.WaitCursor
-        If (Not bgwThree.IsBusy) Then
-            bgwThree.RunWorkerAsync()
-        End If
-    End Sub
-
-    Private Sub bgwThree_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwThree.DoWork
-        AnimationList = BinaryDeserialize()
-    End Sub
-
-    Private Sub loadCompleteThree(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwThree.RunWorkerCompleted
-        lstSlideShowPics.BeginUpdate()
-        For Each item As TreeNode In lstSlideShowPics.Nodes
-            If item.Parent Is Nothing Then
-                Dim animationSearch = AnimationList.IndexOf(item.Text)
-                Dim animationOneSearch = AnimationOneList.IndexOf(item.Text)
-
-                If animationSearch <> -1 Then
-                    If (item.Nodes.Count = 0) Then
-                        item.Nodes.Add(AnimationList(animationSearch + 1).ToString)
-                        AnimationOneList.Insert(animationOneSearch + 1, AnimationList(animationSearch + 1).ToString)
-                    End If
-                End If
-            End If
-        Next
-        lstSlideShowPics.EndUpdate()
-        Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub cmbCategories_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCategories.SelectedIndexChanged
@@ -192,11 +154,8 @@ Public Class FrmManageSlideshow
             SlideShowPicsArrayList.Add(lstPics.SelectedItem)
 
             ' Update UI
-            lstSlideShowPics.Nodes.Add(lstPics.SelectedItem)
+            lstSlideShowPics.Items.Add(lstPics.SelectedItem)
         End If
-
-        'Restore item's animation (if any)
-        LoadAnimationList()
 
         'Update the digital board at run time
         Digital_Board.digital.updateSlideShow()
@@ -212,7 +171,7 @@ Public Class FrmManageSlideshow
     End Function
 
     Private Sub btnRemove_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRemove.Click
-        If lstSlideShowPics.SelectedNode Is Nothing Then
+        If lstSlideShowPics.SelectedItem Is Nothing Then
             MessageBox.Show("Please select an item first", "Error")
             Return
         End If
@@ -223,7 +182,7 @@ Public Class FrmManageSlideshow
     End Sub
 
     Private Sub RemoveFromSlideShow()
-        Dim item As String = lstSlideShowPics.SelectedNode.ToString().Substring(10)
+        Dim item As String = lstSlideShowPics.SelectedItem.ToString()
         Dim itemId As String = -1
         ' Get itemid of selected item
         For i = 2 To SlideShowPicsArrayList.Count Step 3
@@ -242,7 +201,7 @@ Public Class FrmManageSlideshow
         Dim response As Boolean = DataLayer.RemoveFromSlideShow(CInt(itemId), 1)
 
         'Update ui
-        lstSlideShowPics.Nodes.Remove(lstSlideShowPics.SelectedNode)
+        lstSlideShowPics.Items.Remove(lstSlideShowPics.SelectedItem)
 
         'Update the digital board at run time
         Digital_Board.digital.updateSlideShow()
@@ -262,8 +221,7 @@ Public Class FrmManageSlideshow
 
     Private Sub loadCompleteTwo(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwTwo.RunWorkerCompleted
         For i = 2 To SlideShowPicsArrayList.Count Step 3
-            lstSlideShowPics.Nodes.Add(SlideShowPicsArrayList(i))
-            AnimationOneList.Add(SlideShowPicsArrayList(i))
+            lstSlideShowPics.Items.Add(SlideShowPicsArrayList(i))
         Next
         Me.Cursor = Cursors.Arrow
     End Sub
@@ -271,109 +229,37 @@ Public Class FrmManageSlideshow
     Private Sub lstPics_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstPics.SelectedIndexChanged
         Try
             If lstPics.SelectedItem <> Nothing Then
-                If picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1).ToString.Contains(".avi") Then
-                    video = New Video(Directory.GetCurrentDirectory() & "\images\" & picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1))
-                    video.Owner = PictureBox1
-                    video.Size = New Size(386, 112)
-                    video.Play()
-                    AddHandler video.Ending, AddressOf BackLoopHandler
-                Else
-                    If (video IsNot Nothing) Then
-                        video.Dispose()
-                    End If
-                    Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1))
-                    PictureBox1.Image = myImage
-                End If
-
+                Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & picsArrayList(picsArrayList.IndexOf(lstPics.SelectedItem.ToString()) - 1))
+                PictureBox1.Image = myImage
             End If
         Catch ex As FileNotFoundException
             PictureBox1.Image = Nothing
         End Try
     End Sub
 
-    Private Sub lstSlideShowPics_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstSlideShowPics.AfterSelect
+    Private Sub lstSlideShowPics_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstSlideShowPics.SelectedIndexChanged
         Try
-            If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
-                If SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1).ToString.Contains(".avi") Then
-                    PictureBox1.Image = Nothing
-                    video = New Video(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
-                    video.Owner = PictureBox1
-                    video.Size = New Size(386, 112)
-                    video.Play()
-                    AddHandler video.Ending, AddressOf BackLoopHandler
-                Else
-                    If (video IsNot Nothing) Then
-                        video.Dispose()
-                    End If
-                    Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1))
-
-                    PictureBox1.Size = New Size(386, 112)
-                    PictureBox1.Image = myImage
-                End If
-            Else
-                Digital_Board.vwOne.changeAnimaSelected(lstSlideShowPics.SelectedNode.Text)
+            If (lstSlideShowPics.SelectedIndex <> -1) Then
+                Dim myImage As System.Drawing.Image = Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedItem.ToString) - 1))
+                PictureBox1.Image = myImage
             End If
         Catch ex As FileNotFoundException
             PictureBox1.Image = Nothing
         End Try
-    End Sub
-
-    Sub BackLoopHandler(sender As Object, args As EventArgs)
-        If (Not video.Disposed) Then
-            video.Stop()
-            'video.Dispose()
-        End If
-    End Sub
-
-    Public Sub AddAnimation(ByVal anima As AnimationTypes)
-        If lstSlideShowPics.SelectedNode Is Nothing Then
-            MessageBox.Show("Please Select an Item", "Error")
-        ElseIf lstSlideShowPics.SelectedNode.Text.ToString.Contains(".avi") Then
-            MessageBox.Show("Cannot add animation to video", "Error")
-        Else
-            If (lstSlideShowPics.SelectedNode.Nodes.Count = 0) Or Not SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(lstSlideShowPics.SelectedNode.Text) - 1).ToString.Contains(".avi") Then
-                lstSlideShowPics.SelectedNode.Nodes.Add(anima.ToString())
-            Else
-                MessageBox.Show(lstSlideShowPics.SelectedNode.Text & " already has animation: " & lstSlideShowPics.SelectedNode.Nodes(0).ToString.Substring(10), "Error")
-                Return
-            End If
-
-            AnimationList.Add(lstSlideShowPics.SelectedNode.Text)
-            AnimationList.Add(anima.ToString)
-
-            BinarySerialize(AnimationList)
-        End If
     End Sub
 
     Private Sub lstSlideShowPics_KeyDown(sender As System.Object, e As KeyEventArgs) Handles lstSlideShowPics.KeyDown
-        If lstSlideShowPics.SelectedNode Is Nothing Then
+        If lstSlideShowPics.SelectedItem Is Nothing Then
             MessageBox.Show("Please Select an Item", "Error")
         Else
             If e.KeyCode = Keys.Delete Then
-                If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
-                    RemoveFromSlideShow()
-                Else
-                    RemoveAnimation()
-                End If
+                RemoveFromSlideShow()
             End If
         End If
     End Sub
 
-    Private Sub RemoveAnimation()
-        Dim item = lstSlideShowPics.SelectedNode.Parent.Text
-        Dim itemIndex = AnimationList.IndexOf(item)
-
-        'Update the arraylist and the binary file
-        AnimationList.RemoveAt(itemIndex)
-        AnimationList.RemoveAt(itemIndex)
-        BinarySerialize(AnimationList)
-
-        'Update UI
-        lstSlideShowPics.SelectedNode.Parent.Nodes.Clear()
-    End Sub
-
     Private Shared Sub BinarySerialize(list As ArrayList)
-        Using str As FileStream = File.Create("AnimationListOne.bin")
+        Using str As FileStream = File.Create("AnimationOne.bin")
             Dim bf As New BinaryFormatter()
             bf.Serialize(str, list)
         End Using
@@ -383,93 +269,47 @@ Public Class FrmManageSlideshow
     Private Shared Function BinaryDeserialize() As ArrayList
         Dim people As New ArrayList
 
-        Try
-            If (File.Exists("AnimationListOne.bin")) Then
-                Using str As FileStream = File.OpenRead("AnimationListOne.bin")
-                    Dim bf As New BinaryFormatter()
-                    people = DirectCast(bf.Deserialize(str), ArrayList)
-                End Using
-            End If
-
-        Catch ex As FileNotFoundException
-
-        End Try
+        If (File.Exists("AnimationOne.bin")) Then
+            Using str As FileStream = File.OpenRead("AnimationOne.bin")
+                Dim bf As New BinaryFormatter()
+                people = DirectCast(bf.Deserialize(str), ArrayList)
+            End Using
+        End If
 
         Return people
     End Function
 
     Private Sub btnUp_Click(sender As Object, e As EventArgs) Handles btnUp.Click
-        If lstSlideShowPics.SelectedNode Is Nothing Or isAnimation(lstSlideShowPics.SelectedNode.ToString) Then
+        If lstSlideShowPics.SelectedItem Is Nothing Then
             MessageBox.Show("Please Select an Item", "Error")
         Else
-            If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
-                MoveUp()
-                UpdateTreeView()
-            End If
+            MoveUp()
+            UpdateListView()
         End If
     End Sub
 
     Private Sub btnDown_Click(sender As Object, e As EventArgs) Handles btnDown.Click
-        If lstSlideShowPics.SelectedNode Is Nothing Or isAnimation(lstSlideShowPics.SelectedNode.ToString) Then
+        If lstSlideShowPics.SelectedItem Is Nothing Then
             MessageBox.Show("Please Select an Item", "Error")
         Else
-            If lstSlideShowPics.SelectedNode.Parent Is Nothing Then
-                MoveDown()
-                UpdateTreeView()
-            End If
+            MoveDown()
+            UpdateListView()
         End If
     End Sub
 
-    Private Function isAnimation(ByVal node As String) As Boolean
-        For Each Str As String In [Enum].GetNames(GetType(AnimationTypes))
-            If node = Str Then
-                Return True
-            End If
-        Next
-        Return False
-    End Function
-
     Private Sub MoveUp()
-        Dim item = lstSlideShowPics.SelectedNode.Text
-        Dim itemIndex = AnimationOneList.IndexOf(item)
-        Dim animationTypes = [Enum].GetNames(GetType(AnimationTypes))
+        Dim item = lstSlideShowPics.SelectedItem.ToString
 
-        If itemIndex > 0 Then
-
-            Dim isEnum As Boolean = False
-            For Each Str As String In animationTypes
-                If AnimationOneList(itemIndex - 1) = Str Then
-                    isEnum = True
-                End If
-            Next
-
-            If isEnum Then
-                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationOneList(itemIndex - 2)) - 2), 1)
-            Else
-                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationOneList(itemIndex - 1)) - 2), 1)
-            End If
+        If lstSlideShowPics.SelectedIndex > 0 Then
+            DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 5), 1)
         End If
     End Sub
 
     Private Sub MoveDown()
-        Dim item = lstSlideShowPics.SelectedNode.Text
-        Dim itemIndex = AnimationOneList.IndexOf(item)
-        Dim animationTypes = [Enum].GetNames(GetType(AnimationTypes))
+        Dim item = lstSlideShowPics.SelectedItem.ToString
 
-        If itemIndex <> AnimationOneList.Count - 1 Then
-
-            Dim isEnum As Boolean = False
-            For Each Str As String In animationTypes
-                If AnimationOneList(itemIndex + 1) = Str Then
-                    isEnum = True
-                End If
-            Next
-
-            If isEnum Then
-                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationOneList(itemIndex + 2)) - 2), 1)
-            Else
-                DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(AnimationOneList(itemIndex + 1)) - 2), 1)
-            End If
+        If lstSlideShowPics.SelectedIndex <> lstSlideShowPics.Items.Count - 1 Then
+            DataLayer.SwitchSlideShowOrder(SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) - 2), SlideShowPicsArrayList(SlideShowPicsArrayList.IndexOf(item) + 1), 1)
         End If
     End Sub
 End Class
