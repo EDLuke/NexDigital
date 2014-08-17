@@ -431,6 +431,12 @@ Public Class frmSetup
         Digital_Board.colorD.loadPanel()
     End Sub
 
+    Private Sub lstItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstItems.SelectedIndexChanged
+        selectedItemId = itemsArrayList(lstItems.SelectedIndex * 4)
+        Digital_Board.fontD.loadPanel()
+        Digital_Board.colorD.loadPanel()
+    End Sub
+
     Public Sub BinarySerialize()
         Dim tempColor As New ArrayList
         tempColor.Add(despBgColor)

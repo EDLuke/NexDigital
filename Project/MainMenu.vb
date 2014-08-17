@@ -118,11 +118,15 @@ Public Class MainMenu
     End Sub
 
     Private Sub tabMain_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tabMain.MouseEnter
-        _tabOne.Select()
+        If TypeOf (_tabOne) Is Form Then
+            _tabOne.Select()
+        End If
     End Sub
 
     Private Sub tabSec_MouseEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tabSec.MouseEnter
-        _tabTwo.Select()
+        If TypeOf (_tabTwo) Is Form Then
+            _tabTwo.Select()
+        End If
     End Sub
 
     Public Sub updateSecForm()
