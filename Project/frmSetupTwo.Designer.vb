@@ -86,7 +86,7 @@ Partial Class frmSetupTwo
         Me.GroupBox1.Controls.Add(Me.lstMenuItems)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 0)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(391, 391)
+        Me.GroupBox1.Size = New System.Drawing.Size(391, 428)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Select Menu Items"
@@ -159,7 +159,7 @@ Partial Class frmSetupTwo
         Me.lstItems.FormattingEnabled = True
         Me.lstItems.Location = New System.Drawing.Point(9, 81)
         Me.lstItems.Name = "lstItems"
-        Me.lstItems.Size = New System.Drawing.Size(169, 303)
+        Me.lstItems.Size = New System.Drawing.Size(169, 329)
         Me.lstItems.TabIndex = 1
         '
         'lstMenuItems
@@ -167,7 +167,7 @@ Partial Class frmSetupTwo
         Me.lstMenuItems.FormattingEnabled = True
         Me.lstMenuItems.Location = New System.Drawing.Point(235, 81)
         Me.lstMenuItems.Name = "lstMenuItems"
-        Me.lstMenuItems.Size = New System.Drawing.Size(99, 303)
+        Me.lstMenuItems.Size = New System.Drawing.Size(99, 329)
         Me.lstMenuItems.TabIndex = 2
         '
         'CategoryTableAdapter
@@ -178,7 +178,7 @@ Partial Class frmSetupTwo
         '
         Me.btnName.Appearance = System.Windows.Forms.Appearance.Button
         Me.btnName.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnName.Location = New System.Drawing.Point(12, 412)
+        Me.btnName.Location = New System.Drawing.Point(12, 434)
         Me.btnName.Name = "btnName"
         Me.btnName.Size = New System.Drawing.Size(104, 31)
         Me.btnName.TabIndex = 22
@@ -190,7 +190,7 @@ Partial Class frmSetupTwo
         '
         Me.btnPrice.Appearance = System.Windows.Forms.Appearance.Button
         Me.btnPrice.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPrice.Location = New System.Drawing.Point(122, 412)
+        Me.btnPrice.Location = New System.Drawing.Point(154, 434)
         Me.btnPrice.Name = "btnPrice"
         Me.btnPrice.Size = New System.Drawing.Size(104, 31)
         Me.btnPrice.TabIndex = 23
@@ -202,7 +202,7 @@ Partial Class frmSetupTwo
         '
         Me.btnDesp.Appearance = System.Windows.Forms.Appearance.Button
         Me.btnDesp.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDesp.Location = New System.Drawing.Point(232, 412)
+        Me.btnDesp.Location = New System.Drawing.Point(299, 434)
         Me.btnDesp.Name = "btnDesp"
         Me.btnDesp.Size = New System.Drawing.Size(104, 31)
         Me.btnDesp.TabIndex = 24
@@ -220,7 +220,7 @@ Partial Class frmSetupTwo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(415, 455)
+        Me.ClientSize = New System.Drawing.Size(415, 480)
         Me.Controls.Add(Me.btnDesp)
         Me.Controls.Add(Me.btnPrice)
         Me.Controls.Add(Me.btnName)
