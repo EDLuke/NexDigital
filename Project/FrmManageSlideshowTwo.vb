@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports System.Reflection
-Imports Microsoft.DirectX.AudioVideoPlayback
 
 Public Class FrmManageSlideshowTwo
     Private picsArrayList As ArrayList

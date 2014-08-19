@@ -6,7 +6,6 @@ Imports System.Net
 Imports System.ComponentModel
 Imports System.Threading
 Imports System.Reflection
-Imports Microsoft.DirectX.AudioVideoPlayback
 
 Public Class FrmDigitalBB
     Public weatherLocationCode As String = "2396503"
@@ -26,7 +25,6 @@ Public Class FrmDigitalBB
     Private n_Thread As CallBackThread
     Private n As New clsNews
     Private w As New clsWeather(weatherLocationCode, "f")
-    Private video As Video
 
     Private Sub FrmViewSlideShow_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
@@ -460,13 +458,6 @@ Public Class FrmDigitalBB
         If weatherPic IsNot Nothing Then
             Dim r As New Rectangle(Me.Width * 0.8, Me.Height * (-0.08), Me.Width * 0.2, Me.Width * 0.2)
             e.Graphics.DrawImage(weatherPic, r)
-        End If
-    End Sub
-
-    Sub BackLoopHandler(sender As Object, args As EventArgs)
-        If (Not video.Disposed) Then
-            video.Stop()
-            'video.Dispose()
         End If
     End Sub
 End Class

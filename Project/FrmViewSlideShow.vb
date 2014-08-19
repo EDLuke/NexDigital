@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Drawing.Drawing2D
 Imports System.Reflection
-Imports Microsoft.DirectX.AudioVideoPlayback
 Imports System.Runtime.Serialization.Formatters.Binary
 
 Public Class FrmViewSlideShow

@@ -6,7 +6,6 @@ Imports System.Net
 Imports System.ComponentModel
 Imports System.Threading
 Imports System.Reflection
-Imports Microsoft.DirectX.AudioVideoPlayback
 
 Public Class FrmDigitalBBTwo
     Public weatherLocationCode As String = "2396503"
@@ -27,7 +26,6 @@ Public Class FrmDigitalBBTwo
     Private i_Thread As CallBackThread
     Private n As New clsNews
     Private w As New clsWeather(weatherLocationCode, "f")
-    Private video As Video
 
     Private Sub FrmViewSlideShow_Shown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
         Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
@@ -369,97 +367,66 @@ Public Class FrmDigitalBBTwo
             FullPictureBox.BackgroundImage = FullPictureBox.AnimatedImage
         End If
 
-        If TypeOf Pics(imageNumber) Is String Then
-            PictureBox1.Visible = False
-            PictureBox2.Visible = False
-            FullPictureBox.Visible = True
-            FullPictureBox.BackgroundImage = Nothing
-            video = New Video(Pics(imageNumber))
-            Dim duration As Integer = video.Duration * 1000
-            If (duration > TimerDelay.Interval) Then
-                TimerDelay.Interval = duration
-            End If
-            video.Owner = FullPictureBox
-            video.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
-            FullPictureBox.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
-            video.Play()
-            AddHandler video.Ending, AddressOf BackLoopHandler
-
-            'Change image number
-            imageNumber += 1
-            If imageNumber >= imageCount Then
-                imageNumber = 0
-            End If
-        ElseIf TypeOf Pics(imageNumber) Is Image Then
-            Timer1.Interval = frqOne
-            Try
-                If Not slideFullSeparte Then
-                    PictureBox1.Visible = True
-                    PictureBox2.Visible = True
-                    FullPictureBox.Visible = False
-                    If (video IsNot Nothing) Then
-                        video.Dispose()
-                    End If
-                    PictureBox1.Size = New Size(Me.Width * 0.65, Me.Height * 0.48)
-                    If (Not Full(imageNumber2)) Then
-                        'Change Background Image
-                        PictureBox1.AnimatedFadeImage = Pics(imageNumber)
-                        PictureBox1.BackgroundImage = Pics(imageNumber)
-                        PictureBox1.BackColor = Color.Transparent
-                    End If
-
-                    'Change image number
-                    imageNumber += 1
-                    If imageNumber >= imageCount Then
-                        imageNumber = 0
-                    End If
-
-                    If TypeOf Pics(imageNumber) Is Image Then
-                        'Animate (Foreground) Image
-                        PictureBox1.AnimatedImage = Pics(imageNumber)
-                    End If
-
-                    'Highlight Menu Item
-                    updatePanel(Not FullPictureBox.Visible)
-
-                    If animationOneList IsNot Nothing Then
-                        'Search for Unique AnimationType
-                        Dim animationSearch = animationOneList.IndexOf(SlideShowPics(imageNumber * 3 + 2))
-                        If animationSearch <> -1 Then
-                            PictureBox1.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationOneList(animationSearch + 1)), AnimationTypes)
-                        End If
-                    End If
-
-                    FullPictureBox.Visible = False
-                    PictureBox1.Animate(frqOne / 100)
-                Else
-                    FullPictureBox.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
-                    If (video IsNot Nothing) Then
-                        video.Dispose()
-                    End If
-
-                    FullPictureBox.AnimatedImage = Pics(imageNumber)
-                    FullPictureBox.Animate(30)
-
-                    FullPictureBox.BackColor = Color.Transparent
-
-                    'Change image number
-                    imageNumber += 1
-                    If imageNumber >= imageCount Then
-                        imageNumber = 0
-                    End If
-
-                    'Highlight Menu Item
-                    updatePanel(FullPictureBox.Visible)
+        
+        Timer1.Interval = frqOne
+        Try
+            If Not slideFullSeparte Then
+                PictureBox1.Visible = True
+                PictureBox2.Visible = True
+                FullPictureBox.Visible = False
+                If (Not Full(imageNumber2)) Then
+                    'Change Background Image
+                    PictureBox1.AnimatedFadeImage = Pics(imageNumber)
+                    PictureBox1.BackgroundImage = Pics(imageNumber)
+                    PictureBox1.BackColor = Color.Transparent
                 End If
-            Catch exArg As ArgumentOutOfRangeException
-                updateSlideShow()
-            Catch ex As IndexOutOfRangeException
-                updateSlideShow()
-            Catch exNull As NullReferenceException
-                updateSlideShow()
-            End Try
-        End If
+
+                'Change image number
+                imageNumber += 1
+                If imageNumber >= imageCount Then
+                    imageNumber = 0
+                End If
+
+                If TypeOf Pics(imageNumber) Is Image Then
+                    'Animate (Foreground) Image
+                    PictureBox1.AnimatedImage = Pics(imageNumber)
+                End If
+
+                'Highlight Menu Item
+                updatePanel(Not FullPictureBox.Visible)
+
+                If animationOneList IsNot Nothing Then
+                    'Search for Unique AnimationType
+                    Dim animationSearch = animationOneList.IndexOf(SlideShowPics(imageNumber * 3 + 2))
+                    If animationSearch <> -1 Then
+                        PictureBox1.AnimationType = DirectCast([Enum].Parse(GetType(AnimationTypes), animationOneList(animationSearch + 1)), AnimationTypes)
+                    End If
+                End If
+
+                FullPictureBox.Visible = False
+                PictureBox1.Animate(frqOne / 100)
+            Else
+                FullPictureBox.AnimatedImage = Pics(imageNumber)
+                FullPictureBox.Animate(30)
+
+                FullPictureBox.BackColor = Color.Transparent
+
+                'Change image number
+                imageNumber += 1
+                If imageNumber >= imageCount Then
+                    imageNumber = 0
+                End If
+
+                'Highlight Menu Item
+                updatePanel(FullPictureBox.Visible)
+            End If
+        Catch exArg As ArgumentOutOfRangeException
+            updateSlideShow()
+        Catch ex As IndexOutOfRangeException
+            updateSlideShow()
+        Catch exNull As NullReferenceException
+            updateSlideShow()
+        End Try
 
         Timer1.Stop()
         TimerDelay.Start()
@@ -485,11 +452,6 @@ Public Class FrmDigitalBBTwo
 
 
         TimerDelay.Interval = frqTwo
-        FullPictureBox.Size = New Size(Me.Width * 0.65, Me.Height * 0.96)
-        If (video IsNot Nothing) Then
-            video.Dispose()
-        End If
-
         FullPictureBox.AnimatedImage = Pics(imageNumber)
 
         imageNumber += 1
@@ -659,12 +621,5 @@ Public Class FrmDigitalBBTwo
         fullAnimate = False
         TimerSecondDelay.Stop()
         Timer1.Start()
-    End Sub
-
-    Sub BackLoopHandler(sender As Object, args As EventArgs)
-        If (Not video.Disposed) Then
-            video.Stop()
-            'video.Dispose()
-        End If
     End Sub
 End Class
