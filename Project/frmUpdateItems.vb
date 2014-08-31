@@ -104,13 +104,13 @@ Public Class frmUpdateItem
             picture = txtPicture.Text
             If (OpenFileDialog1.FileName IsNot Nothing) Then
                 ' Copy image file
-                FileCopy(OpenFileDialog1.FileName, Directory.GetCurrentDirectory() & "\images\" & picture.Substring(picture.LastIndexOf("\")))
+                FileCopy(OpenFileDialog1.FileName, Directory.GetCurrentDirectory() & "\images\" & picture.Substring(picture.LastIndexOf("\") + 1))
             End If
         Else
             picture = ""
         End If
 
-        Dim result As Boolean = DataLayer.UpdateItem(currentItemId, item, desc, price, picture, full, categoryid)
+        Dim result As Boolean = DataLayer.UpdateItem(currentItemId, item, desc, price, picture.Substring(picture.LastIndexOf("\") + 1), full, categoryid)
         MessageBox.Show("Item has been updated!", "Success")
         Digital_Board.mainFrm.tabOne.loadItems()
 
