@@ -209,6 +209,8 @@ Public Class FrmDigitalBBTwo
 
     Public Sub updateSlideShow()
         Timer1.Stop()
+        TimerDelay.Stop()
+        TimerSecondDelay.Stop()
 
         loadBinaryDeserialize()
 
@@ -476,7 +478,6 @@ Public Class FrmDigitalBBTwo
             PictureBox2.AnimatedFadeImage = PictureBox2.AnimatedImage
             PictureBox2.BackgroundImage = PictureBox2.AnimatedImage
         End If
-
 
         TimerDelay.Interval = frqTwo
 

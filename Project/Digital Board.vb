@@ -168,11 +168,13 @@ Public Class Digital_Board
         mgOne.LoadCategory()
         mgOne.FillCategories()
         mgOne.UpdateListView()
+        mgOne.clearPictureBox()
         vwOne.loadSlideShowPic()
         vwOne.loadTimerFreq()
         mgTwo.LoadCategory()
         mgTwo.FillCategories()
         mgTwo.UpdateListView()
+        mgTwo.clearPictureBox()
         vwTwo.loadSlideShowPic()
         vwTwo.loadTimerFreq()
     End Sub

@@ -32,6 +32,10 @@ Public Class FrmManageSlideshow
         cmbCategories.Select()
     End Sub
 
+    Public Sub clearPictureBox()
+        PictureBox1.Image = Nothing
+    End Sub
+
     Private Sub lstMenuItems_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstSlideShowPics.MouseWheel
         If (lstSlideShowPics.SelectedItem Is Nothing) Then
             lstSlideShowPics.SelectedItem = lstSlideShowPics.Items(0)

@@ -173,6 +173,7 @@ Public Class FrmDigitalBB
 
     Public Sub updateSlideShow()
         Timer1.Stop()
+        TimerDelay.Stop()
 
         loadBinaryDeserialize()
 
@@ -183,11 +184,7 @@ Public Class FrmDigitalBB
         imageCount = SlideShowPics.Count / 3
 
         For i = 1 To SlideShowPics.Count Step 3
-            If (SlideShowPics(i).ToString.Contains(".avi")) Then
-                Pics((i - 1) / 3) = Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()
-            Else
-                Pics((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
-            End If
+            Pics((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
         Next
 
         imageNumber = 0

@@ -31,6 +31,10 @@ Public Class FrmManageSlideshowTwo
         cmbCategories.Select()
     End Sub
 
+    Public Sub clearPictureBox()
+        PictureBox1.Image = Nothing
+    End Sub
+
     Private Sub lstPics_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstPics.MouseWheel
         If (e.Delta > 0) Then
             If lstPics.SelectedIndex - 1 >= 0 Then

@@ -36,8 +36,6 @@ Public Class frmCategorySetup
         End If
     End Sub
 
-
-
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         Dim result As DialogResult = MessageBox.Show("Are you sure you want to delete " & lstAllCate.SelectedItem.Row.ItemArray(1) & "? All items in this category will be deleted as well", "Confirm", MessageBoxButtons.YesNo)
 
