@@ -88,8 +88,8 @@ Public Class FrmDigitalBBTwo
     End Sub
 
     Private Sub loadFrq()
-        frqOne = Timer1.Interval
-        frqTwo = TimerDelay.Interval
+        frqOne = TimerDelay.Interval
+        frqTwo = TimerSecondDelay.Interval
     End Sub
 
     Private Sub loadThread()
@@ -223,20 +223,12 @@ Public Class FrmDigitalBBTwo
         imageCount2 = SlideShowPics2.Count / 3
 
         For i = 1 To SlideShowPics.Count Step 3
-            If (SlideShowPics(i).ToString.Contains(".avi")) Then
-                Pics((i - 1) / 3) = Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()
-            else
-                Pics((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
-            End If
+            Pics((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics(i).ToString()))
         Next
 
         For i = 1 To SlideShowPics2.Count Step 3
-            If (SlideShowPics2(i).ToString.Contains(".avi")) Then
-                Pics2((i - 1) / 3) = Directory.GetCurrentDirectory() & "\images\" & SlideShowPics2(i).ToString()
-            Else
-                Pics2((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics2(i).ToString()))
-                Full((i - 1) / 3) = CBool(SlideShowFull(i).ToString())
-            End If
+            Pics2((i - 1) / 3) = resizeImage(Image.FromFile(Directory.GetCurrentDirectory() & "\images\" & SlideShowPics2(i).ToString()))
+            Full((i - 1) / 3) = CBool(SlideShowFull(i).ToString())
         Next
 
         imageNumber = 0
@@ -450,8 +442,7 @@ Public Class FrmDigitalBBTwo
             FullPictureBox.BackgroundImage = FullPictureBox.AnimatedImage
         End If
 
-
-        TimerDelay.Interval = frqTwo
+        TimerDelay.Interval = frqOne
         FullPictureBox.AnimatedImage = Pics(imageNumber)
 
         imageNumber += 1
@@ -546,8 +537,6 @@ Public Class FrmDigitalBBTwo
             Catch ex As Exception
 
             End Try
-
-
             FullPictureBox.Animate(frqOne / 100)
         Else
             FullPictureBox.Visible = False

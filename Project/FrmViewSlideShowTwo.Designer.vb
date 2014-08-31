@@ -75,8 +75,8 @@ Partial Class FrmViewSlideShowTwo
         '
         Me.trkOne.LargeChange = 2
         Me.trkOne.Location = New System.Drawing.Point(110, 395)
-        Me.trkOne.Maximum = 20
-        Me.trkOne.Minimum = 6
+        Me.trkOne.Maximum = 40
+        Me.trkOne.Minimum = 2
         Me.trkOne.Name = "trkOne"
         Me.trkOne.Size = New System.Drawing.Size(272, 45)
         Me.trkOne.TabIndex = 29

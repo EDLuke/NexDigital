@@ -61,8 +61,8 @@ Public Class FrmDigitalBB
     End Sub
 
     Private Sub loadFrq()
-        frqOne = Timer1.Interval
-        frqTwo = Timer1.Interval
+        frqOne = TimerDelay.Interval
+        frqTwo = TimerDelay.Interval
     End Sub
 
     Private Sub loadThread()
@@ -349,18 +349,6 @@ Public Class FrmDigitalBB
         End If
 
         If TypeOf Pics(imageNumber) Is String Then
-            'video = New Video(Pics(imageNumber))
-            'Dim duration As Integer = video.Duration * 1000
-            'If (duration > TimerDelay.Interval) Then
-            '    TimerDelay.Interval = duration
-            'End If
-            'video.Owner = PictureBox1
-            'video.Size = New Size(Me.Height * 0.475, Me.Height * 0.475)
-            'PictureBox1.Size = New Size(Me.Height * 0.475, Me.Height * 0.475)
-            'video.Play()
-            'AddHandler video.Ending, AddressOf BackLoopHandler
-
-            
             'Change image number
             imageNumber += 1
             If imageNumber >= imageCount Then
@@ -371,16 +359,7 @@ Public Class FrmDigitalBB
                 'Animate (Foreground) Image
                 PictureBox1.AnimatedImage = Pics(imageNumber)
             End If
-
-            'PictureBox1 = New AnimationControl
-            'PictureBox1.Size = New Size(Me.Height * 0.475, Me.Height * 0.475)
-            'PictureBox1.AnimationType = Project.AnimationTypes.RighTotLeft
-            'PictureBox1.Location = New System.Drawing.Point(0, 0)
-            'PictureBox1.MinimumSize = New System.Drawing.Size(100, 100)
-            'PictureBox1.Transparent = True
-
         Else
-            Timer1.Interval = frqOne
             Try
                 'Change Background Image   
                 PictureBox1.AnimatedFadeImage = Pics(imageNumber)

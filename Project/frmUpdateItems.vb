@@ -100,12 +100,14 @@ Public Class frmUpdateItem
         Dim full As Boolean = chkFull.Checked
         Dim categoryid As Integer = cmbCategories.SelectedValue
         Dim picture As String
-        If OpenFileDialog1.FileName = "OpenFileDialog1" Then
+        If txtPicture.Text <> "" Then
             picture = txtPicture.Text
+            If (OpenFileDialog1.FileName IsNot Nothing) Then
+                ' Copy image file
+                FileCopy(OpenFileDialog1.FileName, Directory.GetCurrentDirectory() & "\images\" & picture.Substring(picture.LastIndexOf("\")))
+            End If
         Else
-            picture = OpenFileDialog1.SafeFileName
-            ' Copy image file
-            FileCopy(OpenFileDialog1.FileName, Directory.GetCurrentDirectory() & "\images\" & picture)
+            picture = ""
         End If
 
         Dim result As Boolean = DataLayer.UpdateItem(currentItemId, item, desc, price, picture, full, categoryid)

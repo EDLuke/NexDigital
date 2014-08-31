@@ -75,8 +75,8 @@ Partial Class FrmViewSlideShow
         '
         Me.trkOne.LargeChange = 2
         Me.trkOne.Location = New System.Drawing.Point(110, 395)
-        Me.trkOne.Maximum = 20
-        Me.trkOne.Minimum = 6
+        Me.trkOne.Maximum = 40
+        Me.trkOne.Minimum = 2
         Me.trkOne.Name = "trkOne"
         Me.trkOne.Size = New System.Drawing.Size(272, 45)
         Me.trkOne.TabIndex = 29
@@ -100,9 +100,6 @@ Partial Class FrmViewSlideShow
         Me.Label2.Size = New System.Drawing.Size(30, 13)
         Me.Label2.TabIndex = 31
         Me.Label2.Text = "Slow"
-        '
-        'bgw
-        '
         '
         'PictureBox1
         '

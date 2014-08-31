@@ -133,7 +133,7 @@ Public Class FrmViewSlideShowTwo
         Me.ActiveControl = btnSetAnima
     End Sub
 
-    Private Sub trkOne_Scroll(sender As Object, e As EventArgs) Handles trkOne.MouseLeave
+    Private Sub trkOne_Scroll(sender As Object, e As EventArgs) Handles trkOne.Scroll
         slideShowFreq = trkOne.Value / 2 * 1000
         TimerDelay.Interval = slideShowFreq
         Digital_Board.digital.frqTwo = slideShowFreq
